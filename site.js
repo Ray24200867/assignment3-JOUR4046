@@ -9,6 +9,7 @@ addEventListener('resize', updateProgress);
 updateProgress();
 
 const steps = Array.from(document.querySelectorAll('.ladder-choice')).reverse();
+const stepSurfaces = Array.from(document.querySelectorAll('.ladder-surface'));
 const hint = document.querySelector('[data-node-id="13:130"]');
 const defaultHint = hint.textContent.trim();
 const ranking = document.querySelector('[data-node-id="23:14"]');
@@ -21,6 +22,9 @@ hint.setAttribute('aria-live', 'polite');
 
 function showHint(score) {
   hint.textContent = score === undefined ? defaultHint : score + ' 分 · ' + labels[score];
+  for (const surface of stepSurfaces) {
+    surface.classList.toggle('is-preview', Number(surface.dataset.stepSurface) === score);
+  }
 }
 function renderRanking(score) {
   const countries = window.happinessRanking;
@@ -65,6 +69,12 @@ function renderRanking(score) {
 
 for (const step of steps) {
   const score = Number(step.dataset.score);
+  const surface = stepSurfaces.find(item => Number(item.dataset.stepSurface) === score);
+  surface.addEventListener('pointerenter', event => {
+    if (event.pointerType === 'mouse') showHint(score);
+  });
+  surface.addEventListener('pointerleave', () => showHint(selectedScore));
+  surface.addEventListener('click', () => step.click());
   step.setAttribute('aria-label', score + ' 分 · ' + labels[score]);
   step.addEventListener('mouseenter', () => showHint(score));
   step.addEventListener('mouseleave', () => showHint(selectedScore));
@@ -73,6 +83,7 @@ for (const step of steps) {
   step.addEventListener('click', () => {
     selectedScore = score;
     for (const choice of steps) choice.setAttribute('aria-pressed', String(choice === step));
+    for (const item of stepSurfaces) item.classList.toggle('is-selected', item === surface);
     showHint(score);
     renderRanking(score);
     ranking.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
