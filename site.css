@@ -9,9 +9,6 @@ button{font:inherit;cursor:pointer}
 .site-header{height:65px;display:flex;align-items:center;justify-content:space-between;gap:20px;position:sticky;top:0;z-index:5;padding-inline:max(24px,calc((100% - 1240px)/2));background:#f6f3eef2;backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .brand{font:900 18px var(--serif);text-decoration:none;white-space:nowrap}
 .brand span{font:600 9px "Noto Sans TC",sans-serif;letter-spacing:.14em;margin-left:12px;color:var(--muted)}
-.site-header nav{display:flex;gap:clamp(12px,3vw,35px);white-space:nowrap}
-.site-header nav a{font-size:13px;color:var(--muted);text-decoration:none;padding-block:6px;border-bottom:1px solid transparent}
-.site-header nav a[aria-current],.site-header nav a:hover{color:var(--accent);border-color:currentColor}
 .progress{position:absolute;inset:auto 0 0;height:3px;background:linear-gradient(90deg,#8f3967,#dc8f9e);transform:scaleX(var(--progress,0));transform-origin:left}
 .hero{color:#fbf2f1;background:radial-gradient(ellipse at 80% 39%,#50384f,transparent 49%),#242036;overflow:hidden}
 .hero-inner{width:min(1240px,calc(100% - 64px));margin:auto;display:grid;grid-template-columns:1.3fr 1fr;min-height:640px;align-items:center;column-gap:30px;padding-top:65px}
@@ -109,7 +106,7 @@ figcaption a{margin-left:7px}
 .methods{padding-block:33px}
 footer{padding:22px 24px;text-align:center;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
 @media(max-width:720px){
- .site-header{height:58px;padding-inline:12px;gap:8px}.brand span{display:none}.brand{font-size:15px}.site-header nav{gap:10px}.site-header nav a{font-size:11px}
+ .site-header{height:58px;padding-inline:12px;gap:8px}.brand span{display:none}.brand{font-size:15px}
  .hero-inner{width:calc(100% - 34px);grid-template-columns:1fr;min-height:auto;padding-top:25px}.hero-copy{padding-bottom:0}.hero-art{min-height:225px}.hero-heart{width:120px}.orbit{width:210px}.heart{width:48px}.heart-one{left:20%}.heart-two,.heart-three{right:20%}
  .hero-stats div+div{padding-left:9px}.hero-stats div{padding-right:7px}.hero-stats span{font-size:11px}
  .ladder-layout,.evidence-grid{grid-template-columns:1fr}.ladder-section,.story-section{padding:44px 15px}.intro{padding-bottom:10px}

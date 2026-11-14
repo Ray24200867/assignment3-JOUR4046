@@ -17,16 +17,9 @@ const signed = value => (value < 0 ? '−' : '+') + decimal(Math.abs(value));
 const get = id => document.getElementById(id);
 
 const header = document.querySelector('.site-header');
-const anchors = Array.from(header.querySelectorAll('nav a'));
-const sections = anchors.map(anchor => document.querySelector(anchor.hash));
 function trackReading() {
   const distance = document.documentElement.scrollHeight - innerHeight;
   header.style.setProperty('--progress', distance > 0 ? Math.max(0, Math.min(1, scrollY / distance)) : 0);
-  const active = sections.findLastIndex(section => section.getBoundingClientRect().top <= 145);
-  anchors.forEach((anchor, index) => {
-    if (index === active) anchor.setAttribute('aria-current', 'location');
-    else anchor.removeAttribute('aria-current');
-  });
 }
 addEventListener('scroll', trackReading, {passive:true});
 addEventListener('resize', trackReading);
