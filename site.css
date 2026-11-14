@@ -115,3 +115,28 @@ footer{padding:22px 24px;text-align:center;border-top:1px solid var(--line);colo
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
 .transformed{transform:rotate(var(--rotation,0deg)) skewX(var(--skew,0deg))}
+
+.income-story{display:grid;grid-template-columns:minmax(0,1.9fr) minmax(220px,1fr);gap:clamp(20px,4vw,62px);max-width:1200px;margin:34px auto 0;align-items:start}
+.income-figure{position:sticky;top:84px;width:100%;margin:0;z-index:1}
+.income-step{min-height:55vh;display:flex;flex-direction:column;justify-content:center;padding:18px 0 18px 17px;border-left:2px solid var(--line);transition:border-color .25s}
+.income-step.is-current{border-color:var(--accent)}
+.income-step h3{font-size:clamp(21px,2.45vw,30px);margin-bottom:12px}
+.income-step p{color:var(--muted);line-height:1.85}
+.income-step strong{color:var(--accent)}
+.income-figure .chart-heading{margin-bottom:10px}
+.income-figure .chart-reading{margin-block:8px}
+@media(max-width:720px){
+  .income-story{display:block}
+  .income-figure{top:64px}
+  .income-figure .chart-heading h3{font-size:19px}
+  .income-figure .chart-heading{gap:7px}
+  .income-figure .segmented button{padding:4px 8px;font-size:12px}
+  .income-figure .chart-reading{font-size:12px;padding:7px 9px;min-height:0}
+  .income-step{min-height:43vh;padding:14px 12px}
+}
+@media(max-height:560px){.income-figure{position:relative;top:auto}.income-step{min-height:0;margin-top:24px}}
+@media(prefers-reduced-motion:reduce){.income-step{transition:none}}
+.income-figure .plot svg{max-height:48vh}
+@media(min-width:721px) and (min-height:561px){
+  .income-steps{padding-bottom:24vh}
+}

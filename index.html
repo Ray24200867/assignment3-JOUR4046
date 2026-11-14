@@ -9,9 +9,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="layout.css">
-<link rel="stylesheet" href="site.css?v=story2">
+<link rel="stylesheet" href="site.css?v=scroll1">
 <script src="data/chart-data.js" defer></script>
-<script src="site.js?v=story2" defer></script>
+<script src="site.js?v=scroll1" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">跳至正文</a>
@@ -497,16 +497,30 @@
   <div class="prose">
     <p class="eyebrow">收入與生活評分</p>
     <h2>香港比收入模型預測低 1.18 分</h2>
-    <p>把 146 個有可用數據的地方放到同一張圖上，虛線由左下往右上走。整體而言，人均 GDP 相關指標愈高的地方，居民給生活的評分也傾向愈高。香港的點落在虛線下方，實際的 <strong>5.57 分</strong>比模型估計的 <strong>6.75 分</strong>低了 <strong>1.18 分</strong>。</p>
   </div>
-  <figure class="chart-card">
-    <div class="chart-heading"><div><p class="figure-number">圖 1</p><h3>香港在收入預測線下方</h3></div>
-    <div class="segmented" id="scatter-controls" aria-label="散點圖比較範圍"><button type="button" aria-pressed="true" data-view="world">全球</button><button type="button" aria-pressed="false" data-view="peers">亞洲五地</button></div></div>
-    <div id="scatter" class="plot"></div>
-    <div id="scatter-reading" class="chart-reading" aria-live="polite"></div>
-    <figcaption>點選圖中的圓點，或用鍵盤聚焦亞洲五地的圓點。橫軸為報告估算的人均 GDP 模型貢獻，單位是分。<a href="https://www.worldhappiness.report/data-sharing/">官方數據 ↗</a></figcaption>
-  </figure>
-  <div class="prose after-chart"><p>香港與台灣在橫軸的數值都約為 <strong>1.96</strong>，生活評分卻分別是 <strong>5.57</strong> 和 <strong>6.71</strong>。用原始數值計算，兩地相差約 <strong>1.15 分</strong>。</p></div>
+  <div class="income-story" id="income-story">
+    <figure class="chart-card income-figure">
+      <div class="chart-heading"><div><p class="figure-number">圖 1</p><h3 id="scatter-title">先看全球趨勢</h3></div>
+      <div class="segmented" id="scatter-controls" aria-label="散點圖比較範圍"><button type="button" aria-pressed="true" data-view="world">全球</button><button type="button" aria-pressed="false" data-view="peers">亞洲五地</button></div></div>
+      <div id="scatter" class="plot"></div>
+      <div id="scatter-reading" class="chart-reading" aria-live="polite"></div>
+      <figcaption>橫軸為人均 GDP 的模型貢獻（分）。點選圓點可看數值。<a href="https://www.worldhappiness.report/data-sharing/">官方數據 ↗</a></figcaption>
+    </figure>
+    <div class="income-steps">
+      <div class="income-step" data-scene="world">
+        <h3>先看全球趨勢</h3>
+        <p>把 146 個地方放在同一張圖上，虛線由左下往右上走。整體而言，人均 GDP 相關指標愈高的地方，生活評分也傾向愈高。</p>
+      </div>
+      <div class="income-step" data-scene="hong-kong">
+        <h3>找到香港的位置</h3>
+        <p>香港落在虛線下方。模型預測約 <strong>6.75 分</strong>，居民實際給了 <strong>5.57 分</strong>，相差 <strong>1.18 分</strong>。</p>
+      </div>
+      <div class="income-step" data-scene="taiwan">
+        <h3>把香港和台灣放在一起</h3>
+        <p>兩地在橫軸上的數值都約為 <strong>1.96</strong>，台灣的生活評分卻達 <strong>6.71</strong>。用原始數值計算，兩地相差約 <strong>1.15 分</strong>。</p>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section id="factors" class="story-section">

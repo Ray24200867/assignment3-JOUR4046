@@ -64,7 +64,8 @@ function svgElement(tag, attributes, text) {
 }
 
 let scatterView = 'world';
-let scatterChoice = hongKong;
+let scatterChoice = null;
+let comparePair = false;
 function renderScatter() {
   const world = scatterView === 'world';
   const compact = get('scatter').clientWidth < 540;
@@ -90,19 +91,29 @@ function renderScatter() {
   const start = Math.max(xMin,(yMin-intercept)/slope);
   const end = Math.min(xMax,(yMax-intercept)/slope);
   add('line',{x1:x(start),y1:y(intercept+slope*start),x2:x(end),y2:y(intercept+slope*end),stroke:'#68657f','stroke-width':2,'stroke-dasharray':'6 5'});
-  add('line',{x1:x(scatterChoice.gdp),x2:x(scatterChoice.gdp),y1:y(scatterChoice.score),y2:y(scatterChoice.pred),stroke:color,'stroke-width':2,'pointer-events':'none'});
+  if (comparePair) {
+    const taiwan = asian[1];
+    add('line',{x1:x(hongKong.gdp),x2:x(taiwan.gdp),y1:y(hongKong.score),y2:y(taiwan.score),stroke:color,'stroke-width':2,'stroke-dasharray':'4 3','pointer-events':'none'});
+  } else if (scatterChoice) {
+    add('line',{x1:x(scatterChoice.gdp),x2:x(scatterChoice.gdp),y1:y(scatterChoice.score),y2:y(scatterChoice.pred),stroke:color,'stroke-width':2,'pointer-events':'none'});
+  }
   const points = world ? [...observations.filter(row => !peers.has(row.country)), ...asian] : asian;
   const reading = get('scatter-reading');
   function showPoint(row) {
+    if (!row) {
+      reading.textContent = '146 個國家和地區 · 虛線是按人均 GDP 指標估計的生活評分';
+      return;
+    }
     reading.textContent = `${nameOf(row)}　實際 ${decimal(row.score)} 分 · 預測 ${decimal(row.pred)} 分 · 差距 ${signed(row.score-row.pred)} 分`;
   }
   for (const row of points) {
-    const highlighted = row === scatterChoice;
+    const highlighted = row === scatterChoice || (comparePair && row === asian[1]);
     const peer = peers.has(row.country);
     const point = svgElement('circle',{class:'point',cx:x(row.gdp),cy:y(row.score),r:highlighted?8:peer?6:4,fill:highlighted?color:peer?'#5e648f':'#b9b5c3','aria-label':`${nameOf(row)}，${decimal(row.score)} 分`});
     if (peer) {point.setAttribute('tabindex','0');point.setAttribute('role','button');}
     const choose = () => {
       const hadFocus = document.activeElement === point;
+      comparePair = false;
       scatterChoice = row;
       renderScatter();
       if (hadFocus && peer) {
@@ -111,9 +122,9 @@ function renderScatter() {
     };
     if (peer) point.dataset.peer = asian.indexOf(row);
     point.addEventListener('pointerenter', () => showPoint(row));
-    point.addEventListener('pointerleave', () => showPoint(scatterChoice));
+    point.addEventListener('pointerleave', restoreReading);
     point.addEventListener('focus', () => showPoint(row));
-    point.addEventListener('blur', () => showPoint(scatterChoice));
+    point.addEventListener('blur', restoreReading);
     point.addEventListener('click', choose);
     point.addEventListener('keydown', event => {
       if (event.key === 'Enter' || event.key === ' ') {event.preventDefault();choose();}
@@ -125,17 +136,51 @@ function renderScatter() {
     }
   }
   get('scatter').replaceChildren(svg);
-  showPoint(scatterChoice);
+  restoreReading();
+  function restoreReading() {
+    if (comparePair) reading.textContent = '香港 5.57 分 · 台灣 6.71 分 · 相差約 1.15 分';
+    else showPoint(scatterChoice);
+  }
 }
 get('scatter-controls').addEventListener('click', event => {
   const button = event.target.closest('button[data-view]');
   if (!button) return;
   scatterView = button.dataset.view;
-  if (scatterView === 'peers' && !peers.has(scatterChoice.country)) scatterChoice = hongKong;
+  comparePair = false;
+  if (scatterView === 'peers' && !peers.has(scatterChoice?.country)) scatterChoice = hongKong;
   selectControl(event.currentTarget,'view',scatterView);
   renderScatter();
 });
 new ResizeObserver(renderScatter).observe(get('scatter'));
+
+const incomeStory = get('income-story');
+const incomeSteps = Array.from(incomeStory.querySelectorAll('.income-step'));
+let activeScene;
+let scrollFrame;
+function updateIncomeScene() {
+  scrollFrame = null;
+  const sceneLine = innerHeight * (innerWidth <= 720 ? .76 : .55);
+  const bounds = incomeStory.getBoundingClientRect();
+  if (bounds.top > sceneLine || bounds.bottom < 0) return;
+  const current = incomeSteps.findLast(step => step.getBoundingClientRect().top <= sceneLine) || incomeSteps[0];
+  const scene = current.dataset.scene;
+  if (activeScene === scene) return;
+  activeScene = scene;
+  incomeSteps.forEach(step => step.classList.toggle('is-current', step === current));
+  get('scatter-title').textContent = current.querySelector('h3').textContent;
+  comparePair = scene === 'taiwan';
+  scatterView = comparePair ? 'peers' : 'world';
+  scatterChoice = scene === 'world' ? null : hongKong;
+  selectControl(get('scatter-controls'), 'view', scatterView);
+  renderScatter();
+}
+function queueIncomeScene() {
+  if (scrollFrame == null) scrollFrame = requestAnimationFrame(updateIncomeScene);
+}
+addEventListener('scroll', queueIncomeScene, {passive:true});
+addEventListener('resize', queueIncomeScene);
+queueIncomeScene();
+
 
 function createRow(row, plot, onSelect, trackItems) {
   const button = document.createElement('button');
