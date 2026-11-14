@@ -91,18 +91,23 @@ for (const step of steps) {
 }
 
 const figures = [...document.querySelectorAll('main > section > [data-name]')].filter(element => {
-  const width = Number.parseFloat(element.className.match(/\bu-w--(\d+)px\b/)?.[1]);
-  return width === 1040 && !element.closest('#cover') || element.querySelector('[data-name^="Chart"]') && width >= 700;
+  return element.dataset.name.startsWith('圖') || element.querySelector('[data-name^="Chart ·"]');
+});
+const fitFigures = new ResizeObserver(entries => {
+  for (const { target, contentRect } of entries) {
+    const figure = target.firstElementChild;
+    figure.style.zoom = Math.min(1, contentRect.width / figure.offsetWidth);
+  }
 });
 for (const figure of figures) {
   const wrapper = document.createElement('div');
   wrapper.className = 'chart-viewport';
-  wrapper.style.maxWidth = figure.className.includes('u-w--1040px') ? '1040px' : '720px';
-  wrapper.tabIndex = 0;
   wrapper.setAttribute('role', 'region');
-  wrapper.setAttribute('aria-label', (figure.dataset.name || '圖表') + '，可左右捲動');
+  wrapper.setAttribute('aria-label', figure.dataset.name);
   figure.before(wrapper);
   wrapper.append(figure);
+  wrapper.style.maxWidth = figure.offsetWidth + 'px';
+  fitFigures.observe(wrapper);
 }
 const ladderArt = document.querySelector('[data-node-id="13:14"]');
 const ladderSection = document.querySelector('#ladder');

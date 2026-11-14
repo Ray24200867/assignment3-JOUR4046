@@ -56,8 +56,7 @@ main > section { height: auto; }
 .ladder-surface.is-selected { fill: rgb(255 226 243 / 32%); }
 [data-node-id="23:14"] { height: auto; min-height: 0; }
 [data-node-id="23:28"] { height: auto; width: 100%; }
-.chart-viewport { width: 100%; overflow-x: auto; }
-.chart-viewport:focus-visible { outline-offset: -2px; }
+.chart-viewport { width: 100%; }
 
 @media (max-width: 1100px) {
   main > section:not(#cover) { padding-inline: 20px; }
@@ -107,9 +106,6 @@ main > section { height: auto; }
 .chart-data :is(th,td) { border-top: 1px solid #dddae6; padding: 6px 12px; white-space: nowrap; }
 .chart-data th { position: sticky; top: 0; background: #f8eef4; }
 .chart-data tr:nth-child(even) { background: #f7f6fa; }
-@media (max-width: 900px) {
-  [data-node-id="24:15"] { overflow-x: auto; }
-}
 .expand-button { background: transparent; color: inherit; padding: 0; cursor: pointer; text-align: left; }
 [hidden] { display: none !important; }
 [data-node-id="19:14"] { pointer-events: none; }
