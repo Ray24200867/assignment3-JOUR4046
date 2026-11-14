@@ -118,18 +118,9 @@ fitLadder();
 const sourceData = window.happinessCharts;
 const chartTables = [
   ['7:14', ['排名', '國家或地區', '生活評分'], window.happinessRanking.map(country => [country.rank, country.name, country.score])],
-  ['7:192', ['地區', ...sourceData.years.slice(1)], [
-    ...Object.entries(sourceData.regions)
-      .filter(([region]) => region !== 'North America & ANZ')
-      .map(([region, series]) => [region, ...series.slice(1)]),
-    ['North America', ...sourceData.anglo.na],
-    ['Australia & New Zealand', ...sourceData.anglo.anz],
-  ]],
   ['7:414', ['國家或地區', '人均 GDP 的解釋值', '生活評分', '健康預期壽命的解釋值', '地區'], sourceData.cs
     .filter(country => country.country !== 'Venezuela' && country.gdp != null)
     .map(country => [country.country, country.gdp, country.score, country.health, country.region])],
-  ['7:706', ['國家或地區', '最大跌幅', '2025 年生活評分', '高峰年份', '低谷年份'], sourceData.drops
-    .map(country => [country.country, country.mdd, country.s25, country.pk_yr ?? '—', country.tr_yr ?? '—'])],
 ];
 
 for (const [id, headings, values] of chartTables) {

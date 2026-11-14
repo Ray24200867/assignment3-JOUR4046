@@ -109,3 +109,8 @@ main > section { height: auto; }
 .expand-button { background: transparent; color: inherit; padding: 0; cursor: pointer; text-align: left; }
 [hidden] { display: none !important; }
 [data-node-id="19:14"] { pointer-events: none; }
+
+#cover [data-node-id="12:18"] {
+  font-size: clamp(28px, 6.8vw, 76px);
+  line-height: 1.18;
+}
