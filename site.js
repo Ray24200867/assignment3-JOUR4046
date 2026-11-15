@@ -209,13 +209,36 @@ function mountGlobalFigure() {
   plot.addEventListener('scroll', hide, {passive: true});
 }
 
+function mountPeerDumbbell() {
+  const taiwan = asian[1];
+  const gap = decimal(taiwan.score - hongKong.score);
+  const x = score => 32 + score * 51.6;
+  const svg = svgElement('svg', {viewBox: '0 0 580 143', role: 'img',
+    'aria-label': `生活評分（滿分 10 分）。香港 ${decimal(hongKong.score)} 分，台灣 ${decimal(taiwan.score)} 分，相差約 ${gap} 分。`});
+  const draw = (tag, attributes, content) => svg.append(svgElement(tag, attributes, content));
+  draw('line', {x1: x(0), x2: x(10), y1: 113, y2: 113, class: 'peer-axis'});
+  for (const tick of [0, 2, 4, 6, 8, 10]) {
+    draw('line', {x1: x(tick), x2: x(tick), y1: 113, y2: 119, class: 'peer-axis'});
+    draw('text', {x: x(tick), y: 136, 'text-anchor': 'middle'}, tick);
+  }
+  draw('line', {x1: x(hongKong.score), x2: x(taiwan.score), y1: 74, y2: 74, class: 'peer-connector'});
+  draw('text', {x: x((hongKong.score + taiwan.score) / 2), y: 39, 'text-anchor': 'middle', class: 'peer-gap'}, `相差約 ${gap} 分`);
+  for (const [row, side, color] of [[hongKong, -1, 'hong-kong'], [taiwan, 1, 'taiwan']]) {
+    const marker = x(row.score);
+    const label = {x: marker + side * 16, 'text-anchor': side < 0 ? 'end' : 'start'};
+    draw('circle', {cx: marker, cy: 74, r: 9, class: color});
+    draw('text', {...label, y: 65, class: 'peer-label'}, nameOf(row));
+    draw('text', {...label, y: 92, class: 'peer-score'}, decimal(row.score));
+  }
+  get('peer-dumbbell-plot').append(svg);
+}
+
 function mountScatter(panel) {
   const plot = panel.querySelector('[data-scatter-plot]');
   const reading = panel.querySelector('[data-scatter-reading]');
   const controls = panel.querySelector('[data-scatter-controls]');
   const scene = panel.dataset.scene;
-  let comparePair = scene === 'taiwan';
-  let scatterView = comparePair ? 'peers' : 'world';
+  let scatterView = 'world';
   let scatterChoice = scene === 'world' ? null : hongKong;
 
   function renderScatter() {
@@ -243,10 +266,7 @@ function mountScatter(panel) {
     const start = Math.max(xMin,(yMin-intercept)/slope);
     const end = Math.min(xMax,(yMax-intercept)/slope);
     add('line',{x1:x(start),y1:y(intercept+slope*start),x2:x(end),y2:y(intercept+slope*end),stroke:'#68657f','stroke-width':2,'stroke-dasharray':'6 5'});
-    if (comparePair) {
-      const taiwan = asian[1];
-      add('line',{x1:x(hongKong.gdp),x2:x(taiwan.gdp),y1:y(hongKong.score),y2:y(taiwan.score),stroke:color,'stroke-width':2,'stroke-dasharray':'4 3','pointer-events':'none'});
-    } else if (scatterChoice) {
+    if (scatterChoice) {
       add('line',{x1:x(scatterChoice.gdp),x2:x(scatterChoice.gdp),y1:y(scatterChoice.score),y2:y(scatterChoice.pred),stroke:color,'stroke-width':2,'pointer-events':'none'});
     }
     const points = world ? [...observations.filter(row => !peers.has(row.country)), ...asian] : asian;
@@ -258,13 +278,12 @@ function mountScatter(panel) {
       reading.textContent = `${nameOf(row)}　實際 ${decimal(row.score)} 分 · 預測 ${decimal(row.pred)} 分 · 差距 ${signed(row.score-row.pred)} 分`;
     }
     for (const row of points) {
-      const highlighted = row === scatterChoice || (comparePair && row === asian[1]);
+      const highlighted = row === scatterChoice;
       const peer = peers.has(row.country);
       const point = svgElement('circle',{class:'point',cx:x(row.gdp),cy:y(row.score),r:highlighted?8:peer?6:4,fill:highlighted?color:peer?'#5e648f':'#b9b5c3','aria-label':`${nameOf(row)}，${decimal(row.score)} 分`});
       if (peer) {point.setAttribute('tabindex','0');point.setAttribute('role','button');}
       const choose = () => {
         const hadFocus = document.activeElement === point;
-        comparePair = false;
         scatterChoice = row;
         renderScatter();
         if (hadFocus && peer) {
@@ -289,8 +308,7 @@ function mountScatter(panel) {
     plot.replaceChildren(svg);
     restoreReading();
     function restoreReading() {
-      if (comparePair) reading.textContent = '香港 5.57 分 · 台灣 6.71 分 · 相差約 1.15 分';
-      else showPoint(scatterChoice);
+      showPoint(scatterChoice);
     }
   }
 
@@ -298,8 +316,7 @@ function mountScatter(panel) {
     const button = event.target.closest('button[data-view]');
     if (!button) return;
     scatterView = button.dataset.view;
-    comparePair = scene === 'taiwan' && scatterView === 'peers';
-    if (comparePair || (scatterView === 'peers' && !peers.has(scatterChoice?.country))) scatterChoice = hongKong;
+    if (scatterView === 'peers' && !peers.has(scatterChoice?.country)) scatterChoice = hongKong;
     selectControl(controls, 'view', scatterView);
     renderScatter();
   });
@@ -313,6 +330,7 @@ function mountScatter(panel) {
 }
 
 mountGlobalFigure();
+mountPeerDumbbell();
 document.querySelectorAll('.income-panel').forEach(mountScatter);
 
 const readingPages = Array.from(document.querySelectorAll('main > section'));

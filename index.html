@@ -9,10 +9,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="layout.css">
-<link rel="stylesheet" href="site.css?v=global-intro">
+<link rel="stylesheet" href="site.css?v=peer-dumbbell">
 <script src="data/chart-data.js" defer></script>
 <script src="data/ranking.js" defer></script>
-<script src="site.js?v=global-figure" defer></script>
+<script src="site.js?v=peer-dumbbell" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">跳至正文</a>
@@ -553,17 +553,16 @@
   </div>
 </section>
 
-<section id="taiwan" class="story-section income-panel" data-scene="taiwan">
-  <div class="income-story">
-    <div class="prose"><h2>把香港和台灣放在一起</h2><p>兩地在橫軸上的數值都約為 <strong>1.96</strong>，台灣的生活評分卻達 <strong>6.71</strong>。用原始數值計算，兩地相差約 <strong>1.15 分</strong>。</p></div>
-    <figure class="chart-card income-figure">
-      <div class="chart-heading">
-      <div class="segmented" data-scatter-controls aria-label="散點圖比較範圍"><button type="button" aria-pressed="true" data-view="world">全球</button><button type="button" aria-pressed="false" data-view="peers">亞洲五地</button></div></div>
-      <div data-scatter-plot class="plot"></div>
-      <div data-scatter-reading class="chart-reading" aria-live="polite"></div>
-      <figcaption>橫軸為人均 GDP 的模型貢獻（分）。點選圓點可看數值。<a href="https://www.worldhappiness.report/data-sharing/">官方數據 ↗</a></figcaption>
-    </figure>
+<section id="taiwan" class="story-section">
+  <div class="prose">
+    <h2>把香港和台灣放在一起</h2>
+    <p>香港與台灣的人均 GDP 模型貢獻都約為 <strong>1.96 分</strong>，台灣的生活評分卻比香港高約 <strong>1.15 分</strong>。</p>
   </div>
+  <figure class="chart-card peer-dumbbell">
+    <h3>生活評分（0–10）</h3>
+    <div id="peer-dumbbell-plot" class="plot"></div>
+    <figcaption>評分為 2023 至 2025 年的調查平均。差距以原始分數計算。<a href="https://www.worldhappiness.report/data-sharing/">官方數據 ↗</a></figcaption>
+  </figure>
 </section>
 
 <section id="factors" class="story-section">
