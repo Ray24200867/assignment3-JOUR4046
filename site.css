@@ -187,8 +187,39 @@ main > section > .chart-card { margin-top: clamp(14px, 3vh, 30px); }
   margin-bottom: 10px;
   font-size: clamp(16px, 2vw, 22px);
 }
+.regional-plot { position: relative; }
+.regional-steps { display: grid; gap: 12px; }
+.regional-steps > p {
+  margin: 0;
+  padding: clamp(14px, 2vw, 24px);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--muted);
+  line-height: 1.8;
+}
+#hong-kong.has-scroll-steps {
+  display: block;
+  min-height: 230svh;
+  padding-block: 0;
+}
+.has-scroll-steps > .income-story {
+  position: sticky;
+  top: 0;
+  min-height: 100svh;
+  padding-block: 24px;
+}
+.has-scroll-steps .regional-steps > p { grid-area: 1 / 1; align-self: start; }
+.has-scroll-steps .regional-steps > p:not(.is-current) { visibility: hidden; }
+.has-scroll-steps .regional-steps > p.is-current {
+  animation: regional-step-in .46s cubic-bezier(.2,.78,.25,1) both;
+}
+@keyframes regional-step-in {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 .scatter-flag { cursor: pointer; outline: none; }
-.scatter-flag:is(:hover, :focus-visible, .is-selected) .scatter-label { fill: var(--accent); }
+.scatter-flag:is(:hover, :focus-visible) .scatter-label { fill: var(--accent); }
 .scatter-flag:focus-visible .scatter-label { text-decoration: underline; }
 .plot svg .scatter-label {
   fill: var(--ink);
@@ -308,7 +339,6 @@ main > #income > .global-figure {
   .income-story { grid-template-columns: 1fr; gap: 14px; }
   .income-story .prose h2 { margin-bottom: 8px; }
   .income-figure .plot svg { max-height: 40svh; }
-  .income-figure .chart-reading { min-height: 0; padding: 8px 10px; }
 }
 .factor-page > .chart-card { width: 100%; margin: 0; }
 @media (min-width: 721px) and (max-height: 760px) {

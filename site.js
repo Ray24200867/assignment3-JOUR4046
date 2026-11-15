@@ -126,10 +126,20 @@ function svgElement(tag, attributes, text) {
   return element;
 }
 
+function showChartTooltip(tooltip, point, label, details) {
+  const marker = point.getBoundingClientRect();
+  const area = tooltip.parentElement.getBoundingClientRect();
+  const name = document.createElement('strong');
+  name.textContent = label;
+  tooltip.replaceChildren(name, document.createTextNode(details));
+  tooltip.style.setProperty('--tooltip-x', `${marker.right - area.left + 8}px`);
+  tooltip.style.top = `${Math.max(0, marker.top - area.top - 12)}px`;
+  tooltip.hidden = false;
+}
+
 function mountGlobalFigure() {
   const plot = get('global-plot');
   const tooltip = get('global-tooltip');
-  const chart = plot.parentElement;
   const width = 960;
   const height = 510;
   const {left, right, top, bottom} = {left: 62, right: width - 24, top: 16, bottom: height - 52};
@@ -181,16 +191,7 @@ function mountGlobalFigure() {
       const point = draw('circle', {cx: x(row.gdp), cy: y(row.score),
         r: 2 + 8 * Math.sqrt(Math.max(0, row.health || 0) / 1.25),
         class: `point ${group}`, 'aria-label': `${label}, ${points}`});
-      const show = () => {
-        const marker = point.getBoundingClientRect();
-        const area = chart.getBoundingClientRect();
-        const name = document.createElement('strong');
-        name.textContent = label;
-        tooltip.replaceChildren(name, document.createTextNode(points));
-        tooltip.style.setProperty('--tooltip-x', `${marker.right - area.left + 6}px`);
-        tooltip.style.top = `${Math.max(0, marker.top - area.top - 12)}px`;
-        tooltip.hidden = false;
-      };
+      const show = () => showChartTooltip(tooltip, point, label, points);
       point.addEventListener('pointerenter', show);
       point.addEventListener('pointerleave', hide);
       point.addEventListener('click', show);
@@ -214,10 +215,10 @@ function mountGlobalFigure() {
 
 function mountScatter(panel) {
   const plot = panel.querySelector('[data-scatter-plot]');
-  const reading = panel.querySelector('[data-scatter-reading]');
+  const tooltip = panel.querySelector('[data-scatter-tooltip]');
+  const hideTooltip = () => { tooltip.hidden = true; };
   const indonesia = observations.find(row => row.country === 'Indonesia');
   const points = [...asian.map(row => ({row, ...peers.get(row.country)})), {row: indonesia, name: '印度尼西亞', flag: 'id'}];
-  let scatterChoice = hongKong;
 
   function renderScatter() {
     const compact = plot.clientWidth < 540;
@@ -242,14 +243,7 @@ function mountScatter(panel) {
     const start = Math.max(xMin,(yMin-intercept)/slope);
     const end = Math.min(xMax,(yMax-intercept)/slope);
     add('line',{x1:x(start),y1:y(intercept+slope*start),x2:x(end),y2:y(intercept+slope*end),stroke:'#68657f','stroke-width':2,'stroke-dasharray':'6 5'});
-    function showPoint({row, name}) {
-      reading.textContent = `${name}　GDP 模型貢獻 ${row.gdp.toFixed(3)} · 實際 ${decimal(row.score)} 分 · 預測 ${decimal(row.pred)} 分 · 差距 ${signed(row.score-row.pred)} 分`;
-    }
-    const restoreReading = () => showPoint(points.find(point => point.row === scatterChoice));
-    let selectedPoint;
-    for (const entry of points) {
-      const {row, name, flag} = entry;
-      const active = row === scatterChoice;
+    for (const {row, name, flag} of points) {
       const flagWidth = compact ? 25 : 34;
       const flagHeight = flagWidth * .75;
       const labelBesideFlag = row.country === 'Republic of Korea';
@@ -259,39 +253,34 @@ function mountScatter(panel) {
       const comparison = row === hongKong || row === indonesia;
       const label = comparison ? `${name} ${decimal(row.score)}` : name;
       const point = svgElement('g', {
-        class: active ? 'scatter-flag is-selected' : 'scatter-flag',
+        class: 'scatter-flag',
         transform: `translate(${x(row.gdp)},${y(row.score)})`,
         tabindex: 0,
         role: 'button',
-        'aria-pressed': active,
         'aria-label': `${name}，生活評分 ${decimal(row.score)} 分`,
       });
-      if (active) selectedPoint = point;
       point.append(
         svgElement('image', {x: -flagWidth / 2, y: -flagHeight / 2, width: flagWidth, height: flagHeight, href: `assets/flags/${flag}.svg`, 'aria-hidden': 'true'}),
         svgElement('text', {...labelPosition, class: comparison ? 'scatter-label is-comparison' : 'scatter-label'}, label),
       );
-      const choose = () => {
-        selectedPoint.classList.remove('is-selected');
-        selectedPoint.setAttribute('aria-pressed', 'false');
-        selectedPoint = point;
-        point.classList.add('is-selected');
-        point.setAttribute('aria-pressed', 'true');
-        scatterChoice = row;
-        showPoint(entry);
-      };
-      point.addEventListener('pointerenter', () => showPoint(entry));
-      point.addEventListener('pointerleave', restoreReading);
-      point.addEventListener('focus', () => showPoint(entry));
-      point.addEventListener('blur', restoreReading);
-      point.addEventListener('click', choose);
+      const details = `GDP 模型貢獻 ${row.gdp.toFixed(3)} · 實際 ${decimal(row.score)} 分 · 預測 ${decimal(row.pred)} 分 · 差距 ${signed(row.score-row.pred)} 分`;
+      const show = () => showChartTooltip(tooltip, point, name, details);
+      point.addEventListener('pointerenter', show);
+      point.addEventListener('pointerleave', hideTooltip);
+      point.addEventListener('focus', show);
+      point.addEventListener('blur', hideTooltip);
+      point.addEventListener('click', show);
       point.addEventListener('keydown', event => {
-        if (event.key === 'Enter' || event.key === ' ') {event.preventDefault();choose();}
+        if (event.key === 'Escape') hideTooltip();
+        if (event.key === 'Enter' || event.key === ' ') {event.preventDefault();show();}
       });
       svg.append(point);
     }
+    svg.addEventListener('click', event => {
+      if (!event.target.closest('.scatter-flag')) hideTooltip();
+    });
+    hideTooltip();
     plot.replaceChildren(svg);
-    restoreReading();
   }
 
   let width;
@@ -302,8 +291,36 @@ function mountScatter(panel) {
   }).observe(plot);
 }
 
+function mountRegionalSteps(section) {
+  const stage = section.querySelector('.income-story');
+  const cards = Array.from(section.querySelectorAll('.regional-steps > p'));
+  const enhanced = matchMedia('(min-width: 900px) and (min-height: 620px) and (prefers-reduced-motion: no-preference)');
+  let frame;
+  function update() {
+    frame = undefined;
+    if (!enhanced.matches) return;
+    const distance = Math.max(1, section.offsetHeight - stage.offsetHeight);
+    const progress = Math.max(0, -section.getBoundingClientRect().top) / distance;
+    const step = Math.min(cards.length - 1, Math.floor(progress * cards.length));
+    cards.forEach((card, index) => card.classList.toggle('is-current', index === step));
+  }
+  function sync() {
+    section.classList.toggle('has-scroll-steps', enhanced.matches);
+    if (!enhanced.matches) return;
+    update();
+  }
+  enhanced.addEventListener('change', sync);
+  addEventListener('resize', sync);
+  addEventListener('scroll', () => {
+    if (enhanced.matches && frame === undefined) frame = requestAnimationFrame(update);
+  }, {passive: true});
+  sync();
+}
+
 mountGlobalFigure();
-mountScatter(get('hong-kong'));
+const regionalSection = get('hong-kong');
+mountScatter(regionalSection);
+mountRegionalSteps(regionalSection);
 
 const readingPages = Array.from(document.querySelectorAll('main > section'));
 const entrance = new IntersectionObserver(entries => {
@@ -355,7 +372,8 @@ addEventListener('wheel', event => {
   pageTurned = true;
   turningUntil = now + 440;
   document.documentElement.style.setProperty('--entry-offset', direction > 0 ? '56px' : '-56px');
-  next.scrollIntoView({block:'start', behavior:'smooth'});
+  const block = direction < 0 && next.classList.contains('has-scroll-steps') ? 'end' : 'start';
+  next.scrollIntoView({block, behavior:'smooth'});
 }, {passive:false});
 
 function createRow(row, plot, onSelect, trackItems) {
