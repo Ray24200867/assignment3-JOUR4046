@@ -415,7 +415,7 @@ function updateModel() {
     line.style.width = (scale(Math.max(actual,expected))-scale(Math.min(actual,expected)))+'%';
     actualDot.style.left = scale(actual)+'%';
     expectedDot.style.left = scale(expected)+'%';
-    if (row===modelChoice) get('model-reading').textContent = `${nameOf(row)}　實際 ${decimal(actual)} 分 · ${model==='income'?'GDP 指標':'六項因素'}預測 ${decimal(expected)} 分 · 差距 ${signed(actual-expected)} 分`;
+    if (row===modelChoice) get('model-reading').textContent = `${nameOf(row)}　居民評分 ${decimal(actual)} 分 · ${model==='income'?'人均 GDP':'六項因素'}預測 ${decimal(expected)} 分 · 差距 ${signed(actual-expected)} 分`;
   }
 }
 get('model-controls').addEventListener('click', event => {

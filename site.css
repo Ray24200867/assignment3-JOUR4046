@@ -294,6 +294,21 @@ main > #income > .global-figure {
 .global-method { margin-top: 12px; color: var(--muted); font-size: 13px; line-height: 1.7; }
 .global-method summary { cursor: pointer; }
 .global-method a { margin-left: .4em; color: var(--accent); }
+.model-method summary { color: var(--accent); font-weight: 700; }
+.model-method > p { margin-top: 10px; }
+.model-breakdown {
+  width: 100%;
+  margin-top: 10px;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+.model-breakdown :is(th, td) {
+  padding: 5px 4px;
+  border-bottom: 1px solid var(--line);
+  text-align: right;
+}
+.model-breakdown th:first-child { text-align: left; }
+.model-breakdown tbody th { font-weight: 500; }
 .methods .text-link { margin-top: 20px; }
 .hero { position: relative; padding-bottom: 36px; }
 .hero-inner { min-height: min(640px, calc(100svh - 36px)); padding-top: clamp(25px, 7vh, 65px); }
