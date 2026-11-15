@@ -1,7 +1,10 @@
 const data = window.happinessCharts;
 const peers = new Map([
-  ['Hong Kong SAR of China', '香港'], ['Taiwan Province of China', '台灣'],
-  ['Singapore', '新加坡'], ['Japan', '日本'], ['Republic of Korea', '韓國'],
+  ['Hong Kong SAR of China', {name: '香港', flag: 'hk'}],
+  ['Taiwan Province of China', {name: '台灣', flag: 'tw'}],
+  ['Singapore', {name: '新加坡', flag: 'sg'}],
+  ['Japan', {name: '日本', flag: 'jp'}],
+  ['Republic of Korea', {name: '韓國', flag: 'kr'}],
 ]);
 const observations = data.cs.filter(row => row.gdp > 0 && Number.isFinite(row.pred));
 const asian = Array.from(peers.keys(), name => observations.find(row => row.country === name));
@@ -11,7 +14,7 @@ const meanScore = observations.reduce((total, row) => total + row.score, 0) / ob
 const slope = observations.reduce((total, row) => total + (row.gdp - meanGDP) * (row.score - meanScore), 0) /
   observations.reduce((total, row) => total + (row.gdp - meanGDP) ** 2, 0);
 const intercept = meanScore - slope * meanGDP;
-const nameOf = row => peers.get(row.country) || row.country;
+const nameOf = row => peers.get(row.country)?.name || row.country;
 const decimal = value => (Math.round((value + Number.EPSILON) * 100) / 100).toFixed(2);
 const signed = value => (value < 0 ? '−' : '+') + decimal(Math.abs(value));
 const get = id => document.getElementById(id);
@@ -237,9 +240,8 @@ function mountScatter(panel) {
   const plot = panel.querySelector('[data-scatter-plot]');
   const reading = panel.querySelector('[data-scatter-reading]');
   const controls = panel.querySelector('[data-scatter-controls]');
-  const scene = panel.dataset.scene;
-  let scatterView = 'world';
-  let scatterChoice = scene === 'world' ? null : hongKong;
+  let scatterView = 'peers';
+  let scatterChoice = hongKong;
 
   function renderScatter() {
     const world = scatterView === 'world';
@@ -275,13 +277,32 @@ function mountScatter(panel) {
         reading.textContent = '146 個國家和地區 · 虛線是按人均 GDP 指標估計的生活評分';
         return;
       }
-      reading.textContent = `${nameOf(row)}　實際 ${decimal(row.score)} 分 · 預測 ${decimal(row.pred)} 分 · 差距 ${signed(row.score-row.pred)} 分`;
+      reading.textContent = `${nameOf(row)}　GDP 模型貢獻 ${row.gdp.toFixed(3)} · 實際 ${decimal(row.score)} 分 · 預測 ${decimal(row.pred)} 分 · 差距 ${signed(row.score-row.pred)} 分`;
     }
     for (const row of points) {
       const highlighted = row === scatterChoice;
       const peer = peers.has(row.country);
-      const point = svgElement('circle',{class:'point',cx:x(row.gdp),cy:y(row.score),r:highlighted?8:peer?6:4,fill:highlighted?color:peer?'#5e648f':'#b9b5c3','aria-label':`${nameOf(row)}，${decimal(row.score)} 分`});
-      if (peer) {point.setAttribute('tabindex','0');point.setAttribute('role','button');}
+      const cx = x(row.gdp);
+      const cy = y(row.score);
+      const label = `${nameOf(row)}，生活評分 ${decimal(row.score)} 分`;
+      const flag = peers.get(row.country)?.flag;
+      const point = flag
+        ? svgElement('g', {class: `scatter-flag${highlighted ? ' is-selected' : ''}`, transform: `translate(${cx},${cy})`, 'aria-label': label})
+        : svgElement('circle', {class: 'point', cx, cy, r: highlighted ? 8 : 4, fill: highlighted ? color : '#b9b5c3', 'aria-label': label});
+      if (flag) {
+        const flagWidth = world ? 20 : 30;
+        const flagHeight = flagWidth * .75;
+        const frame = {x: -flagWidth / 2 - 3, y: -flagHeight / 2 - 3, width: flagWidth + 6, height: flagHeight + 6};
+        point.append(
+          svgElement('rect', {...frame, rx: 4, class: 'scatter-flag-frame'}),
+          svgElement('image', {x: -flagWidth / 2, y: -flagHeight / 2, width: flagWidth, height: flagHeight, href: `assets/flags/${flag}.svg`, 'aria-hidden': 'true'}),
+        );
+      }
+      if (peer) {
+        point.setAttribute('tabindex', '0');
+        point.setAttribute('role', 'button');
+        point.setAttribute('aria-pressed', String(highlighted));
+      }
       const choose = () => {
         const hadFocus = document.activeElement === point;
         scatterChoice = row;
@@ -301,8 +322,7 @@ function mountScatter(panel) {
       });
       svg.append(point);
       if (highlighted || !world) {
-        const align = x(row.gdp) > right - 80 ? 'end' : 'start';
-        add('text',{x:x(row.gdp)+(align==='end'?-11:11),y:y(row.score)-8,'text-anchor':align,'pointer-events':'none',class:'axis-title'},nameOf(row));
+        add('text', {x: cx, y: cy - (flag ? (world ? 15 : 19) : 12), 'text-anchor': 'middle', 'pointer-events': 'none', class: 'scatter-label'}, nameOf(row));
       }
     }
     plot.replaceChildren(svg);
@@ -331,7 +351,7 @@ function mountScatter(panel) {
 
 mountGlobalFigure();
 mountPeerDumbbell();
-document.querySelectorAll('.income-panel').forEach(mountScatter);
+mountScatter(get('hong-kong'));
 
 const readingPages = Array.from(document.querySelectorAll('main > section'));
 const entrance = new IntersectionObserver(entries => {

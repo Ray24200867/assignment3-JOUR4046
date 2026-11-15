@@ -184,6 +184,25 @@ main > section > .chart-card { margin-top: clamp(14px, 3vh, 30px); }
 .income-figure { width: 100%; margin: 0; }
 .income-figure .plot svg { max-height: 50svh; }
 .income-figure .chart-heading { margin-bottom: 10px; }
+.scatter-flag { cursor: pointer; outline: none; }
+.scatter-flag-frame {
+  fill: #fffdfd;
+  stroke: #d9c9d9;
+  stroke-width: 1;
+  filter: drop-shadow(0 2px 3px #2d183825);
+  transition: stroke .18s, stroke-width .18s;
+}
+.scatter-flag:is(:hover, :focus-visible, .is-selected) .scatter-flag-frame {
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+.plot svg .scatter-label {
+  fill: var(--ink);
+  font-weight: 700;
+  paint-order: stroke;
+  stroke: #fffdfd;
+  stroke-width: 3px;
+}
 main > section > .peer-dumbbell { max-width: 740px; }
 .peer-dumbbell h3 { font-size: clamp(17px, 2.3vw, 23px); }
 .peer-dumbbell .peer-axis { stroke: var(--line); }

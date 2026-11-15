@@ -9,10 +9,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="layout.css">
-<link rel="stylesheet" href="site.css?v=peer-dumbbell">
+<link rel="stylesheet" href="site.css?v=peer-flags">
 <script src="data/chart-data.js" defer></script>
 <script src="data/ranking.js" defer></script>
-<script src="site.js?v=peer-dumbbell" defer></script>
+<script src="site.js?v=peer-flags" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">跳至正文</a>
@@ -517,14 +517,14 @@
 <section id="income" class="story-section">
   <div class="prose">
     <h2>全球趨勢</h2>
-    <p>人均 GDP 的模型貢獻愈高，生活評分整體上也愈高，但不同地區與虛線的距離很不一樣。圖中的 17 個拉丁美洲國家都高於預測，平均高 <strong>0.75 分</strong>。五個高收入亞洲經濟體的評分低於或接近預測，平均低 <strong>0.57 分</strong>。台灣幾乎落在預測線上，香港則低 <strong>1.18 分</strong>，是這五地中落差最大的一個。接下來放大看香港的位置。</p>
+    <p>人均 GDP 的模型貢獻愈高，生活評分整體上也愈高，但不同地區與虛線的距離很不一樣。圖中的 17 個拉丁美洲國家都高於預測，平均高 <strong>0.75 分</strong>。東亞及東南亞人均 GDP 模型貢獻最高的五個國家或地區，生活評分低於或接近預測，平均低 <strong>0.57 分</strong>。台灣幾乎落在預測線上，香港則低 <strong>1.18 分</strong>，是這五地中落差最大的一個。接下來放大看香港的位置。</p>
   </div>
   <figure class="chart-card global-figure" aria-labelledby="global-figure-title">
     <p class="figure-number">圖 1</p>
     <h3 id="global-figure-title" lang="en">Money can’t buy all of happiness: Latin America is “poor but happy”, Hong Kong “rich but unhappy”</h3>
     <ul class="global-legend" lang="en" aria-label="Legend">
       <li><span class="global-swatch latin-america"></span>Latin America (17 countries)</li>
-      <li><span class="global-swatch east-asia"></span>Rich East Asia (Japan, South Korea, Hong Kong, Taiwan, Singapore)</li>
+      <li><span class="global-swatch east-asia"></span>Top five in East and Southeast Asia by GDP per capita contribution</li>
       <li><span class="global-swatch other"></span>Other</li>
       <li><span class="global-swatch prediction"></span>Score predicted by income alone</li>
       <li>Larger dot = higher health contribution</li>
@@ -540,15 +540,15 @@
   </figure>
 </section>
 
-<section id="hong-kong" class="story-section income-panel" data-scene="hong-kong">
+<section id="hong-kong" class="story-section">
   <div class="income-story">
     <div class="prose"><h2>找到香港的位置</h2><p>香港落在虛線下方。模型預測約 <strong>6.75 分</strong>，居民實際給了 <strong>5.57 分</strong>，相差 <strong>1.18 分</strong>。</p></div>
     <figure class="chart-card income-figure">
       <div class="chart-heading">
-      <div class="segmented" data-scatter-controls aria-label="散點圖比較範圍"><button type="button" aria-pressed="true" data-view="world">全球</button><button type="button" aria-pressed="false" data-view="peers">亞洲五地</button></div></div>
+      <div class="segmented" data-scatter-controls aria-label="散點圖比較範圍"><button type="button" aria-pressed="false" data-view="world">全球</button><button type="button" aria-pressed="true" data-view="peers">人均 GDP 模型貢獻前五</button></div></div>
       <div data-scatter-plot class="plot"></div>
       <div data-scatter-reading class="chart-reading" aria-live="polite"></div>
-      <figcaption>橫軸為人均 GDP 的模型貢獻（分）。點選圓點可看數值。<a href="https://www.worldhappiness.report/data-sharing/">官方數據 ↗</a></figcaption>
+      <figcaption>旗幟標示東亞及東南亞中，人均 GDP 模型貢獻最高的五個國家或地區。點選旗幟或圓點可看數值。<a href="https://www.worldhappiness.report/data-sharing/">官方數據 ↗</a></figcaption>
     </figure>
   </div>
 </section>
@@ -576,7 +576,7 @@
     <div class="chart-heading"><div><p class="figure-number">圖 2</p><h3>實際評分與模型預測</h3></div>
     <div class="segmented" id="model-controls" aria-label="選擇模型"><button type="button" aria-pressed="false" data-model="income">GDP 指標</button><button type="button" aria-pressed="true" data-model="six">六項因素</button></div></div>
     <div class="chart-legend"><span><i></i> 實際評分</span><span><i class="outline"></i> 模型預測</span></div>
-    <div id="model-plot" class="model-plot" aria-label="亞洲五地的實際和預測分數"></div>
+    <div id="model-plot" class="model-plot" aria-label="東亞及東南亞人均 GDP 模型貢獻前五的實際和預測分數"></div>
     <div id="model-reading" class="chart-reading" aria-live="polite"></div>
     <figcaption>切換模型看差距如何變化。兩個模型使用不同資訊，差距各自以同一模型的預測值計算。<a href="https://www.worldhappiness.report/data-sharing/">官方數據 ↗</a></figcaption>
   </figure>
