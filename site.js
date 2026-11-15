@@ -21,6 +21,7 @@ const stairViewport = ladder.parentElement;
 const stairButtons = Array.from(ladder.querySelectorAll('.ladder-choice'));
 const stairFaces = Array.from(ladder.querySelectorAll('.ladder-surface'));
 const ranking = window.happinessRanking;
+const hongKongRankIndex = ranking.findIndex(row => row.rank === hongKong.rank);
 const rankPage = get('ladder-rank');
 const rankingNames = new Map([
   ['Afghanistan', '阿富汗'], ['Sierra Leone', '塞拉利昂'], ['Malawi', '馬拉維'],
@@ -50,15 +51,34 @@ function showLadderRank(score) {
   get('ladder-rank-summary').textContent = comparison;
 
   const reader = {rank: position + 1, name: '你', score};
+  const start = Math.max(0, position - 2);
+  const end = Math.min(ranking.length, position + 2);
   const visible = [
-    ...ranking.slice(Math.max(0, position - 2), position),
+    ...ranking.slice(start, position),
     reader,
-    ...ranking.slice(position, position + 2),
+    ...ranking.slice(position, end),
   ];
+  const hongKongRank = ranking[hongKongRankIndex];
+  if (hongKongRankIndex < start) {
+    if (hongKongRankIndex < start - 1) visible.unshift(null);
+    visible.unshift(hongKongRank);
+  } else if (hongKongRankIndex >= end) {
+    if (hongKongRankIndex > end) visible.push(null);
+    visible.push(hongKongRank);
+  }
   const rows = visible.map(row => {
     const tr = document.createElement('tr');
+    if (!row) {
+      tr.className = 'rank-gap';
+      const cell = tr.insertCell();
+      cell.colSpan = 3;
+      cell.setAttribute('aria-label', '略過中間名次');
+      cell.textContent = '⋯';
+      return tr;
+    }
     const isReader = row === reader;
     tr.classList.toggle('is-reader', isReader);
+    tr.classList.toggle('is-hong-kong', row === hongKongRank);
     tr.insertCell().textContent = isReader ? `模擬第 ${row.rank} 位` : `第 ${row.rank} 位`;
     tr.insertCell().textContent = rankingName(row);
     tr.insertCell().textContent = isReader ? String(score) : row.score.toFixed(3);

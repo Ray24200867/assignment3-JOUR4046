@@ -133,6 +133,8 @@ main > section[hidden] { display: none; }
 .ladder-ranking thead { color: var(--muted); font-size: 13px; }
 .ladder-ranking :is(th, td):last-child { text-align: right; }
 .ladder-ranking tr.is-reader { background: #efc4db; color: #3d2440; font-weight: 700; }
+.ladder-ranking tr.is-hong-kong { background: #fffafd; color: #3d2440; font-weight: 700; }
+.ladder-ranking .rank-gap td { padding-block: 2px; text-align: center; color: var(--muted); }
 .ladder-rank .ladder-rank-note p { font-size: 13px; }
 .ladder-rank-note .text-link { margin: 10px 8px 0; }
 .hero-inner { min-height: min(640px, 100svh); }
@@ -153,6 +155,13 @@ main > section > .chart-card { margin-top: clamp(14px, 3vh, 30px); }
   grid-column: 1 / -1;
   max-width: none;
   margin: 0;
+}
+.intro-factors {
+  margin: 0 0 clamp(20px, 6vh, 54px);
+  padding: clamp(16px, 2.6vw, 30px);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
 }
 .intro-cart {
   margin: 0;
@@ -216,6 +225,7 @@ main > section > .chart-card { margin-top: clamp(14px, 3vh, 30px); }
 @media (max-width: 720px) {
   .hero-inner { min-height: auto; }
   .intro-layout { grid-template-columns: 1fr; }
+  .intro-factors { margin-bottom: 0; }
   .income-story { grid-template-columns: 1fr; gap: 14px; }
   .income-story .prose h2 { margin-bottom: 8px; }
   .income-figure .plot svg { max-height: 40svh; }
