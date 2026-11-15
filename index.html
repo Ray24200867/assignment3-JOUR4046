@@ -9,9 +9,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="layout.css">
-<link rel="stylesheet" href="site.css?v=cart2">
+<link rel="stylesheet" href="site.css?v=ladder-rank">
 <script src="data/chart-data.js" defer></script>
-<script src="site.js?v=pages2" defer></script>
+<script src="data/ranking.js" defer></script>
+<script src="site.js?v=ladder-rank" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">跳至正文</a>
@@ -44,11 +45,8 @@
 <section id="ladder" class="ladder-section">
   <div class="ladder-layout">
     <div class="ladder-copy">
-      <p class="eyebrow">生活評價</p>
       <h2>你站在哪一級？</h2>
-      <p>想像一把從 0 到 10 級的梯子。0 代表你能想像最差的生活，10 代表最好的生活。你會把自己放在哪一級？</p>
-      <div class="score-panel" aria-live="polite"><strong id="your-score">—</strong><div><b id="score-label">點一下任意台階</b><p id="score-comparison">看看你的答案與香港平均的 5.57 分相差多少。</p></div></div>
-      <small>個人答案與全港調查平均只供對照。</small>
+      <p>想像一把從 0 到 10 級的梯子。0 代表你能想像最差的生活，10 代表最好的生活。點一下台階，選擇你的生活評分。</p>
     </div>
     <div class="stair-viewport">    <div class="u-h--496-619px u-overflow-clip u-relative u-shrink-0 u-w--560px" data-node-id="13:18" data-name="Ribbon staircase (0–10)">
       <svg class="ladder-surfaces" viewbox="0 0 560 496.619" aria-hidden="true" focusable="false">
@@ -482,7 +480,25 @@
   </div>
 </section>
 
-<section class="story-section intro">
+<section id="ladder-rank" class="story-section ladder-rank" aria-labelledby="ladder-rank-title" hidden>
+  <div class="prose">
+    <h2 id="ladder-rank-title" tabindex="-1">你的分數，在世界哪裡？</h2>
+    <p id="ladder-rank-summary"></p>
+  </div>
+  <table class="ladder-ranking" aria-label="你的分數與相鄰國家或地區的生活評分">
+    <thead>
+      <tr><th scope="col">位置</th><th scope="col">國家／地區</th><th scope="col">生活評分</th></tr>
+    </thead>
+    <tbody id="ladder-rank-rows"></tbody>
+  </table>
+  <div class="prose ladder-rank-note">
+    <p>個人評分以插入排行榜的方式與各地 2023 至 2025 年的調查平均分對照。各地名次沿用<a href="https://www.worldhappiness.report/ed/2026/international-evidence-on-happiness-and-social-media/">《2026 年世界幸福報告》</a>。</p>
+    <a class="text-link" href="#ladder">重新選擇 ↑</a>
+    <a class="text-link" href="#ranking-method">繼續閱讀 ↓</a>
+  </div>
+</section>
+
+<section id="ranking-method" class="story-section intro">
   <div class="intro-layout">
     <div class="prose intro-overview">
       <h2>幸福排名是怎麼得出的？</h2>

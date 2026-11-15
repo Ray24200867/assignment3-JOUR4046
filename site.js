@@ -20,8 +20,60 @@ const ladder = document.querySelector('[data-node-id="13:18"]');
 const stairViewport = ladder.parentElement;
 const stairButtons = Array.from(ladder.querySelectorAll('.ladder-choice'));
 const stairFaces = Array.from(ladder.querySelectorAll('.ladder-surface'));
+const ranking = window.happinessRanking;
+const rankPage = get('ladder-rank');
+const rankingNames = new Map([
+  ['Afghanistan', '阿富汗'], ['Sierra Leone', '塞拉利昂'], ['Malawi', '馬拉維'],
+  ['Zambia', '贊比亞'], ['Sri Lanka', '斯里蘭卡'], ['Ethiopia', '埃塞俄比亞'],
+  ['Comoros', '科摩羅'], ['Cameroon', '喀麥隆'], ['South Africa', '南非'],
+  ['Azerbaijan', '阿塞拜疆'], ['Niger', '尼日爾'], ['Croatia', '克羅地亞'],
+  ['Malaysia', '馬來西亞'], ['Peru', '秘魯'], ['Mauritius', '毛里求斯'],
+]);
+const rankingName = row => rankingNames.get(row.name) || row.name;
+
+function showLadderRank(score) {
+  const position = ranking.filter(row => row.score > score).length;
+  const above = ranking[position - 1];
+  const below = ranking[position];
+  const title = get('ladder-rank-title');
+  title.textContent = `${score} 分，模擬排名第 ${position + 1} 位`;
+  let comparison;
+  if (!above) {
+    comparison = `你的分數高於榜首的${rankingName(below)}。`;
+  } else if (!below) {
+    comparison = `你的分數低於榜末的${rankingName(above)}。`;
+  } else if (below.score === score) {
+    comparison = `你的分數與${rankingName(below)}相同。`;
+  } else {
+    comparison = `你的分數介於${rankingName(above)}與${rankingName(below)}之間。`;
+  }
+  get('ladder-rank-summary').textContent = comparison;
+
+  const reader = {rank: position + 1, name: '你', score};
+  const visible = [
+    ...ranking.slice(Math.max(0, position - 2), position),
+    reader,
+    ...ranking.slice(position, position + 2),
+  ];
+  const rows = visible.map(row => {
+    const tr = document.createElement('tr');
+    const isReader = row === reader;
+    tr.classList.toggle('is-reader', isReader);
+    tr.insertCell().textContent = isReader ? `模擬第 ${row.rank} 位` : `第 ${row.rank} 位`;
+    tr.insertCell().textContent = rankingName(row);
+    tr.insertCell().textContent = isReader ? String(score) : row.score.toFixed(3);
+    return tr;
+  });
+  get('ladder-rank-rows').replaceChildren(...rows);
+  rankPage.hidden = false;
+  document.documentElement.style.setProperty('--entry-offset', '56px');
+  turningUntil = performance.now() + 440;
+  title.focus({preventScroll: true});
+  rankPage.scrollIntoView({block: 'start', behavior: motion.matches ? 'instant' : 'smooth'});
+}
+
 new ResizeObserver(([entry]) => {
-  ladder.style.zoom = Math.min(1, entry.contentRect.width / 560);
+  ladder.style.zoom = entry.contentRect.width / 560;
 }).observe(stairViewport);
 for (const face of stairFaces) {
   const button = stairButtons.find(item => item.dataset.score === face.dataset.stepSurface);
@@ -35,10 +87,7 @@ for (const face of stairFaces) {
     const score = Number(button.dataset.score);
     stairButtons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
     stairFaces.forEach(item => item.classList.toggle('is-selected', item === face));
-    get('your-score').textContent = score;
-    get('score-label').textContent = '你的生活評分';
-    const difference = score - hongKong.score;
-    get('score-comparison').textContent = `比香港平均的 ${decimal(hongKong.score)} 分${difference >= 0 ? '高' : '低'} ${decimal(Math.abs(difference))} 分。`;
+    showLadderRank(score);
   });
 }
 
@@ -189,12 +238,13 @@ addEventListener('wheel', event => {
   }
 
   const middle = innerHeight / 2;
-  const index = readingPages.findIndex(page => {
+  const visiblePages = readingPages.filter(page => !page.hidden);
+  const index = visiblePages.findIndex(page => {
     const {top, bottom} = page.getBoundingClientRect();
     return top <= middle && bottom > middle;
   });
-  const current = readingPages[index];
-  const next = readingPages[index + direction];
+  const current = visiblePages[index];
+  const next = visiblePages[index + direction];
   if (!current || !next) return;
   const {top, bottom, height} = current.getBoundingClientRect();
   // Keep regular scrolling inside any section that exceeds the viewport.
