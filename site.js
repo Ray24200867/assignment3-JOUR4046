@@ -239,13 +239,15 @@ function mountPeerDumbbell() {
 function mountScatter(panel) {
   const plot = panel.querySelector('[data-scatter-plot]');
   const reading = panel.querySelector('[data-scatter-reading]');
+  const indonesia = observations.find(row => row.country === 'Indonesia');
+  const points = [...asian.map(row => ({row, ...peers.get(row.country)})), {row: indonesia, name: '印尼', flag: 'id'}];
   let scatterChoice = hongKong;
 
   function renderScatter() {
     const compact = plot.clientWidth < 540;
     const w = compact ? 440 : 860;
     const h = compact ? 355 : 440;
-    const [xMin, xMax] = [1.78,2.25];
+    const [xMin, xMax] = [1.44,2.25];
     const [yMin, yMax] = [5.25,7.7];
     const left = 47, right = w - 22, top = 29, bottom = h - 59;
     const x = value => left + (right-left)*(value-xMin)/(xMax-xMin);
@@ -256,7 +258,7 @@ function mountScatter(panel) {
       add('line',{x1:left,x2:right,y1:y(tick),y2:y(tick),stroke:'#e5dfe6'});
       add('text',{x:left-10,y:y(tick)+4,'text-anchor':'end'},tick);
     }
-    for (const tick of [1.8,1.9,2,2.1,2.2]) {
+    for (const tick of [1.5,1.6,1.7,1.8,1.9,2,2.1,2.2]) {
       add('text',{x:x(tick),y:bottom+23,'text-anchor':'middle'},tick);
     }
     add('text',{x:left,y:17,class:'axis-title'},'生活評分（0–10）');
@@ -264,26 +266,34 @@ function mountScatter(panel) {
     const start = Math.max(xMin,(yMin-intercept)/slope);
     const end = Math.min(xMax,(yMax-intercept)/slope);
     add('line',{x1:x(start),y1:y(intercept+slope*start),x2:x(end),y2:y(intercept+slope*end),stroke:'#68657f','stroke-width':2,'stroke-dasharray':'6 5'});
-    function showPoint(row) {
-      reading.textContent = `${nameOf(row)}　GDP 模型貢獻 ${row.gdp.toFixed(3)} · 實際 ${decimal(row.score)} 分 · 預測 ${decimal(row.pred)} 分 · 差距 ${signed(row.score-row.pred)} 分`;
+    function showPoint({row, name}) {
+      reading.textContent = `${name}　GDP 模型貢獻 ${row.gdp.toFixed(3)} · 實際 ${decimal(row.score)} 分 · 預測 ${decimal(row.pred)} 分 · 差距 ${signed(row.score-row.pred)} 分`;
     }
-    const restoreReading = () => showPoint(scatterChoice);
+    const restoreReading = () => showPoint(points.find(point => point.row === scatterChoice));
     let selectedPoint;
-    for (const row of asian) {
-      const flag = peers.get(row.country).flag;
+    for (const entry of points) {
+      const {row, name, flag} = entry;
       const active = row === scatterChoice;
+      const flagWidth = compact ? 25 : 34;
+      const flagHeight = flagWidth * .75;
+      const labelBesideFlag = row.country === 'Republic of Korea';
+      const labelPosition = labelBesideFlag
+        ? {x: flagWidth / 2 + 5, y: 4, 'text-anchor': 'start'}
+        : {x: 0, y: -flagHeight / 2 - 6, 'text-anchor': 'middle'};
+      const comparison = row === hongKong || row === indonesia;
+      const label = comparison ? `${name} ${decimal(row.score)}` : name;
       const point = svgElement('g', {
         class: active ? 'scatter-flag is-selected' : 'scatter-flag',
         transform: `translate(${x(row.gdp)},${y(row.score)})`,
         tabindex: 0,
         role: 'button',
         'aria-pressed': active,
-        'aria-label': `${nameOf(row)}，生活評分 ${decimal(row.score)} 分`,
+        'aria-label': `${name}，生活評分 ${decimal(row.score)} 分`,
       });
       if (active) selectedPoint = point;
       point.append(
-        svgElement('image', {x: -17, y: -12.75, width: 34, height: 25.5, href: `assets/flags/${flag}.svg`, 'aria-hidden': 'true'}),
-        svgElement('text', {x: 0, y: -19, 'text-anchor': 'middle', class: 'scatter-label'}, nameOf(row)),
+        svgElement('image', {x: -flagWidth / 2, y: -flagHeight / 2, width: flagWidth, height: flagHeight, href: `assets/flags/${flag}.svg`, 'aria-hidden': 'true'}),
+        svgElement('text', {...labelPosition, class: comparison ? 'scatter-label is-comparison' : 'scatter-label'}, label),
       );
       const choose = () => {
         selectedPoint.classList.remove('is-selected');
@@ -292,11 +302,11 @@ function mountScatter(panel) {
         point.classList.add('is-selected');
         point.setAttribute('aria-pressed', 'true');
         scatterChoice = row;
-        showPoint(row);
+        showPoint(entry);
       };
-      point.addEventListener('pointerenter', () => showPoint(row));
+      point.addEventListener('pointerenter', () => showPoint(entry));
       point.addEventListener('pointerleave', restoreReading);
-      point.addEventListener('focus', () => showPoint(row));
+      point.addEventListener('focus', () => showPoint(entry));
       point.addEventListener('blur', restoreReading);
       point.addEventListener('click', choose);
       point.addEventListener('keydown', event => {
