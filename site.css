@@ -125,6 +125,24 @@ main > section {
 main > section > .prose { width: min(100%, 740px); margin: 0 auto; }
 main > section > .chart-card, main > section > .evidence-grid { width: min(100%, 1060px); }
 main > section > .chart-card { margin-top: clamp(14px, 3vh, 30px); }
+.intro-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: clamp(20px, 6vw, 76px);
+  width: min(100%, 980px);
+  margin-inline: auto;
+  align-items: center;
+}
+.intro-cart {
+  margin: 0;
+  text-align: center;
+}
+.intro-cart img {
+  display: block;
+  width: min(100%, 46svh, 390px);
+  height: auto;
+  margin-inline: auto;
+}
 .income-story {
   display: grid;
   grid-template-columns: minmax(220px, 1fr) minmax(0, 2fr);
@@ -157,7 +175,7 @@ main > section > .chart-card { margin-top: clamp(14px, 3vh, 30px); }
 .page-arrived :is(.prose, .ladder-copy) {
   animation: page-copy .68s cubic-bezier(.18, .83, .26, 1) both;
 }
-.page-arrived :is(.chart-card, .stair-viewport, .evidence-grid) {
+.page-arrived :is(.chart-card, .stair-viewport, .evidence-grid, .intro-cart) {
   animation: page-visual .82s .10s cubic-bezier(.18, .83, .26, 1) both;
 }
 @keyframes page-copy {
@@ -176,6 +194,7 @@ main > section > .chart-card { margin-top: clamp(14px, 3vh, 30px); }
 }
 @media (max-width: 720px) {
   .hero-inner { min-height: auto; }
+  .intro-layout { grid-template-columns: 1fr; }
   .income-story { grid-template-columns: 1fr; gap: 14px; }
   .income-story .prose h2 { margin-bottom: 8px; }
   .income-figure .plot svg { max-height: 40svh; }
