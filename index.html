@@ -1,30 +1,30 @@
 <!doctype html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="用世界幸福報告的數據，追問香港的生活評分為甚麼低於預期。">
-<title>香港的生活評分，為甚麼低於預期？｜幸福階梯</title>
+<meta name="description" content="Using World Happiness Report data to investigate why Hong Kong’s life evaluation falls below what its economic indicators would predict.">
+<title>Why is Hong Kong’s life evaluation lower than predicted? | The Happiness Ladder</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;650;700&family=Playfair+Display:wght@600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="layout.css">
-<link rel="stylesheet" href="site.css?v=cover-clean">
+<link rel="stylesheet" href="site.css?v=english">
 <script src="data/chart-data.js" defer></script>
-<script src="data/ranking.js" defer></script>
-<script src="site.js?v=aligned-factors" defer></script>
+<script src="data/ranking.js?v=english" defer></script>
+<script src="site.js?v=english" defer></script>
 </head>
 <body>
-<a class="skip" href="#main">跳至正文</a>
+<a class="skip" href="#main">Skip to the story</a>
 <main id="main">
 <section id="cover" class="hero">
   <div class="hero-inner">
     <div class="hero-copy">
-      <p class="eyebrow">世界幸福報告 2026 · 香港</p>
-      <h1>香港的生活評分，<br>為甚麼<span>低於預期</span>？</h1>
-      <p class="dek">香港的經濟指標在全球靠前，居民給生活的平均評分卻只有 5.57。從全球散點圖到香港人的居住與支援，我們追問這個落差。</p>
-      <a class="primary" href="#income">探索數據 <span aria-hidden="true">↓</span></a>
-      <a class="text-link" href="#ladder">先給自己的生活打分</a>
+      <p class="eyebrow">World Happiness Report 2026 · Hong Kong</p>
+      <h1>Why is Hong Kong’s<br>life evaluation <span>lower than predicted</span>?</h1>
+      <p class="dek">Hong Kong ranks high on economic indicators, yet residents rated their lives just 5.57 out of 10. We trace the gap from global data to housing and social support in Hong Kong.</p>
+      <a class="primary" href="#income">Explore the data <span aria-hidden="true">↓</span></a>
+      <a class="text-link" href="#ladder">Rate your own life first</a>
     </div>
     <div class="hero-art" aria-hidden="true">
       <div class="orbit"></div><div class="orbit orbit-small"></div>
@@ -34,14 +34,14 @@
       <img class="heart heart-three" src="assets/12-14-2fba7.svg" alt="">
     </div>
   </div>
-  <a class="cover-scroll" href="#ladder">向下閱讀 <span aria-hidden="true">↓</span></a>
+  <a class="cover-scroll" href="#ladder">Scroll to read <span aria-hidden="true">↓</span></a>
 </section>
 
 <section id="ladder" class="ladder-section">
   <div class="ladder-layout">
     <div class="ladder-copy">
-      <h2>你站在哪一級？</h2>
-      <p>想像一把從 0 到 10 級的梯子。0 代表你能想像最差的生活，10 代表最好的生活。點一下台階，選擇你的生活評分。</p>
+      <h2>Where are you on the ladder?</h2>
+      <p>Imagine a ladder from 0 to 10. Zero is the worst possible life for you, and 10 is the best. Select the step that best describes your life today.</p>
     </div>
     <div class="stair-viewport">    <div class="u-h--496-619px u-overflow-clip u-relative u-shrink-0 u-w--560px" data-node-id="13:18" data-name="Ribbon staircase (0–10)">
       <svg class="ladder-surfaces" viewbox="0 0 560 496.619" aria-hidden="true" focusable="false">
@@ -125,7 +125,7 @@
           </div>
           <div class="u-absolute u-flex u-inset--13-88-_17-12-_76-68-_73-19 u-items-center u-justify-center" data-node-id="13:26" style="container-type:size">
             <div class="u-flex-none u-h--hypot-19-1401cqw-12-7945cqh u-rotate---42-97deg u-skew-x--17-03deg u-w--hypot-80-8599cqw--87-2055cqh transformed">
-              <p class="u-word-break-break-word u-font--Noto_Sans_TC-Bold u-font-bold u-leading--normal u-relative u-text--3d2f5c u-text--9-616px u-text-center u-whitespace-nowrap">更好的生活 →</p>
+              <p class="u-word-break-break-word u-font--Noto_Sans_TC-Bold u-font-bold u-leading--normal u-relative u-text--3d2f5c u-text--9-616px u-text-center u-whitespace-nowrap">A better life →</p>
             </div>
           </div>
         </div>
@@ -154,9 +154,9 @@
             <div class="u-rotate-30 u-flex-none u-h--hypot-51-6129cqw-51-6129cqh u-skew-x-30 u-w--hypot-48-3871cqw--48-3871cqh transformed">
               <p class="u-word-break-break-word u-font--IBM_Plex_Mono-Bold u-leading--normal u-not-italic u-relative u-text--f4eef6 u-text--12-034px u-text-center u-whitespace-nowrap">10</p>
             </div>
-          <button class="ladder-choice" type="button" data-score="10" aria-label="10 分" aria-pressed="false"></button></div>
+          <button class="ladder-choice" type="button" data-score="10" aria-label="10 points" aria-pressed="false"></button></div>
           <p class="u-word-break-break-word u-absolute u-font--Noto_Sans_TC-Regular u-font-normal u-inset--32-41-_9-95-_64-98-_80-23 u-leading--normal u-text--c3bdd3 u-text--10-831px u-whitespace-nowrap" data-node-id="13:35">
-            最好的生活
+            Best possible life
           </p>
         </div>
         <div class="u-absolute u-contents u-inset--29-24-_17-73-_56-3-_56-1" data-node-id="13:36" data-name="Group">
@@ -184,9 +184,9 @@
             <div class="u-rotate-30 u-flex-none u-h--hypot-51-6129cqw-51-6129cqh u-skew-x-30 u-w--hypot-48-3871cqw--48-3871cqh transformed">
               <p class="u-word-break-break-word u-font--IBM_Plex_Mono-Bold u-leading--normal u-not-italic u-relative u-text--f4eef6 u-text--12-034px u-text-center u-whitespace-nowrap">09</p>
             </div>
-          <button class="ladder-choice" type="button" data-score="9" aria-label="9 分" aria-pressed="false"></button></div>
+          <button class="ladder-choice" type="button" data-score="9" aria-label="9 points" aria-pressed="false"></button></div>
           <p class="u-word-break-break-word u-absolute u-font--Noto_Sans_TC-Regular u-font-normal u-inset--38-3-_17-73-_59-08-_76-38 u-leading--normal u-text--c3bdd3 u-text--10-831px u-whitespace-nowrap" data-node-id="13:44">
-            非常好
+            Excellent
           </p>
         </div>
         <div class="u-absolute u-contents u-inset--35-14-_23-54-_50-4-_52-26" data-node-id="13:45" data-name="Group">
@@ -214,9 +214,9 @@
             <div class="u-rotate-30 u-flex-none u-h--hypot-51-6129cqw-51-6129cqh u-skew-x-30 u-w--hypot-48-3871cqw--48-3871cqh transformed">
               <p class="u-word-break-break-word u-font--IBM_Plex_Mono-Bold u-leading--normal u-not-italic u-relative u-text--f4eef6 u-text--12-034px u-text-center u-whitespace-nowrap">08</p>
             </div>
-          <button class="ladder-choice" type="button" data-score="8" aria-label="8 分" aria-pressed="false"></button></div>
+          <button class="ladder-choice" type="button" data-score="8" aria-label="8 points" aria-pressed="false"></button></div>
           <p class="u-word-break-break-word u-absolute u-font--Noto_Sans_TC-Regular u-font-normal u-inset--44-2-_23-54-_53-18-_72-54 u-leading--normal u-text--c3bdd3 u-text--10-831px u-whitespace-nowrap" data-node-id="13:53">
-            很好
+            Very good
           </p>
         </div>
         <div class="u-absolute u-contents u-inset--41-03-_27-39-_44-51-_48-41" data-node-id="13:54" data-name="Group">
@@ -244,9 +244,9 @@
             <div class="u-rotate-30 u-flex-none u-h--hypot-51-6129cqw-51-6129cqh u-skew-x-30 u-w--hypot-48-3871cqw--48-3871cqh transformed">
               <p class="u-word-break-break-word u-font--IBM_Plex_Mono-Bold u-leading--normal u-not-italic u-relative u-text--f4eef6 u-text--12-034px u-text-center u-whitespace-nowrap">07</p>
             </div>
-          <button class="ladder-choice" type="button" data-score="7" aria-label="7 分" aria-pressed="false"></button></div>
+          <button class="ladder-choice" type="button" data-score="7" aria-label="7 points" aria-pressed="false"></button></div>
           <p class="u-word-break-break-word u-absolute u-font--Noto_Sans_TC-Regular u-font-normal u-inset--50-1-_27-39-_47-29-_68-68 u-leading--normal u-text--c3bdd3 u-text--10-831px u-whitespace-nowrap" data-node-id="13:62">
-            良好
+            Good
           </p>
         </div>
         <div class="u-absolute u-contents u-inset--46-93-_31-23-_38-61-_44-57" data-node-id="13:63" data-name="Group">
@@ -274,9 +274,9 @@
             <div class="u-rotate-30 u-flex-none u-h--hypot-51-6129cqw-51-6129cqh u-skew-x-30 u-w--hypot-48-3871cqw--48-3871cqh transformed">
               <p class="u-word-break-break-word u-font--IBM_Plex_Mono-Bold u-leading--normal u-not-italic u-relative u-text--f4eef6 u-text--12-034px u-text-center u-whitespace-nowrap">06</p>
             </div>
-          <button class="ladder-choice" type="button" data-score="6" aria-label="6 分" aria-pressed="false"></button></div>
+          <button class="ladder-choice" type="button" data-score="6" aria-label="6 points" aria-pressed="false"></button></div>
           <p class="u-word-break-break-word u-absolute u-font--Noto_Sans_TC-Regular u-font-normal u-inset--55-99-_31-23-_41-39-_64-84 u-leading--normal u-text--c3bdd3 u-text--10-831px u-whitespace-nowrap" data-node-id="13:71">
-            尚可
+            Fairly good
           </p>
         </div>
         <div class="u-absolute u-contents u-inset--52-83-_35-08-_32-71-_40-72" data-node-id="13:72" data-name="Group">
@@ -304,9 +304,9 @@
             <div class="u-rotate-30 u-flex-none u-h--hypot-51-6129cqw-51-6129cqh u-skew-x-30 u-w--hypot-48-3871cqw--48-3871cqh transformed">
               <p class="u-word-break-break-word u-font--IBM_Plex_Mono-Bold u-leading--normal u-not-italic u-relative u-text--f4eef6 u-text--12-034px u-text-center u-whitespace-nowrap">05</p>
             </div>
-          <button class="ladder-choice" type="button" data-score="5" aria-label="5 分" aria-pressed="false"></button></div>
+          <button class="ladder-choice" type="button" data-score="5" aria-label="5 points" aria-pressed="false"></button></div>
           <p class="u-word-break-break-word u-absolute u-font--Noto_Sans_TC-Regular u-font-normal u-inset--61-89-_35-08-_35-49-_60-99 u-leading--normal u-text--c3bdd3 u-text--10-831px u-whitespace-nowrap" data-node-id="13:80">
-            一般
+            Average
           </p>
         </div>
         <div class="u-absolute u-contents u-inset--58-72-_38-92-_26-82-_36-88" data-node-id="13:81" data-name="Group">
@@ -334,9 +334,9 @@
             <div class="u-rotate-30 u-flex-none u-h--hypot-51-6129cqw-51-6129cqh u-skew-x-30 u-w--hypot-48-3871cqw--48-3871cqh transformed">
               <p class="u-word-break-break-word u-font--IBM_Plex_Mono-Bold u-leading--normal u-not-italic u-relative u-text--f4eef6 u-text--12-034px u-text-center u-whitespace-nowrap">04</p>
             </div>
-          <button class="ladder-choice" type="button" data-score="4" aria-label="4 分" aria-pressed="false"></button></div>
+          <button class="ladder-choice" type="button" data-score="4" aria-label="4 points" aria-pressed="false"></button></div>
           <p class="u-word-break-break-word u-absolute u-font--Noto_Sans_TC-Regular u-font-normal u-inset--67-79-_38-92-_29-6-_57-15 u-leading--normal u-text--c3bdd3 u-text--10-831px u-whitespace-nowrap" data-node-id="13:89">
-            偏差
+            Below average
           </p>
         </div>
         <div class="u-absolute u-contents u-inset--64-62-_42-78-_20-92-_33-02" data-node-id="13:90" data-name="Group">
@@ -364,9 +364,9 @@
             <div class="u-rotate-30 u-flex-none u-h--hypot-51-6129cqw-51-6129cqh u-skew-x-30 u-w--hypot-48-3871cqw--48-3871cqh transformed">
               <p class="u-word-break-break-word u-font--IBM_Plex_Mono-Bold u-leading--normal u-not-italic u-relative u-text--f4eef6 u-text--12-034px u-text-center u-whitespace-nowrap">03</p>
             </div>
-          <button class="ladder-choice" type="button" data-score="3" aria-label="3 分" aria-pressed="false"></button></div>
+          <button class="ladder-choice" type="button" data-score="3" aria-label="3 points" aria-pressed="false"></button></div>
           <p class="u-word-break-break-word u-absolute u-font--Noto_Sans_TC-Regular u-font-normal u-inset--73-68-_42-78-_23-7-_53-3 u-leading--normal u-text--c3bdd3 u-text--10-831px u-whitespace-nowrap" data-node-id="13:98">
-            困難
+            Difficult
           </p>
         </div>
         <div class="u-absolute u-contents u-inset--70-52-_44-65-_15-02-_29-18" data-node-id="13:99" data-name="Group">
@@ -394,9 +394,9 @@
             <div class="u-rotate-30 u-flex-none u-h--hypot-51-6129cqw-51-6129cqh u-skew-x-30 u-w--hypot-48-3871cqw--48-3871cqh transformed">
               <p class="u-word-break-break-word u-font--IBM_Plex_Mono-Bold u-leading--normal u-not-italic u-relative u-text--f4eef6 u-text--12-034px u-text-center u-whitespace-nowrap">02</p>
             </div>
-          <button class="ladder-choice" type="button" data-score="2" aria-label="2 分" aria-pressed="false"></button></div>
+          <button class="ladder-choice" type="button" data-score="2" aria-label="2 points" aria-pressed="false"></button></div>
           <p class="u-word-break-break-word u-absolute u-font--Noto_Sans_TC-Regular u-font-normal u-inset--79-58-_44-65-_17-8-_49-46 u-leading--normal u-text--c3bdd3 u-text--10-831px u-whitespace-nowrap" data-node-id="13:107">
-            很困難
+            Very difficult
           </p>
         </div>
         <div class="u-absolute u-contents u-inset--76-41-_48-51-_9-13-_25-33" data-node-id="13:108" data-name="Group">
@@ -424,9 +424,9 @@
             <div class="u-rotate-30 u-flex-none u-h--hypot-51-6129cqw-51-6129cqh u-skew-x-30 u-w--hypot-48-3871cqw--48-3871cqh transformed">
               <p class="u-word-break-break-word u-font--IBM_Plex_Mono-Bold u-leading--normal u-not-italic u-relative u-text--f4eef6 u-text--12-034px u-text-center u-whitespace-nowrap">01</p>
             </div>
-          <button class="ladder-choice" type="button" data-score="1" aria-label="1 分" aria-pressed="false"></button></div>
+          <button class="ladder-choice" type="button" data-score="1" aria-label="1 point" aria-pressed="false"></button></div>
           <p class="u-word-break-break-word u-absolute u-font--Noto_Sans_TC-Regular u-font-normal u-inset--85-46-_48-51-_11-92-_45-6 u-leading--normal u-text--c3bdd3 u-text--10-831px u-whitespace-nowrap" data-node-id="13:116">
-            極困難
+            Extremely difficult
           </p>
         </div>
         <div class="u-absolute u-contents u-inset--82-31-_48-42-_4-6-_21-49" data-node-id="13:117" data-name="Group">
@@ -451,9 +451,9 @@
             <div class="u-rotate-30 u-flex-none u-h--hypot-51-6129cqw-51-6129cqh u-skew-x-30 u-w--hypot-48-3871cqw--48-3871cqh transformed">
               <p class="u-word-break-break-word u-font--IBM_Plex_Mono-Bold u-leading--normal u-not-italic u-relative u-text--f4eef6 u-text--12-034px u-text-center u-whitespace-nowrap">00</p>
             </div>
-          <button class="ladder-choice" type="button" data-score="0" aria-label="0 分" aria-pressed="false"></button></div>
+          <button class="ladder-choice" type="button" data-score="0" aria-label="0 points" aria-pressed="false"></button></div>
           <p class="u-word-break-break-word u-absolute u-font--Noto_Sans_TC-Regular u-font-normal u-inset--91-36-_48-42-_6-03-_41-76 u-leading--normal u-text--c3bdd3 u-text--10-831px u-whitespace-nowrap" data-node-id="13:124">
-            最差的生活
+            Worst possible life
           </p>
         </div>
         <div class="u-absolute u-contents u-inset--84-81-_67-09-_-15-91-_-13-12" data-node-id="13:125" data-name="Group">
@@ -465,7 +465,7 @@
           </div>
           <div class="u-absolute u-flex u-inset--91-58-_77-73-_3-69-_15 u-items-center u-justify-center" data-node-id="13:128" style="container-type:size">
             <div class="u-rotate-30 u-flex-none u-h--hypot-27-6596cqw-27-6596cqh u-skew-x-30 u-w--hypot-72-3404cqw--72-3404cqh transformed">
-              <p class="u-word-break-break-word u-font--Noto_Sans_TC-Bold u-font-bold u-leading--normal u-relative u-text--f4eef6 u-text--10-43px u-text-center u-whitespace-nowrap">起點 →</p>
+              <p class="u-word-break-break-word u-font--Noto_Sans_TC-Bold u-font-bold u-leading--normal u-relative u-text--f4eef6 u-text--10-43px u-text-center u-whitespace-nowrap">Start →</p>
             </div>
           </div>
         </div>
@@ -477,60 +477,60 @@
 
 <section id="ladder-rank" class="story-section ladder-rank" aria-labelledby="ladder-rank-title" hidden>
   <div class="prose">
-    <h2 id="ladder-rank-title" tabindex="-1">你的分數，在世界哪裡？</h2>
+    <h2 id="ladder-rank-title" tabindex="-1">Where would your score rank?</h2>
     <p id="ladder-rank-summary"></p>
   </div>
-  <table class="ladder-ranking" aria-label="你的分數與相鄰國家或地區的生活評分">
+  <table class="ladder-ranking" aria-label="Your score alongside life evaluations in nearby places in the ranking">
     <thead>
-      <tr><th scope="col">位置</th><th scope="col">國家／地區</th><th scope="col">生活評分</th></tr>
+      <tr><th scope="col">Rank</th><th scope="col">Country or territory</th><th scope="col">Life evaluation</th></tr>
     </thead>
     <tbody id="ladder-rank-rows"></tbody>
   </table>
   <div class="prose ladder-rank-note">
-    <p>個人評分以插入排行榜的方式與各地 2023 至 2025 年的調查平均分對照。各地名次沿用<a href="https://www.worldhappiness.report/ed/2026/international-evidence-on-happiness-and-social-media/">《2026 年世界幸福報告》</a>。</p>
-    <a class="text-link" href="#ladder">重新選擇 ↑</a>
-    <a class="text-link" href="#ranking-method">繼續閱讀 ↓</a>
+    <p>Your score is placed alongside each country or territory’s 2023–2025 survey average. Official ranks come from the <a href="https://www.worldhappiness.report/ed/2026/international-evidence-on-happiness-and-social-media/">2026 World Happiness Report</a>.</p>
+    <a class="text-link" href="#ladder">Choose again ↑</a>
+    <a class="text-link" href="#ranking-method">Keep reading ↓</a>
   </div>
 </section>
 
 <section id="ranking-method" class="story-section intro">
   <div class="intro-layout">
     <div class="prose intro-overview">
-      <h2>幸福排名是怎麼得出的？</h2>
-      <p>《世界幸福報告》的幸福排名以「生活評價」（<i>life evaluation</i>）為依據。蓋洛普請受訪者用 0 至 10 分評價自己目前的整體生活。香港的 5.57 分，是報告根據 2023 至 2025 年的調查算出的平均生活評分，在 147 個國家和地區中排第 90。</p>
+      <h2>How does the report rank happiness?</h2>
+      <p>The World Happiness Report ranks countries and territories by <i>life evaluation</i>. Gallup asks respondents to rate their current life as a whole on a scale from 0 to 10. Hong Kong averaged 5.57 in the 2023–2025 surveys, placing 90th out of 147 countries and territories.</p>
     </div>
     <div class="prose intro-factors">
-      <p>報告另外用人均 GDP、健康預期壽命、社會支援、人生選擇自由、慷慨程度和貪腐觀感分析各地評分的差異。<strong>排名來自居民的回答，六項因素用於分析評分。</strong> <a href="https://www.worldhappiness.report/ed/2026/international-evidence-on-happiness-and-social-media/">報告第二章 ↗</a></p>
+      <p>The report uses six factors to examine why scores vary across places, including GDP per capita, healthy life expectancy, social support, freedom to make life choices, generosity, and perceptions of corruption. <strong>Survey responses determine the rankings. The six factors help explain differences in scores.</strong> <a href="https://www.worldhappiness.report/ed/2026/international-evidence-on-happiness-and-social-media/">Read Chapter 2 ↗</a></p>
     </div>
     <figure class="intro-cart">
-      <img src="assets/happiness-shopping-cart-open-grid.png" width="1122" height="1402" alt="粉色購物車載着六張等大的因素卡片，每張標示六分之一。手上拿着印有 Happiness Index 的小票。">
-      <figcaption>假設情境：六項因素若同等重要，每項各佔六分之一。</figcaption>
+      <img src="assets/happiness-shopping-cart-open-grid.png" width="1122" height="1402" alt="A pink shopping cart holds six equal-sized cards, each marked one-sixth. A hand holds a receipt labelled Happiness Index.">
+      <figcaption>If all six factors carried equal weight, each would account for one-sixth.</figcaption>
     </figure>
   </div>
 </section>
 
 <section id="income" class="story-section">
   <div class="prose">
-    <h2>全球趨勢</h2>
-    <p>人均 GDP 的模型貢獻愈高，生活評分整體上也愈高，但不同地區與虛線的距離很不一樣。圖中的 17 個拉丁美洲國家都高於預測，平均高 <strong>0.75 分</strong>。東亞及東南亞人均 GDP 模型貢獻最高的五個國家或地區，生活評分低於或接近預測，平均低 <strong>0.57 分</strong>。台灣幾乎落在預測線上，香港則低 <strong>1.18 分</strong>，是這五地中落差最大的一個。接下來放大看香港的位置。</p>
+    <h2>The global pattern</h2>
+    <p>Places with a larger model contribution from GDP per capita tend to report higher life evaluations. Their scores vary widely around the dashed line. All 17 Latin American countries highlighted here score higher than predicted, by <strong>0.75 points</strong> on average. The five places in East and Southeast Asia with the largest GDP contributions score at or below the prediction, by <strong>0.57 points</strong> on average. Taiwan sits close to the line. Hong Kong is <strong>1.18 points</strong> below it, the largest shortfall of the five.</p>
   </div>
   <figure class="chart-card global-figure" aria-labelledby="global-figure-title">
-    <p class="figure-number">圖 1</p>
-    <h3 id="global-figure-title" lang="en">Money can’t buy all of happiness: Latin America is “poor but happy”, Hong Kong “rich but unhappy”</h3>
-    <ul class="global-legend" lang="en" aria-label="Legend">
+    <p class="figure-number">Figure 1</p>
+    <h3 id="global-figure-title">Latin America scores above the GDP-based prediction. Hong Kong falls below it.</h3>
+    <ul class="global-legend" aria-label="Legend">
       <li><span class="global-swatch latin-america"></span>Latin America (17 countries)</li>
       <li><span class="global-swatch east-asia"></span>Top five in East and Southeast Asia by GDP per capita contribution</li>
       <li><span class="global-swatch other"></span>Other</li>
       <li><span class="global-swatch prediction"></span>Score predicted by income alone</li>
-      <li>Larger dot = higher health contribution</li>
+      <li>Larger dots indicate a larger contribution from healthy life expectancy</li>
     </ul>
     <div class="global-chart">
       <div id="global-plot" class="plot"></div>
       <div id="global-tooltip" class="global-tooltip" hidden></div>
     </div>
     <details class="global-method">
-      <summary>數據與方法</summary>
-      <p>2025 年生活評分指 2023 至 2025 年的調查平均。虛線以 146 個國家和地區的生活評分及報告的「人均 GDP 模型貢獻」做線性迴歸，委內瑞拉因該欄缺值而排除。R² = 0.64，表示這條線解釋樣本中約 64% 的評分差異。拉丁美洲一組沿用原圖分法，排除牙買加、多明尼加及千里達和多巴哥。<a href="https://www.worldhappiness.report/data-sharing/">官方數據 ↗</a></p>
+      <summary>Data and methods</summary>
+      <p>The 2025 life evaluation scores average responses from 2023 to 2025. The dashed line comes from a linear regression of life evaluations on the report’s GDP-per-capita contribution for 146 countries and territories. Venezuela was excluded because a usable GDP contribution was unavailable. The line accounts for about 64% of the variation in the sample (R² = 0.64). The Latin American group follows the original chart and excludes Jamaica, the Dominican Republic and Trinidad and Tobago. <a href="https://www.worldhappiness.report/data-sharing/">Official data ↗</a></p>
     </details>
   </figure>
 </section>
@@ -538,101 +538,101 @@
 <section id="hong-kong" class="story-section">
   <div class="income-story">
     <div class="prose">
-      <h2>香港經濟指標居前，生活評分與印度尼西亞相近</h2>
+      <h2>Hong Kong ranks high on GDP but scores close to Indonesia</h2>
       <div class="regional-steps">
-      <p>本報導選取《世界幸福報告》中人均 GDP 模型貢獻最高的五個東亞及東南亞經濟體。香港在區內有數據的地方中<strong>排第二，僅次於新加坡</strong>。按全球趨勢，模型預測香港的生活評分約有 <strong>6.75 分</strong>。居民實際給了 <strong>5.57 分</strong>，低了 <strong>1.18 分</strong>，是前五地中落差最大的一個。</p>
-      <p>香港的人均 GDP 模型貢獻僅比印度尼西亞高 <strong>0.448 分</strong>（1.960 對 1.512）。按購買力平價計算，香港 2024 年的人均 GDP 約是印度尼西亞的 <strong>4.6 倍</strong>。 <a href="https://data.worldbank.org/indicator/NY.GDP.PCAP.PP.KD?locations=HK-ID">世界銀行數據 ↗</a></p>
-      <p>香港與台灣的人均 GDP 模型貢獻都約為 <strong>1.96 分</strong>，台灣的生活評分卻比香港高約 <strong>1.15 分</strong>。</p>
+      <p>We compare the five places in East and Southeast Asia with the largest GDP-per-capita contributions in the World Happiness Report. Within the region, Hong Kong <strong>ranks second on this measure, behind Singapore</strong>. The global trend predicts a score of about <strong>6.75</strong> for Hong Kong. Residents gave their lives an average of <strong>5.57</strong>, a shortfall of <strong>1.18 points</strong> and the largest among the five.</p>
+      <p>Hong Kong’s GDP-per-capita contribution is <strong>0.448 points</strong> higher than Indonesia’s (1.960 versus 1.512). Adjusted for purchasing power, Hong Kong’s GDP per capita in 2024 was about <strong>4.6 times</strong> Indonesia’s. <a href="https://data.worldbank.org/indicator/NY.GDP.PCAP.PP.KD?locations=HK-ID">World Bank data ↗</a></p>
+      <p>GDP per capita contributes about <strong>1.96 points</strong> in both Hong Kong and Taiwan. Taiwan’s life evaluation is about <strong>1.15 points</strong> higher.</p>
       </div>
     </div>
     <figure class="chart-card income-figure">
-      <h3 class="regional-chart-title">香港與印度尼西亞的生活評分只差約 0.05 分</h3>
+      <h3 class="regional-chart-title">Hong Kong and Indonesia score about 0.05 points apart</h3>
       <div class="regional-plot">
         <div data-scatter-plot class="plot"></div>
         <div data-scatter-tooltip class="global-tooltip" role="status" hidden></div>
       </div>
-      <figcaption>圖中比較東亞及東南亞人均 GDP 模型貢獻前五地，另加生活評分最接近香港的印度尼西亞。點選旗幟可看各地數值。<a href="https://www.worldhappiness.report/data-sharing/">官方數據 ↗</a></figcaption>
+      <figcaption>The chart shows the five places in East and Southeast Asia with the largest GDP-per-capita contributions, plus Indonesia, whose life evaluation is closest to Hong Kong’s in the region. Select a flag to see its figures. <a href="https://www.worldhappiness.report/data-sharing/">Official data ↗</a></figcaption>
     </figure>
   </div>
 </section>
 
 <section id="factor-comparison" class="story-section">
   <div class="prose">
-    <h2>香港的六項模型貢獻合計高於台灣</h2>
-    <p>香港和台灣的人均 GDP 模型貢獻幾乎一樣。拆開來看，香港在<strong>健康預期壽命和貪腐觀感</strong>兩項的模型貢獻較高，台灣在<strong>社會支援、人生選擇自由和慷慨程度</strong>三項較高。六項合計，香港領先 <strong>0.362 分</strong>。<strong>問卷結果的排序相反，香港居民給了 5.57 分，台灣居民給了 6.71 分。</strong></p>
+    <h2>Hong Kong leads Taiwan on the six-factor total</h2>
+    <p>GDP per capita contributes almost equally in Hong Kong and Taiwan. Hong Kong has larger model contributions from <strong>healthy life expectancy and perceptions of corruption</strong>. Taiwan has larger contributions from <strong>social support, freedom to make life choices and generosity</strong>. Hong Kong leads by <strong>0.362 points</strong> across all six factors. <strong>The survey results reverse that order, with scores of 5.57 for Hong Kong and 6.71 for Taiwan.</strong></p>
   </div>
   <figure class="chart-card factor-bar-chart" aria-labelledby="factor-bar-title">
     <div class="chart-heading">
-      <div><p class="figure-number">圖 2</p><h3 id="factor-bar-title">香港的健康預期壽命貢獻較高，台灣的社會支援貢獻較高</h3></div>
-      <div class="chart-legend factor-bar-legend"><span><i class="hk-bar"></i>香港</span><span><i class="tw-bar"></i>台灣</span></div>
+      <div><p class="figure-number">Figure 2</p><h3 id="factor-bar-title">Hong Kong leads on healthy life expectancy, Taiwan on social support</h3></div>
+      <div class="chart-legend factor-bar-legend"><span><i class="hk-bar"></i>Hong Kong</span><span><i class="tw-bar"></i>Taiwan</span></div>
     </div>
     <div class="factor-bar-area">
       <div id="factor-plot" class="plot"></div>
       <div id="factor-tooltip" class="global-tooltip" role="status" hidden></div>
     </div>
-    <figcaption>每組柱比較同一因素的模型貢獻。最右一組為六項相加。加上共同基準 1.16 分，才是六因素模型的預測分數。<a href="https://www.worldhappiness.report/data-sharing/">官方數據 ↗</a></figcaption>
+    <figcaption>Each pair of bars compares one factor’s contribution. The last pair adds up all six. Adding the shared baseline of 1.16 points gives each place’s predicted life evaluation. <a href="https://www.worldhappiness.report/data-sharing/">Official data ↗</a></figcaption>
   </figure>
 </section>
 
 <section id="why-gap" class="story-section story-transition" aria-labelledby="why-gap-title">
   <div class="prose">
-    <h2 id="why-gap-title">香港生活評分低於預測，<br>落差從何而來？</h2>
-    <p>香港的六項模型貢獻合計高於台灣，居民給出的生活評分卻較低。按六項因素推算，香港約有 <strong>7.03 分</strong>，居民實際給了 <strong>5.57 分</strong>，比預測低約 <strong>1.46 分</strong>。</p>
-    <p>香港的本地數據提供兩條線索。人口普查顯示，不同住戶的人均居住空間相差很大。住戶調查則發現，孤單感在年紀較大的長者中更普遍。這些日常處境與人們對生活的評價有甚麼關係？</p>
+    <h2 id="why-gap-title">Hong Kong falls below the prediction.<br>What might explain the gap?</h2>
+    <p>Hong Kong’s six factors add up to more than Taiwan’s, but its residents rate their lives lower. The six-factor model predicts about <strong>7.03</strong> for Hong Kong. Residents gave their lives an average of <strong>5.57</strong>, about <strong>1.46 points</strong> below the prediction.</p>
+    <p>Local data offer two clues. The census shows large differences in living space across households. A household survey finds that loneliness is more common among people aged 80 and over than among younger seniors. How do these conditions relate to the way people rate their lives?</p>
   </div>
 </section>
 
 <section id="daily-life" class="story-section daily-life">
   <div class="prose">
-    <h2>劏房住戶人均居住面積只有 6 平方米</h2>
-    <p>同樣生活在香港，劏房住戶的人均居住面積中位數只有全港住戶的 <strong>約四成</strong>。一項分析 1,480 名香港成年人的研究也發現，住房開支、居住密度和居住環境等都與主觀福祉有關，這種關聯在私樓租戶中尤其明顯。 <a href="https://research.cuhk.edu.hk/en/publications/housing-and-subjective-well-being-in-hong-kong-a-structural-equat-2/">香港住屋研究 ↗</a></p>
+    <h2>In subdivided units, the median is just 6 m² per person</h2>
+    <p>The median living space per person in subdivided units is <strong>about 40%</strong> of the citywide median. A study of 1,480 Hong Kong adults found that housing costs, crowding and living conditions were associated with subjective well-being. The link was especially strong among private renters. <a href="https://research.cuhk.edu.hk/en/publications/housing-and-subjective-well-being-in-hong-kong-a-structural-equat-2/">Hong Kong housing study ↗</a></p>
   </div>
   <figure class="chart-card local-stat-chart" aria-labelledby="housing-chart-title">
-    <p class="figure-number">圖 3</p>
-    <h3 id="housing-chart-title">2021 年人均居所樓面面積中位數</h3>
+    <p class="figure-number">Figure 3</p>
+    <h3 id="housing-chart-title">Median living space per person, 2021</h3>
     <ul class="local-stat-bars">
-      <li><span>私人住宅單位住戶</span><span class="local-stat-track" aria-hidden="true"><span style="--bar-size:90%"></span></span><strong>18</strong></li>
-      <li><span>全港住戶</span><span class="local-stat-track" aria-hidden="true"><span style="--bar-size:80%"></span></span><strong>16</strong></li>
-      <li class="is-highlighted"><span>分間樓宇單位住戶（劏房）</span><span class="local-stat-track" aria-hidden="true"><span style="--bar-size:30%"></span></span><strong>6</strong></li>
+      <li><span>Private residential flats</span><span class="local-stat-track" aria-hidden="true"><span style="--bar-size:90%"></span></span><strong>18</strong></li>
+      <li><span>All households</span><span class="local-stat-track" aria-hidden="true"><span style="--bar-size:80%"></span></span><strong>16</strong></li>
+      <li class="is-highlighted"><span>Subdivided units</span><span class="local-stat-track" aria-hidden="true"><span style="--bar-size:30%"></span></span><strong>6</strong></li>
     </ul>
     <div class="local-stat-scale" aria-hidden="true"><span>0</span><span>5</span><span>10</span><span>15</span><span>20</span></div>
-    <figcaption>單位為平方米。全港住戶是整體參照。 <a href="https://www.censtatd.gov.hk/en/data/stat_report/product/B1120113/att/B11201132021XXXXB0100.pdf">政府統計處，2021 年人口普查表 6.4 ↗</a></figcaption>
+    <figcaption>Floor area is measured in square metres. The citywide median includes all households. <a href="https://www.censtatd.gov.hk/en/data/stat_report/product/B1120113/att/B11201132021XXXXB0100.pdf">2021 Population Census, Table 6.4 ↗</a></figcaption>
   </figure>
 </section>
 
 <section id="social-support" class="story-section daily-life">
   <div class="prose">
-    <h2>80 歲及以上長者，約五分之一曾感到孤單</h2>
-    <p>前面的港、台比較顯示，香港的社會支援模型貢獻比台灣低 <strong>0.116 分</strong>。《世界幸福報告》透過問受訪者遇到困難時有沒有親友可以依靠，衡量社會支援。</p>
-    <p>香港的住戶調查從孤單感提供另一個角度。80 歲及以上人士在受訪前一星期曾感到孤單的比例，比 65 至 79 歲人士高 <strong>8.9 個百分點</strong>。一項追蹤 200 名香港長者的研究也發現，社交網絡和社會參與與生活滿意度有關。 <a href="https://pubmed.ncbi.nlm.nih.gov/35332829/">香港長者追蹤研究 ↗</a></p>
+    <h2>About one in five people aged 80 and over felt lonely</h2>
+    <p>In the Hong Kong–Taiwan comparison, social support contributed <strong>0.116 points</strong> less to Hong Kong’s model score. The World Happiness Report measures social support by asking whether people have family or friends they can count on if they are in trouble.</p>
+    <p>Hong Kong’s household survey offers a closer look at loneliness. The share who felt lonely in the week before the survey was <strong>8.9 percentage points</strong> higher among people aged 80 and over than among those aged 65–79. A study that followed 200 older adults in Hong Kong also linked social networks and participation to life satisfaction. <a href="https://pubmed.ncbi.nlm.nih.gov/35332829/">Longitudinal study of older adults ↗</a></p>
   </div>
   <figure class="chart-card local-stat-chart" aria-labelledby="loneliness-chart-title">
-    <p class="figure-number">圖 4</p>
-    <h3 id="loneliness-chart-title">2024 年受訪前一星期曾感到孤單的比例</h3>
+    <p class="figure-number">Figure 4</p>
+    <h3 id="loneliness-chart-title">Share who felt lonely in the week before the 2024 survey</h3>
     <ul class="local-stat-bars">
-      <li><span>65 至 79 歲</span><span class="local-stat-track" aria-hidden="true"><span style="--bar-size:48.4%"></span></span><strong>12.1%</strong></li>
-      <li class="is-highlighted"><span>80 歲及以上</span><span class="local-stat-track" aria-hidden="true"><span style="--bar-size:84%"></span></span><strong>21.0%</strong></li>
-      <li><span>65 歲及以上整體</span><span class="local-stat-track" aria-hidden="true"><span style="--bar-size:56.4%"></span></span><strong>14.1%</strong></li>
+      <li><span>Ages 65–79</span><span class="local-stat-track" aria-hidden="true"><span style="--bar-size:48.4%"></span></span><strong>12.1%</strong></li>
+      <li class="is-highlighted"><span>Ages 80 and over</span><span class="local-stat-track" aria-hidden="true"><span style="--bar-size:84%"></span></span><strong>21.0%</strong></li>
+      <li><span>All aged 65 and over</span><span class="local-stat-track" aria-hidden="true"><span style="--bar-size:56.4%"></span></span><strong>14.1%</strong></li>
     </ul>
     <div class="local-stat-scale" aria-hidden="true"><span>0%</span><span>5%</span><span>10%</span><span>15%</span><span>20%</span><span>25%</span></div>
-    <figcaption>各比例以居於住戶內的相應年齡組別為分母。 <a href="https://www.censtatd.gov.hk/wbr/B1130201/B11302012026XX04/att/tc/B11302012026XX04.pdf">政府統計處，主題性住戶統計調查第 87 號表 2.1 ↗</a></figcaption>
+    <figcaption>Each percentage is based on people in that age group who live in households. <a href="https://www.censtatd.gov.hk/wbr/B1130201/B11302012026XX04/att/en/B11302012026XX04.pdf">Thematic Household Survey No. 87, Table 2.1 ↗</a></figcaption>
   </figure>
 </section>
 
 <section class="closing">
   <div class="prose">
-    <h2>經濟優勢如何變成更好的生活？</h2>
-    <p>香港的人均 GDP 和健康指標靠前，居民對整體生活的評價仍低於模型預測。香港本地研究提示，經濟資源如何反映在生活裡，與居民能負擔怎樣的居所，以及需要時能否得到支援有關。現有資料還無法估算住房或社會支援各佔香港落差多少。回到開頭的階梯，每個人評價的是自己整體生活過得怎樣。</p>
-    <a class="text-link" href="#ladder">回到幸福階梯 ↑</a>
+    <h2>How does economic strength translate into better lives?</h2>
+    <p>Hong Kong ranks high on GDP per capita and health, yet residents rate their lives lower than the model predicts. Local research points to the homes people can afford and the support they can count on. The evidence cannot quantify how much of Hong Kong’s score gap each factor explains. The ladder at the start asks each person to judge how their life is going as a whole.</p>
+    <a class="text-link" href="#ladder">Back to the happiness ladder ↑</a>
   </div>
 </section>
 <section class="story-section methods">
   <div class="prose">
-    <details><summary>數據與方法</summary>
-      <p>國際比較使用《世界幸福報告》2026 年版 Figure 2.1 工作簿。圖 1 用 146 個地方的生活評分及人均 GDP 模型貢獻做線性迴歸，排除缺少可用 GDP 指標的委內瑞拉。圖 2 比較香港和台灣的各項模型貢獻及六項合計。圖中分數經四捨五入。圖 3 取自 2021 年人口普查。圖 4 取自政府統計處於 2024 年進行的主題性住戶統計調查。</p>
-      <p><a href="https://www.worldhappiness.report/data-sharing/">官方工作簿 ↗</a>　<a href="https://www.worldhappiness.report/ed/2026/international-evidence-on-happiness-and-social-media/">報告第二章 ↗</a></p>
+    <details><summary>Data and methods</summary>
+      <p>The international comparisons use the 2026 World Happiness Report’s Figure 2.1 workbook. Figure 1 fits a linear regression of life evaluations on the GDP-per-capita contribution for 146 places, excluding Venezuela because its GDP figure was unavailable. Figure 2 compares each model contribution and the six-factor totals for Hong Kong and Taiwan. The charts display rounded scores. Figure 3 uses the 2021 Population Census. Figure 4 uses the Thematic Household Survey conducted in 2024 by Hong Kong’s Census and Statistics Department.</p>
+      <p><a href="https://www.worldhappiness.report/data-sharing/">Official workbook ↗</a> · <a href="https://www.worldhappiness.report/ed/2026/international-evidence-on-happiness-and-social-media/">Report, Chapter 2 ↗</a></p>
     </details>
-    <a class="text-link" href="#cover">返回封面 ↑</a>
+    <a class="text-link" href="#cover">Back to the cover ↑</a>
   </div>
 </section>
 </main>

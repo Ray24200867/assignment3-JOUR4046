@@ -1,10 +1,10 @@
 const data = window.happinessCharts;
 const peers = new Map([
-  ['Hong Kong SAR of China', {name: '香港', flag: 'hk'}],
-  ['Taiwan Province of China', {name: '台灣', flag: 'tw'}],
-  ['Singapore', {name: '新加坡', flag: 'sg'}],
-  ['Japan', {name: '日本', flag: 'jp'}],
-  ['Republic of Korea', {name: '韓國', flag: 'kr'}],
+  ['Hong Kong SAR of China', {name: 'Hong Kong', flag: 'hk'}],
+  ['Taiwan Province of China', {name: 'Taiwan', flag: 'tw'}],
+  ['Singapore', {name: 'Singapore', flag: 'sg'}],
+  ['Japan', {name: 'Japan', flag: 'jp'}],
+  ['Republic of Korea', {name: 'South Korea', flag: 'kr'}],
 ]);
 const observations = data.cs.filter(row => row.gdp > 0 && Number.isFinite(row.pred));
 const asian = Array.from(peers.keys(), name => observations.find(row => row.country === name));
@@ -26,34 +26,25 @@ const stairFaces = Array.from(ladder.querySelectorAll('.ladder-surface'));
 const ranking = window.happinessRanking;
 const hongKongRankIndex = ranking.findIndex(row => row.rank === hongKong.rank);
 const rankPage = get('ladder-rank');
-const rankingNames = new Map([
-  ['Afghanistan', '阿富汗'], ['Sierra Leone', '塞拉利昂'], ['Malawi', '馬拉維'],
-  ['Zambia', '贊比亞'], ['Sri Lanka', '斯里蘭卡'], ['Ethiopia', '埃塞俄比亞'],
-  ['Comoros', '科摩羅'], ['Cameroon', '喀麥隆'], ['South Africa', '南非'],
-  ['Azerbaijan', '阿塞拜疆'], ['Niger', '尼日爾'], ['Croatia', '克羅地亞'],
-  ['Malaysia', '馬來西亞'], ['Peru', '秘魯'], ['Mauritius', '毛里求斯'],
-]);
-const rankingName = row => rankingNames.get(row.name) || row.name;
-
 function showLadderRank(score) {
   const position = ranking.filter(row => row.score > score).length;
   const above = ranking[position - 1];
   const below = ranking[position];
   const title = get('ladder-rank-title');
-  title.textContent = `${score} 分，模擬排名第 ${position + 1} 位`;
+  title.textContent = `${score}/10 puts you at rank ${position + 1}`;
   let comparison;
   if (!above) {
-    comparison = `你的分數高於榜首的${rankingName(below)}。`;
+    comparison = `Your score is above that of ${below.name}, which ranks first.`;
   } else if (!below) {
-    comparison = `你的分數低於榜末的${rankingName(above)}。`;
+    comparison = `Your score is below that of ${above.name}, which ranks last.`;
   } else if (below.score === score) {
-    comparison = `你的分數與${rankingName(below)}相同。`;
+    comparison = `Your score matches that of ${below.name}.`;
   } else {
-    comparison = `你的分數介於${rankingName(above)}與${rankingName(below)}之間。`;
+    comparison = `Your score falls between ${above.name} and ${below.name}.`;
   }
   get('ladder-rank-summary').textContent = comparison;
 
-  const reader = {rank: position + 1, name: '你', score};
+  const reader = {rank: position + 1, name: 'You', score};
   const start = Math.max(0, position - 2);
   const end = Math.min(ranking.length, position + 2);
   const visible = [
@@ -75,15 +66,15 @@ function showLadderRank(score) {
       tr.className = 'rank-gap';
       const cell = tr.insertCell();
       cell.colSpan = 3;
-      cell.setAttribute('aria-label', '略過中間名次');
+      cell.setAttribute('aria-label', 'Ranks omitted');
       cell.textContent = '⋯';
       return tr;
     }
     const isReader = row === reader;
     tr.classList.toggle('is-reader', isReader);
     tr.classList.toggle('is-hong-kong', row === hongKongRank);
-    tr.insertCell().textContent = isReader ? `模擬第 ${row.rank} 位` : `第 ${row.rank} 位`;
-    tr.insertCell().textContent = rankingName(row);
+    tr.insertCell().textContent = isReader ? `${row.rank} (estimated)` : `${row.rank}`;
+    tr.insertCell().textContent = row.name;
     tr.insertCell().textContent = isReader ? String(score) : row.score.toFixed(3);
     return tr;
   });
@@ -142,7 +133,7 @@ function mountGlobalFigure() {
   const y = value => bottom - (bottom - top) * (value - 1) / 7;
   const prediction = value => intercept + slope * value;
   const svg = svgElement('svg', {viewBox: `0 0 ${width} ${height}`, role: 'group',
-    'aria-label': '146 個國家和地區的生活評分與人均 GDP 模型貢獻散點圖'});
+    'aria-label': 'Scatterplot of life evaluation and the GDP-per-capita contribution across 146 countries and territories'});
   const draw = (tag, attrs, content) => {
     const element = svgElement(tag, attrs, content);
     svg.append(element);
@@ -213,7 +204,7 @@ function mountScatter(panel) {
   const tooltip = panel.querySelector('[data-scatter-tooltip]');
   const hideTooltip = () => { tooltip.hidden = true; };
   const indonesia = observations.find(row => row.country === 'Indonesia');
-  const points = [...asian.map(row => ({row, ...peers.get(row.country)})), {row: indonesia, name: '印度尼西亞', flag: 'id'}];
+  const points = [...asian.map(row => ({row, ...peers.get(row.country)})), {row: indonesia, name: 'Indonesia', flag: 'id'}];
 
   function renderScatter() {
     const compact = plot.clientWidth < 540;
@@ -224,7 +215,7 @@ function mountScatter(panel) {
     const left = 47, right = w - 22, top = 29, bottom = h - 59;
     const x = value => left + (right-left)*(value-xMin)/(xMax-xMin);
     const y = value => bottom - (bottom-top)*(value-yMin)/(yMax-yMin);
-    const svg = svgElement('svg', {viewBox:`0 0 ${w} ${h}`, role:'group','aria-label':'人均 GDP 模型貢獻與生活評分散點圖'});
+    const svg = svgElement('svg', {viewBox:`0 0 ${w} ${h}`, role:'group','aria-label':'Scatterplot of life evaluation and the GDP-per-capita contribution in six places'});
     const add = (tag, attrs, text) => svg.append(svgElement(tag, attrs, text));
     for (const tick of [5.5,6,6.5,7,7.5]) {
       add('line',{x1:left,x2:right,y1:y(tick),y2:y(tick),stroke:'#e5dfe6'});
@@ -233,8 +224,8 @@ function mountScatter(panel) {
     for (const tick of [1.5,1.6,1.7,1.8,1.9,2,2.1,2.2]) {
       add('text',{x:x(tick),y:bottom+23,'text-anchor':'middle'},tick);
     }
-    add('text',{x:left,y:17,class:'axis-title'},'生活評分（0–10）');
-    add('text',{x:(left+right)/2,y:h-10,'text-anchor':'middle',class:'axis-title'},'人均 GDP 的模型貢獻（分）');
+    add('text',{x:left,y:17,class:'axis-title'},'Life evaluation (0–10)');
+    add('text',{x:(left+right)/2,y:h-10,'text-anchor':'middle',class:'axis-title'},'GDP per capita contribution (points)');
     const start = Math.max(xMin,(yMin-intercept)/slope);
     const end = Math.min(xMax,(yMax-intercept)/slope);
     add('line',{x1:x(start),y1:y(intercept+slope*start),x2:x(end),y2:y(intercept+slope*end),stroke:'#68657f','stroke-width':2,'stroke-dasharray':'6 5'});
@@ -252,13 +243,13 @@ function mountScatter(panel) {
         transform: `translate(${x(row.gdp)},${y(row.score)})`,
         tabindex: 0,
         role: 'button',
-        'aria-label': `${name}，生活評分 ${decimal(row.score)} 分`,
+        'aria-label': `${name}, life evaluation ${decimal(row.score)} points`,
       });
       point.append(
         svgElement('image', {x: -flagWidth / 2, y: -flagHeight / 2, width: flagWidth, height: flagHeight, href: `assets/flags/${flag}.svg`, 'aria-hidden': 'true'}),
         svgElement('text', {...labelPosition, class: comparison ? 'scatter-label is-comparison' : 'scatter-label'}, label),
       );
-      const details = `GDP 模型貢獻 ${row.gdp.toFixed(3)} · 實際 ${decimal(row.score)} 分 · 預測 ${decimal(row.pred)} 分 · 差距 ${signed(row.score-row.pred)} 分`;
+      const details = `GDP contribution ${row.gdp.toFixed(3)} · Survey score ${decimal(row.score)} · Predicted ${decimal(row.pred)} · Gap ${signed(row.score-row.pred)} points`;
       const show = () => showChartTooltip(tooltip, point, name, details);
       point.addEventListener('pointerenter', show);
       point.addEventListener('pointerleave', hideTooltip);
@@ -371,7 +362,14 @@ addEventListener('wheel', event => {
   next.scrollIntoView({block, behavior:'smooth'});
 }, {passive:false});
 
-const factors = {gdp: '人均 GDP', health: '健康預期壽命', social: '社會支援', freedom: '人生選擇自由', generosity: '慷慨程度', corruption: '貪腐觀感'};
+const factors = {
+  gdp: ['GDP per capita'],
+  health: ['Healthy life', 'expectancy'],
+  social: ['Social support'],
+  freedom: ['Freedom to make', 'life choices'],
+  generosity: ['Generosity'],
+  corruption: ['Perceptions of', 'corruption'],
+};
 const sixFactorTotal = row => Object.keys(factors).reduce((total, key) => total + row[key], 0);
 
 function mountFactorBars() {
@@ -379,36 +377,37 @@ function mountFactorBars() {
   const tooltip = get('factor-tooltip');
   const taiwan = asian[1];
   const categories = [
-    ...Object.entries(factors).map(([key, label]) => ({label, scores: [hongKong[key], taiwan[key]]})),
-    {label: '六項合計', scores: [sixFactorTotal(hongKong), sixFactorTotal(taiwan)]},
+    ...Object.entries(factors).map(([key, lines]) => ({lines, scores: [hongKong[key], taiwan[key]]})),
+    {lines: ['Six-factor total'], scores: [sixFactorTotal(hongKong), sixFactorTotal(taiwan)]},
   ];
   const width = 900;
-  const height = 340;
+  const height = 354;
   const left = 48;
   const right = width - 16;
   const top = 28;
-  const bottom = height - 43;
+  const bottom = height - 57;
   const interval = (right - left) / categories.length;
   const y = value => bottom - (bottom - top) * value / 6.5;
   const svg = svgElement('svg', {viewBox: `0 0 ${width} ${height}`, role: 'group',
-    'aria-label': '香港與台灣的六項模型貢獻及合計並排柱狀圖'});
+    'aria-label': 'Grouped bar chart comparing Hong Kong and Taiwan across six model factors and their totals'});
   const draw = (tag, attrs, text) => svg.append(svgElement(tag, attrs, text));
   const divider = right - interval;
   draw('rect', {x: divider, y: top, width: interval, height: bottom - top, class: 'factor-total-bg'});
   draw('line', {x1: divider, x2: divider, y1: top, y2: bottom, class: 'factor-divider'});
-  draw('text', {x: left, y: 16, class: 'axis-title'}, '模型貢獻（分）');
+  draw('text', {x: left, y: 16, class: 'axis-title'}, 'Model contribution (points)');
   for (const tick of [0, 1, 2, 3, 4, 5, 6]) {
     draw('line', {x1: left, x2: right, y1: y(tick), y2: y(tick), class: 'factor-gridline'});
     draw('text', {x: left - 9, y: y(tick) + 4, 'text-anchor': 'end'}, tick);
   }
   const hide = () => { tooltip.hidden = true; };
-  categories.forEach(({label, scores}, index) => {
+  categories.forEach(({lines, scores}, index) => {
+    const label = lines.join(' ');
     const x = left + index * interval;
     const center = x + interval / 2;
     const difference = Math.round((scores[0] - scores[1]) * 1000);
-    const gap = difference === 0 ? '兩地相同' : `${difference > 0 ? '香港' : '台灣'}高 ${(Math.abs(difference) / 1000).toFixed(3)} 分`;
-    const details = `香港 ${scores[0].toFixed(3)} 分 · 台灣 ${scores[1].toFixed(3)} 分 · ${gap}`;
-    const pair = svgElement('g', {class: 'factor-pair', role: 'button', tabindex: 0, 'aria-label': `${label}，${details}`});
+    const gap = difference === 0 ? 'Equal scores' : `${difference > 0 ? 'Hong Kong' : 'Taiwan'} leads by ${(Math.abs(difference) / 1000).toFixed(3)} points`;
+    const details = `Hong Kong ${scores[0].toFixed(3)} · Taiwan ${scores[1].toFixed(3)} · ${gap}`;
+    const pair = svgElement('g', {class: 'factor-pair', role: 'button', tabindex: 0, 'aria-label': `${label}, ${details}`});
     const marker = svgElement('rect', {x: x + 2, y: top, width: interval - 4, height: height - top - 5, rx: 5, class: 'factor-hit'});
     pair.append(marker);
     scores.forEach((score, i) => {
@@ -418,7 +417,9 @@ function mountFactorBars() {
         svgElement('text', {x: barX, y: y(score) - 7, 'text-anchor': 'middle', class: 'factor-value'}, score.toFixed(3)),
       );
     });
-    pair.append(svgElement('text', {x: center, y: bottom + 28, 'text-anchor': 'middle', class: 'factor-category'}, label));
+    const category = svgElement('text', {x: center, y: bottom + 24, 'text-anchor': 'middle', class: 'factor-category'});
+    lines.forEach((line, i) => category.append(svgElement('tspan', {x: center, dy: i === 0 ? 0 : 17}, line)));
+    pair.append(category);
     const show = () => showChartTooltip(tooltip, marker, label, details);
     pair.addEventListener('pointerenter', show);
     pair.addEventListener('pointerleave', hide);

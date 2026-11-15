@@ -1,102 +1,102 @@
 window.happinessRanking = [
   {
     "rank": 1,
-    "name": "芬蘭",
+    "name": "Finland",
     "score": 7.764
   },
   {
     "rank": 2,
-    "name": "冰島",
+    "name": "Iceland",
     "score": 7.54
   },
   {
     "rank": 3,
-    "name": "丹麥",
+    "name": "Denmark",
     "score": 7.539
   },
   {
     "rank": 4,
-    "name": "哥斯達黎加",
+    "name": "Costa Rica",
     "score": 7.439
   },
   {
     "rank": 5,
-    "name": "瑞典",
+    "name": "Sweden",
     "score": 7.255
   },
   {
     "rank": 6,
-    "name": "挪威",
+    "name": "Norway",
     "score": 7.242
   },
   {
     "rank": 7,
-    "name": "荷蘭",
+    "name": "Netherlands",
     "score": 7.223
   },
   {
     "rank": 8,
-    "name": "以色列",
+    "name": "Israel",
     "score": 7.187
   },
   {
     "rank": 9,
-    "name": "盧森堡",
+    "name": "Luxembourg",
     "score": 7.063
   },
   {
     "rank": 10,
-    "name": "瑞士",
+    "name": "Switzerland",
     "score": 7.018
   },
   {
     "rank": 11,
-    "name": "新西蘭",
+    "name": "New Zealand",
     "score": 6.995
   },
   {
     "rank": 12,
-    "name": "墨西哥",
+    "name": "Mexico",
     "score": 6.972
   },
   {
     "rank": 13,
-    "name": "愛爾蘭",
+    "name": "Ireland",
     "score": 6.928
   },
   {
     "rank": 14,
-    "name": "比利時",
+    "name": "Belgium",
     "score": 6.926
   },
   {
     "rank": 15,
-    "name": "澳洲",
+    "name": "Australia",
     "score": 6.916
   },
   {
     "rank": 16,
-    "name": "科索沃",
+    "name": "Kosovo",
     "score": 6.91
   },
   {
     "rank": 17,
-    "name": "德國",
+    "name": "Germany",
     "score": 6.882
   },
   {
     "rank": 18,
-    "name": "斯洛文尼亞",
+    "name": "Slovenia",
     "score": 6.868
   },
   {
     "rank": 19,
-    "name": "奧地利",
+    "name": "Austria",
     "score": 6.845
   },
   {
     "rank": 20,
-    "name": "捷克",
+    "name": "Czechia",
     "score": 6.821
   },
   {
@@ -446,7 +446,7 @@ window.happinessRanking = [
   },
   {
     "rank": 90,
-    "name": "香港",
+    "name": "Hong Kong",
     "score": 5.569
   },
   {
