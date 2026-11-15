@@ -137,12 +137,45 @@ main > section > .chart-card { margin-top: clamp(14px, 3vh, 30px); }
 .income-figure .plot svg { max-height: 50svh; }
 .income-figure .chart-heading { margin-bottom: 10px; }
 .methods .text-link { margin-top: 20px; }
-.page-arrived > * { animation: page-enter .48s cubic-bezier(.22, .68, .25, 1) both; }
-@keyframes page-enter {
-  from { opacity: .45; transform: translateY(22px); }
+.hero { position: relative; padding-bottom: 36px; }
+.hero-inner { min-height: min(640px, calc(100svh - 36px)); padding-top: clamp(25px, 7vh, 65px); }
+.cover-scroll {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  translate: -50% 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #f4bed4;
+  text-decoration: none;
+  font-size: 12px;
+}
+.cover-scroll span { animation: scroll-cue 1.8s ease-in-out infinite; }
+@keyframes scroll-cue { 50% { translate: 0 5px; } }
+
+.page-arrived :is(.prose, .ladder-copy) {
+  animation: page-copy .68s cubic-bezier(.18, .83, .26, 1) both;
+}
+.page-arrived :is(.chart-card, .stair-viewport, .evidence-grid) {
+  animation: page-visual .82s .10s cubic-bezier(.18, .83, .26, 1) both;
+}
+@keyframes page-copy {
+  from { opacity: 0; transform: translateY(var(--entry-offset, 56px)); }
   to { opacity: 1; transform: translateY(0); }
 }
+@keyframes page-visual {
+  from { opacity: 0; transform: translateY(var(--entry-offset, 56px)) scale(.93); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    main > section:not(.hero) { animation: page-tone linear both; animation-timeline: view(); animation-range: entry 0% entry 65%; }
+    @keyframes page-tone { from { filter: brightness(.89); } to { filter: brightness(1); } }
+  }
+}
 @media (max-width: 720px) {
+  .hero-inner { min-height: auto; }
   .income-story { grid-template-columns: 1fr; gap: 14px; }
   .income-story .prose h2 { margin-bottom: 8px; }
   .income-figure .plot svg { max-height: 40svh; }

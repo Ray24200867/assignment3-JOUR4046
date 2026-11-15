@@ -159,17 +159,57 @@ function mountScatter(panel) {
 
 document.querySelectorAll('.income-panel').forEach(mountScatter);
 
-const readingPages = document.querySelectorAll('main > section');
+const readingPages = Array.from(document.querySelectorAll('main > section'));
 const entrance = new IntersectionObserver(entries => {
-  for (const entry of entries) {
-    if (!entry.isIntersecting) continue;
-    entry.target.classList.add('page-arrived');
-    entrance.unobserve(entry.target);
+  for (const entry of entries) entry.target.classList.toggle('page-arrived', entry.isIntersecting);
+}, {rootMargin:'-42% 0px -42% 0px'});
+readingPages.filter(page => page.id !== 'cover').forEach(page => entrance.observe(page));
+
+const motion = matchMedia('(prefers-reduced-motion: reduce)');
+let lastWheel = -Infinity;
+let wheelTravel = 0;
+let wheelDirection = 0;
+let pageTurned = false;
+let turningUntil = 0;
+
+addEventListener('wheel', event => {
+  if (motion.matches || event.ctrlKey || event.metaKey || Math.abs(event.deltaX) >= Math.abs(event.deltaY)) return;
+
+  const direction = Math.sign(event.deltaY);
+  const now = performance.now();
+  if (now - lastWheel > 190 || direction !== wheelDirection) {
+    wheelTravel = 0;
+    pageTurned = false;
   }
-}, {rootMargin:'0px 0px -20% 0px'});
-readingPages.forEach(page => {
-  if (page.id !== 'cover') entrance.observe(page);
-});
+  lastWheel = now;
+  wheelDirection = direction;
+  if (pageTurned || now < turningUntil) {
+    event.preventDefault();
+    return;
+  }
+
+  const middle = innerHeight / 2;
+  const index = readingPages.findIndex(page => {
+    const {top, bottom} = page.getBoundingClientRect();
+    return top <= middle && bottom > middle;
+  });
+  const current = readingPages[index];
+  const next = readingPages[index + direction];
+  if (!current || !next) return;
+  const {top, bottom, height} = current.getBoundingClientRect();
+  // Keep regular scrolling inside any section that exceeds the viewport.
+  if (height > innerHeight + 3 && (direction > 0 ? bottom > innerHeight + 3 : top < -3)) return;
+
+  event.preventDefault();
+  const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? innerHeight : 1;
+  wheelTravel += Math.abs(event.deltaY) * unit;
+  if (wheelTravel < 24) return;
+
+  pageTurned = true;
+  turningUntil = now + 440;
+  document.documentElement.style.setProperty('--entry-offset', direction > 0 ? '56px' : '-56px');
+  next.scrollIntoView({block:'start', behavior:'smooth'});
+}, {passive:false});
 
 function createRow(row, plot, onSelect, trackItems) {
   const button = document.createElement('button');
