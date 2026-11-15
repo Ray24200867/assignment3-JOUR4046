@@ -49,10 +49,10 @@ h1,h2,h3{font-family:var(--serif);line-height:1.35}
 .story-section{padding:72px 24px}
 .intro{padding-bottom:26px}
 .prose{max-width:740px;margin:auto}
-.prose>p:not(.eyebrow),.evidence p,.methods p{font-size:17px;line-height:1.95;color:var(--muted)}
+.prose>p:not(.eyebrow),.methods p{font-size:17px;line-height:1.95;color:var(--muted)}
 .prose>p+p,.methods p{margin-top:14px}
 .prose strong{color:var(--ink)}
-.prose p a,.evidence p a,figcaption a{color:var(--accent)}
+.prose p a,figcaption a{color:var(--accent)}
 .chart-card{max-width:1060px;margin:30px auto 0;border:1px solid var(--line);background:#fffdfd;border-radius:24px;padding:clamp(15px,3.2vw,35px);box-shadow:0 14px 45px #2d183809}
 .chart-heading{display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px}
 .chart-heading h3{font-size:clamp(23px,3vw,34px);letter-spacing:-.03em}
@@ -90,13 +90,10 @@ figcaption a{margin-left:7px}
 }
 .factor-bar-area svg .factor-category { fill: var(--ink); font-size: 14px; font-weight: 650; }
 .daily-life{background:#eee6eb}
-.evidence-grid{max-width:1040px;margin:24px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.evidence{background:#fffafb;border-radius:18px;border:1px solid #e0d1dd;padding:20px}
-.evidence summary,.methods summary{cursor:pointer;color:var(--ink);font-weight:700}
-.evidence summary span:first-of-type{display:inline-block}
-.evidence summary strong{display:block;font:700 clamp(29px,4.1vw,50px) Georgia,serif;color:var(--accent);margin:10px 0}
-.evidence summary small,.evidence-action{font-size:13px;color:var(--muted)}
-.evidence p{margin-top:13px;font-size:15px}
+.story-transition { background: #30263d; color: #f9edf2; }
+.story-transition .prose > p { color: #e0d2e1; }
+.story-transition .prose strong { color: #f4bed4; white-space: nowrap; }
+.methods summary{cursor:pointer;color:var(--ink);font-weight:700}
 .closing{padding:77px 24px;background:#292238;color:#fff2f8}
 .closing .prose p{color:#e3d3e4;margin-bottom:20px}
 .methods{padding-block:33px}
@@ -104,7 +101,7 @@ footer{padding:22px 24px;text-align:center;border-top:1px solid var(--line);colo
 @media(max-width:720px){
  .hero-inner{width:calc(100% - 34px);grid-template-columns:1fr;min-height:auto;padding-top:25px}.hero-copy{padding-bottom:0}.hero-art{min-height:225px}.hero-heart{width:120px}.orbit{width:210px}.heart{width:48px}.heart-one{left:20%}.heart-two,.heart-three{right:20%}
  .hero-stats div+div{padding-left:9px}.hero-stats div{padding-right:7px}.hero-stats span{font-size:11px}
- .evidence-grid{grid-template-columns:1fr}.ladder-section,.story-section{padding:44px 15px}.intro{padding-bottom:10px}
+ .ladder-section,.story-section{padding:44px 15px}.intro{padding-bottom:10px}
  .chart-card{border-radius:16px}.plot svg text{font-size:15px}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
@@ -144,7 +141,7 @@ main > section[hidden] { display: none; }
 .ladder-section { padding-block: clamp(22px, 5vh, 65px); }
 .story-section, .closing { padding-block: clamp(26px, 5.5vh, 72px); }
 main > section > .prose { width: min(100%, 740px); margin: 0 auto; }
-main > section > .chart-card, main > section > .evidence-grid { width: min(100%, 1060px); }
+main > section > .chart-card { width: min(100%, 1060px); }
 main > section > .chart-card { margin-top: clamp(14px, 3vh, 30px); }
 .intro-layout {
   display: grid;
@@ -239,11 +236,59 @@ main > section > .chart-card { margin-top: clamp(14px, 3vh, 30px); }
   --global-fit: #82758b;
 }
 main > #income > .global-figure,
-main > #factor-comparison > .factor-bar-chart {
+main > #factor-comparison > .factor-bar-chart,
+main > section > .local-stat-chart {
   width: min(100%, 740px);
   margin-top: 1.15rem;
   padding: clamp(14px, 2.5vw, 25px);
 }
+.local-stat-chart {
+  --stat-label: clamp(105px, 32%, 205px);
+  --stat-value: 50px;
+  --stat-gap: clamp(6px, 1.4vw, 14px);
+}
+.local-stat-chart h3 { font-size: clamp(17px, 2.4vw, 24px); }
+.local-stat-bars {
+  display: grid;
+  gap: 12px;
+  margin: 20px 0 8px;
+  padding: 0;
+  list-style: none;
+}
+.local-stat-bars li {
+  display: grid;
+  grid-template-columns: var(--stat-label) minmax(0, 1fr) var(--stat-value);
+  gap: var(--stat-gap);
+  align-items: center;
+  font-size: clamp(12px, 1.65vw, 15px);
+}
+.local-stat-bars strong,
+.local-stat-scale { font-variant-numeric: tabular-nums; }
+.local-stat-bars strong { text-align: right; }
+.local-stat-track {
+  display: block;
+  height: 18px;
+  background: #eee7f0;
+  border-radius: 3px;
+}
+.local-stat-track span {
+  display: block;
+  width: var(--bar-size);
+  height: 100%;
+  background: #75628f;
+  border-radius: 3px;
+}
+.is-highlighted .local-stat-track span { background: var(--accent); }
+.local-stat-scale {
+  display: flex;
+  justify-content: space-between;
+  margin-inline: calc(var(--stat-label) + var(--stat-gap)) calc(var(--stat-value) + var(--stat-gap));
+  padding-top: 5px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: clamp(9px, 1.35vw, 12px);
+}
+.local-stat-chart figcaption { margin-top: 14px; }
 #factor-comparison > .prose { container-type: inline-size; }
 #factor-comparison > .prose h2 {
   font-size: min(53px, 6.25cqw);
@@ -324,7 +369,7 @@ main > #factor-comparison > .factor-bar-chart {
 .page-arrived :is(.prose, .ladder-copy) {
   animation: page-copy .68s cubic-bezier(.18, .83, .26, 1) both;
 }
-.page-arrived :is(.chart-card, .stair-viewport, .evidence-grid, .intro-cart, .ladder-ranking) {
+.page-arrived :is(.chart-card, .stair-viewport, .intro-cart, .ladder-ranking) {
   animation: page-visual .82s .10s cubic-bezier(.18, .83, .26, 1) both;
 }
 @keyframes page-copy {

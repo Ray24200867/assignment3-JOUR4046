@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="layout.css">
-<link rel="stylesheet" href="site.css?v=aligned-factors">
+<link rel="stylesheet" href="site.css?v=local-evidence">
 <script src="data/chart-data.js" defer></script>
 <script src="data/ranking.js" defer></script>
 <script src="site.js?v=aligned-factors" defer></script>
@@ -579,23 +579,49 @@
   </figure>
 </section>
 
+<section id="why-gap" class="story-section story-transition" aria-labelledby="why-gap-title">
+  <div class="prose">
+    <h2 id="why-gap-title">模型之外，香港人過着怎樣的生活？</h2>
+    <p>香港的六項模型貢獻合計高於台灣，居民給出的生活評分卻較低。用六項因素預測，香港約有 <strong>7.03 分</strong>，居民實際給了 <strong>5.57 分</strong>，比預測低約 <strong>1.46 分</strong>。</p>
+    <p>要追問這個落差，接下來把視線轉回香港。人口普查讓我們看到不同住戶有多少居住空間，住戶調查則讓我們看到哪些長者較容易感到孤單。</p>
+  </div>
+</section>
+
 <section id="daily-life" class="story-section daily-life">
   <div class="prose">
-    <p class="eyebrow">香港日常</p>
-    <h2>從居住條件與社會支援追查落差</h2>
-    <p>上圖中，香港的社會支援模型貢獻比台灣低 <strong>0.116 分</strong>。《世界幸福報告》用受訪者遇到困難時有沒有親友可以依靠，來衡量社會支援。香港的住戶調查和長者研究，讓我們進一步看到孤單感在長者當中有多普遍，以及日常的社交網絡與生活滿意度有甚麼關係。</p>
-    <p>住屋也提供了另一條線索。人均 GDP 衡量一地平均每人的經濟產出。要看香港的經濟優勢如何反映在日常生活，可以從兩個具體問題入手。不同住戶實際有多少空間？居住條件又與他們的福祉有甚麼關係？</p>
+    <h2>劏房住戶人均居住面積只有 6 平方米</h2>
+    <p>同樣生活在香港，劏房住戶的人均居住面積中位數只有全港住戶的 <strong>約四成</strong>。一項分析 1,480 名香港成年人的研究也發現，住房開支、居住密度和居住環境等都與主觀福祉有關，這種關聯在私樓租戶中尤其明顯。 <a href="https://research.cuhk.edu.hk/en/publications/housing-and-subjective-well-being-in-hong-kong-a-structural-equat-2/">香港住屋研究 ↗</a></p>
   </div>
-  <div class="evidence-grid">
-    <details class="evidence" open>
-      <summary><span>居住條件</span><strong>16 m² <small>／</small> 6 m²</strong><span class="evidence-action">展開或收起資料</span></summary>
-      <p>2021 年人口普查顯示，全港住戶的人均居所樓面面積中位數是 16 平方米，分間樓宇單位住戶是 6 平方米。一項分析 1,480 名香港成年人的研究發現，住房開支、居住密度、居住環境和住房滿意度都與主觀福祉有關，住房因素在私人租戶組別的關聯尤其明顯。<br><a href="https://www.census2021.gov.hk/doc/pub/21C_Articles_SDUs.pdf">人口普查 ↗</a> <a href="https://research.cuhk.edu.hk/en/publications/housing-and-subjective-well-being-in-hong-kong-a-structural-equat-2/">住房研究 ↗</a></p>
-    </details>
-    <details class="evidence" open>
-      <summary><span>長者的社會支援</span><strong>14.1%</strong><span class="evidence-action">展開或收起資料</span></summary>
-      <p>2024 年住戶調查中，14.1% 的 65 歲或以上人士在受訪前一星期感到孤單。另一項追蹤 200 名香港長者的研究發現，社交網絡和社會參與與生活滿意度有關。這讓我們能具體追問，長者平日有沒有機會參與社區活動，遇到困難時又能依靠誰。<br><a href="https://www.info.gov.hk/gia/general/202607/31/P2026073100370.htm">住戶調查 ↗</a> <a href="https://pubmed.ncbi.nlm.nih.gov/35332829/">長者追蹤研究 ↗</a></p>
-    </details>
+  <figure class="chart-card local-stat-chart" aria-labelledby="housing-chart-title">
+    <p class="figure-number">圖 3</p>
+    <h3 id="housing-chart-title">2021 年人均居所樓面面積中位數</h3>
+    <ul class="local-stat-bars">
+      <li><span>私人住宅單位住戶</span><span class="local-stat-track" aria-hidden="true"><span style="--bar-size:90%"></span></span><strong>18</strong></li>
+      <li><span>全港住戶</span><span class="local-stat-track" aria-hidden="true"><span style="--bar-size:80%"></span></span><strong>16</strong></li>
+      <li class="is-highlighted"><span>分間樓宇單位住戶（劏房）</span><span class="local-stat-track" aria-hidden="true"><span style="--bar-size:30%"></span></span><strong>6</strong></li>
+    </ul>
+    <div class="local-stat-scale" aria-hidden="true"><span>0</span><span>5</span><span>10</span><span>15</span><span>20</span></div>
+    <figcaption>單位為平方米。全港住戶是整體參照。 <a href="https://www.censtatd.gov.hk/en/data/stat_report/product/B1120113/att/B11201132021XXXXB0100.pdf">政府統計處，2021 年人口普查表 6.4 ↗</a></figcaption>
+  </figure>
+</section>
+
+<section id="social-support" class="story-section daily-life">
+  <div class="prose">
+    <h2>80 歲及以上長者，約五分之一曾感到孤單</h2>
+    <p>前面的港、台比較顯示，香港的社會支援模型貢獻比台灣低 <strong>0.116 分</strong>。《世界幸福報告》透過問受訪者遇到困難時有沒有親友可以依靠，衡量社會支援。</p>
+    <p>香港的住戶調查從孤單感提供另一個角度。80 歲及以上人士在受訪前一星期曾感到孤單的比例，比 65 至 79 歲人士高 <strong>8.9 個百分點</strong>。一項追蹤 200 名香港長者的研究也發現，社交網絡和社會參與與生活滿意度有關。 <a href="https://pubmed.ncbi.nlm.nih.gov/35332829/">香港長者追蹤研究 ↗</a></p>
   </div>
+  <figure class="chart-card local-stat-chart" aria-labelledby="loneliness-chart-title">
+    <p class="figure-number">圖 4</p>
+    <h3 id="loneliness-chart-title">2024 年受訪前一星期曾感到孤單的比例</h3>
+    <ul class="local-stat-bars">
+      <li><span>65 至 79 歲</span><span class="local-stat-track" aria-hidden="true"><span style="--bar-size:48.4%"></span></span><strong>12.1%</strong></li>
+      <li class="is-highlighted"><span>80 歲及以上</span><span class="local-stat-track" aria-hidden="true"><span style="--bar-size:84%"></span></span><strong>21.0%</strong></li>
+      <li><span>65 歲及以上整體</span><span class="local-stat-track" aria-hidden="true"><span style="--bar-size:56.4%"></span></span><strong>14.1%</strong></li>
+    </ul>
+    <div class="local-stat-scale" aria-hidden="true"><span>0%</span><span>5%</span><span>10%</span><span>15%</span><span>20%</span><span>25%</span></div>
+    <figcaption>各比例以居於住戶內的相應年齡組別為分母。 <a href="https://www.censtatd.gov.hk/wbr/B1130201/B11302012026XX04/att/tc/B11302012026XX04.pdf">政府統計處，主題性住戶統計調查第 87 號表 2.1 ↗</a></figcaption>
+  </figure>
 </section>
 
 <section class="closing">
@@ -608,7 +634,7 @@
 <section class="story-section methods">
   <div class="prose">
     <details><summary>數據與方法</summary>
-      <p>報導圖表使用《世界幸福報告》2026 年版 Figure 2.1 工作簿。圖 1 用 146 個地方的生活評分及人均 GDP 模型貢獻做線性迴歸，排除缺少可用 GDP 指標的委內瑞拉。圖 2 比較香港和台灣的各項模型貢獻及六項合計。圖中分數經四捨五入。</p>
+      <p>國際比較使用《世界幸福報告》2026 年版 Figure 2.1 工作簿。圖 1 用 146 個地方的生活評分及人均 GDP 模型貢獻做線性迴歸，排除缺少可用 GDP 指標的委內瑞拉。圖 2 比較香港和台灣的各項模型貢獻及六項合計。圖中分數經四捨五入。圖 3 取自 2021 年人口普查。圖 4 取自政府統計處於 2024 年進行的主題性住戶統計調查。</p>
       <p><a href="https://www.worldhappiness.report/data-sharing/">官方工作簿 ↗</a>　<a href="https://www.worldhappiness.report/ed/2026/international-evidence-on-happiness-and-social-media/">報告第二章 ↗</a></p>
     </details>
     <a class="text-link" href="#cover">返回封面 ↑</a>
