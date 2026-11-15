@@ -187,14 +187,6 @@ main > section > .chart-card { margin-top: clamp(14px, 3vh, 30px); }
   margin-bottom: 10px;
   font-size: clamp(16px, 2vw, 22px);
 }
-.regional-comparison {
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.65;
-  margin: 4px 0 12px;
-}
-.regional-comparison strong { color: var(--ink); }
-.regional-comparison a { color: var(--accent); white-space: nowrap; }
 .scatter-flag { cursor: pointer; outline: none; }
 .scatter-flag:is(:hover, :focus-visible, .is-selected) .scatter-label { fill: var(--accent); }
 .scatter-flag:focus-visible .scatter-label { text-decoration: underline; }
