@@ -9,9 +9,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="layout.css">
-<link rel="stylesheet" href="site.css?v=scroll2">
+<link rel="stylesheet" href="site.css?v=pages1">
 <script src="data/chart-data.js" defer></script>
-<script src="site.js?v=scroll2" defer></script>
+<script src="site.js?v=pages1" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">跳至正文</a>
@@ -489,37 +489,47 @@
   </div>
 </section>
 
-<section id="income" class="story-section">
-  <div class="prose">
-    <p class="eyebrow">收入與生活評分</p>
-    <h2>香港比收入模型預測低 1.18 分</h2>
-  </div>
-  <div class="income-story" id="income-story">
+<section id="income" class="story-section income-panel" data-scene="world">
+  <div class="income-story">
+    <div class="prose"><h2>先看全球趨勢</h2><p>把 146 個地方放在同一張圖上，虛線由左下往右上走。整體而言，人均 GDP 相關指標愈高的地方，生活評分也傾向愈高。</p></div>
     <figure class="chart-card income-figure">
-      <div class="chart-heading"><div><p class="figure-number">圖 1</p><h3 id="scatter-title">先看全球趨勢</h3></div>
-      <div class="segmented" id="scatter-controls" aria-label="散點圖比較範圍"><button type="button" aria-pressed="true" data-view="world">全球</button><button type="button" aria-pressed="false" data-view="peers">亞洲五地</button></div></div>
-      <div id="scatter" class="plot"></div>
-      <div id="scatter-reading" class="chart-reading" aria-live="polite"></div>
+      <div class="chart-heading"><div><p class="figure-number">圖 1</p></div>
+      <div class="segmented" data-scatter-controls aria-label="散點圖比較範圍"><button type="button" aria-pressed="true" data-view="world">全球</button><button type="button" aria-pressed="false" data-view="peers">亞洲五地</button></div></div>
+      <div data-scatter-plot class="plot"></div>
+      <div data-scatter-reading class="chart-reading" aria-live="polite"></div>
       <figcaption>橫軸為人均 GDP 的模型貢獻（分）。點選圓點可看數值。<a href="https://www.worldhappiness.report/data-sharing/">官方數據 ↗</a></figcaption>
     </figure>
-    <div class="income-steps">
-      <div class="income-step" data-scene="world">
-        <h3>先看全球趨勢</h3>
-        <p>把 146 個地方放在同一張圖上，虛線由左下往右上走。整體而言，人均 GDP 相關指標愈高的地方，生活評分也傾向愈高。</p>
-      </div>
-      <div class="income-step" data-scene="hong-kong">
-        <h3>找到香港的位置</h3>
-        <p>香港落在虛線下方。模型預測約 <strong>6.75 分</strong>，居民實際給了 <strong>5.57 分</strong>，相差 <strong>1.18 分</strong>。</p>
-      </div>
-      <div class="income-step" data-scene="taiwan">
-        <h3>把香港和台灣放在一起</h3>
-        <p>兩地在橫軸上的數值都約為 <strong>1.96</strong>，台灣的生活評分卻達 <strong>6.71</strong>。用原始數值計算，兩地相差約 <strong>1.15 分</strong>。</p>
-      </div>
-    </div>
+  </div>
+</section>
+
+<section id="hong-kong" class="story-section income-panel" data-scene="hong-kong">
+  <div class="income-story">
+    <div class="prose"><h2>找到香港的位置</h2><p>香港落在虛線下方。模型預測約 <strong>6.75 分</strong>，居民實際給了 <strong>5.57 分</strong>，相差 <strong>1.18 分</strong>。</p></div>
+    <figure class="chart-card income-figure">
+      <div class="chart-heading">
+      <div class="segmented" data-scatter-controls aria-label="散點圖比較範圍"><button type="button" aria-pressed="true" data-view="world">全球</button><button type="button" aria-pressed="false" data-view="peers">亞洲五地</button></div></div>
+      <div data-scatter-plot class="plot"></div>
+      <div data-scatter-reading class="chart-reading" aria-live="polite"></div>
+      <figcaption>橫軸為人均 GDP 的模型貢獻（分）。點選圓點可看數值。<a href="https://www.worldhappiness.report/data-sharing/">官方數據 ↗</a></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="taiwan" class="story-section income-panel" data-scene="taiwan">
+  <div class="income-story">
+    <div class="prose"><h2>把香港和台灣放在一起</h2><p>兩地在橫軸上的數值都約為 <strong>1.96</strong>，台灣的生活評分卻達 <strong>6.71</strong>。用原始數值計算，兩地相差約 <strong>1.15 分</strong>。</p></div>
+    <figure class="chart-card income-figure">
+      <div class="chart-heading">
+      <div class="segmented" data-scatter-controls aria-label="散點圖比較範圍"><button type="button" aria-pressed="true" data-view="world">全球</button><button type="button" aria-pressed="false" data-view="peers">亞洲五地</button></div></div>
+      <div data-scatter-plot class="plot"></div>
+      <div data-scatter-reading class="chart-reading" aria-live="polite"></div>
+      <figcaption>橫軸為人均 GDP 的模型貢獻（分）。點選圓點可看數值。<a href="https://www.worldhappiness.report/data-sharing/">官方數據 ↗</a></figcaption>
+    </figure>
   </div>
 </section>
 
 <section id="factors" class="story-section">
+  <div class="income-story factor-page">
   <div class="prose">
     <p class="eyebrow">六項因素</p>
     <h2>把健康和社會支援也算進去，落差還在嗎？</h2>
@@ -533,14 +543,20 @@
     <div id="model-reading" class="chart-reading" aria-live="polite"></div>
     <figcaption>切換模型看差距如何變化。兩個模型使用不同資訊，差距各自以同一模型的預測值計算。<a href="https://www.worldhappiness.report/data-sharing/">官方數據 ↗</a></figcaption>
   </figure>
-  <div class="prose after-chart"><p>拆開六項指標，香港的<strong>健康預期壽命模型貢獻值在 146 個有數據的地方中排第一</strong>。與圖中的四個亞洲經濟體相比，香港的社會支援和人生選擇自由貢獻值均低於台灣、新加坡和日本，也均高於韓國。</p></div>
+  </div>
+</section>
+
+<section id="factor-comparison" class="story-section">
+  <div class="income-story factor-page">
+  <div class="prose"><h2>香港與鄰近經濟體差在哪裡？</h2><p>拆開六項指標，香港的<strong>健康預期壽命模型貢獻值在 146 個有數據的地方中排第一</strong>。與圖中的四個亞洲經濟體相比，香港的社會支援和人生選擇自由貢獻值均低於台灣、新加坡和日本，也均高於韓國。</p></div>
   <figure class="chart-card">
-    <div class="chart-heading"><div><p class="figure-number">圖 3</p><h3>香港與鄰近經濟體差在哪裡？</h3></div></div>
+    <div class="chart-heading"><div><p class="figure-number">圖 3</p><h3>五地的六項模型貢獻</h3></div></div>
     <div class="segmented factor-controls" id="factor-controls" aria-label="選擇比較指標"></div>
     <div id="factor-plot" class="factor-plot"></div>
     <div id="factor-reading" class="chart-reading" aria-live="polite"></div>
     <figcaption>各項數值是同一期報告的模型貢獻值。六項因素已納入圖 2 的模型，這些差異提供後續報導的線索。<a href="https://www.worldhappiness.report/data-sharing/">官方數據 ↗</a></figcaption>
   </figure>
+  </div>
 </section>
 
 <section id="daily-life" class="story-section daily-life">
@@ -574,9 +590,9 @@
       <p>三張圖均使用《世界幸福報告》2026 年版 Figure 2.1 工作簿。圖 1 用 146 個地方的生活評分及人均 GDP 模型貢獻做線性迴歸，排除缺少可用 GDP 指標的委內瑞拉。圖 2 將官方六項模型貢獻值加上共同基準 1.16，重建六因素預測值。圖 3 比較五個地方在同一期報告中的模型貢獻值。圖中分數經四捨五入。</p>
       <p><a href="https://www.worldhappiness.report/data-sharing/">官方工作簿 ↗</a>　<a href="https://www.worldhappiness.report/ed/2026/international-evidence-on-happiness-and-social-media/">報告第二章 ↗</a></p>
     </details>
+    <a class="text-link" href="#cover">返回封面 ↑</a>
   </div>
 </section>
 </main>
-<footer><a href="#cover">幸福階梯 · 返回頂部 ↑</a></footer>
 </body>
 </html>

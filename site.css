@@ -1,4 +1,4 @@
-:root{color:#242037;background:#f6f3ee;font-family:"Noto Sans TC","PingFang TC",sans-serif;--ink:#242037;--muted:#59546b;--accent:#8f3967;--line:#e3dce2;--serif:"Noto Serif TC","Songti TC",serif;scroll-padding-top:20px;scroll-behavior:smooth}
+:root{color:#242037;background:#f6f3ee;font-family:"Noto Sans TC","PingFang TC",sans-serif;--ink:#242037;--muted:#59546b;--accent:#8f3967;--line:#e3dce2;--serif:"Noto Serif TC","Songti TC",serif;scroll-snap-type:y mandatory;scroll-behavior:smooth}
 *,*::before,*::after{box-sizing:border-box;border:0 solid}
 body,p,h1,h2,h3,figure{margin:0}
 a{color:inherit;text-underline-offset:4px}
@@ -111,27 +111,46 @@ footer{padding:22px 24px;text-align:center;border-top:1px solid var(--line);colo
 
 .transformed{transform:rotate(var(--rotation,0deg)) skewX(var(--skew,0deg))}
 
-.income-story{display:grid;grid-template-columns:minmax(0,1.9fr) minmax(220px,1fr);gap:clamp(20px,4vw,62px);max-width:1200px;margin:34px auto 0;align-items:start}
-.income-figure{position:sticky;top:20px;width:100%;margin:0;z-index:1}
-.income-step{min-height:55vh;display:flex;flex-direction:column;justify-content:center;padding:18px 0 18px 17px;border-left:2px solid var(--line);transition:border-color .25s}
-.income-step.is-current{border-color:var(--accent)}
-.income-step h3{font-size:clamp(21px,2.45vw,30px);margin-bottom:12px}
-.income-step p{color:var(--muted);line-height:1.85}
-.income-step strong{color:var(--accent)}
-.income-figure .chart-heading{margin-bottom:10px}
-.income-figure .chart-reading{margin-block:8px}
-@media(max-width:720px){
-  .income-story{display:block}
-  .income-figure{top:12px}
-  .income-figure .chart-heading h3{font-size:19px}
-  .income-figure .chart-heading{gap:7px}
-  .income-figure .segmented button{padding:4px 8px;font-size:12px}
-  .income-figure .chart-reading{font-size:12px;padding:7px 9px;min-height:0}
-  .income-step{min-height:43vh;padding:14px 12px}
+main > section {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
-@media(max-height:560px){.income-figure{position:relative;top:auto}.income-step{min-height:0;margin-top:24px}}
-@media(prefers-reduced-motion:reduce){.income-step{transition:none}}
-.income-figure .plot svg{max-height:48vh}
-@media(min-width:721px) and (min-height:561px){
-  .income-steps{padding-bottom:24vh}
+.hero-inner { min-height: min(640px, 100svh); }
+.ladder-section { padding-block: clamp(22px, 5vh, 65px); }
+.story-section, .closing { padding-block: clamp(26px, 5.5vh, 72px); }
+main > section > .prose { width: min(100%, 740px); margin: 0 auto; }
+main > section > .chart-card, main > section > .evidence-grid { width: min(100%, 1060px); }
+main > section > .chart-card { margin-top: clamp(14px, 3vh, 30px); }
+.income-story {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(0, 2fr);
+  gap: clamp(20px, 4vw, 62px);
+  width: min(100%, 1200px);
+  margin-inline: auto;
+  align-items: center;
+}
+.income-figure { width: 100%; margin: 0; }
+.income-figure .plot svg { max-height: 50svh; }
+.income-figure .chart-heading { margin-bottom: 10px; }
+.methods .text-link { margin-top: 20px; }
+.page-arrived > * { animation: page-enter .48s cubic-bezier(.22, .68, .25, 1) both; }
+@keyframes page-enter {
+  from { opacity: .45; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 720px) {
+  .income-story { grid-template-columns: 1fr; gap: 14px; }
+  .income-story .prose h2 { margin-bottom: 8px; }
+  .income-figure .plot svg { max-height: 40svh; }
+  .income-figure .chart-reading { min-height: 0; padding: 8px 10px; }
+}
+.factor-page > .chart-card { width: 100%; margin: 0; }
+@media (min-width: 721px) and (max-height: 760px) {
+  .factor-page .chart-card { padding: 20px; }
+  .factor-page .chart-heading { margin-bottom: 12px; }
+  .factor-page .data-row { padding-block: 7px; }
 }
