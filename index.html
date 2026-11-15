@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="layout.css">
-<link rel="stylesheet" href="site.css?v=global-figure">
+<link rel="stylesheet" href="site.css?v=global-intro">
 <script src="data/chart-data.js" defer></script>
 <script src="data/ranking.js" defer></script>
 <script src="site.js?v=global-figure" defer></script>
@@ -515,7 +515,10 @@
 </section>
 
 <section id="income" class="story-section">
-  <div class="prose"><h2>先看全球趨勢</h2></div>
+  <div class="prose">
+    <h2>全球趨勢</h2>
+    <p>人均 GDP 的模型貢獻愈高，生活評分整體上也愈高，但不同地區與虛線的距離很不一樣。圖中的 17 個拉丁美洲國家都高於預測，平均高 <strong>0.75 分</strong>。五個高收入亞洲經濟體的評分低於或接近預測，平均低 <strong>0.57 分</strong>。台灣幾乎落在預測線上，香港則低 <strong>1.18 分</strong>，是這五地中落差最大的一個。接下來放大看香港的位置。</p>
+  </div>
   <figure class="chart-card global-figure" aria-labelledby="global-figure-title">
     <p class="figure-number">圖 1</p>
     <h3 id="global-figure-title" lang="en">Money can’t buy all of happiness: Latin America is “poor but happy”, Hong Kong “rich but unhappy”</h3>
@@ -530,7 +533,6 @@
       <div id="global-plot" class="plot"></div>
       <div id="global-tooltip" class="global-tooltip" hidden></div>
     </div>
-    <figcaption class="global-insight">人均 GDP 的模型貢獻愈高，生活評分整體上也愈高，但不同地區與虛線的距離很不一樣。圖中的 17 個拉丁美洲國家都高於預測，平均高 <strong>0.75 分</strong>。五個高收入亞洲經濟體的評分低於或接近預測，平均低 <strong>0.57 分</strong>。台灣幾乎落在預測線上，香港則低 <strong>1.18 分</strong>，是這五地中落差最大的一個。接下來放大看香港的位置。</figcaption>
     <details class="global-method">
       <summary>數據與方法</summary>
       <p>2025 年生活評分指 2023 至 2025 年的調查平均。虛線以 146 個國家和地區的生活評分及報告的「人均 GDP 模型貢獻」做線性迴歸，委內瑞拉因該欄缺值而排除。R² = 0.64，表示這條線解釋樣本中約 64% 的評分差異。拉丁美洲一組沿用原圖分法，排除牙買加、多明尼加及千里達和多巴哥。<a href="https://www.worldhappiness.report/data-sharing/">官方數據 ↗</a></p>

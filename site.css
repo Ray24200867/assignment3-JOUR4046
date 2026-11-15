@@ -242,8 +242,6 @@ main > section > .chart-card { margin-top: clamp(14px, 3vh, 30px); }
   pointer-events: none;
 }
 .global-tooltip strong { display: block; }
-.global-figure .global-insight { font-size: 15px; line-height: 1.75; }
-.global-insight strong { color: var(--ink); }
 .global-method { margin-top: 12px; color: var(--muted); font-size: 13px; line-height: 1.7; }
 .global-method summary { cursor: pointer; }
 .global-method a { margin-left: .4em; color: var(--accent); }
