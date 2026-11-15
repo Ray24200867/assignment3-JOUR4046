@@ -212,30 +212,6 @@ function mountGlobalFigure() {
   plot.addEventListener('scroll', hide, {passive: true});
 }
 
-function mountPeerDumbbell() {
-  const taiwan = asian[1];
-  const gap = decimal(taiwan.score - hongKong.score);
-  const x = score => 32 + score * 51.6;
-  const svg = svgElement('svg', {viewBox: '0 0 580 143', role: 'img',
-    'aria-label': `生活評分（滿分 10 分）。香港 ${decimal(hongKong.score)} 分，台灣 ${decimal(taiwan.score)} 分，相差約 ${gap} 分。`});
-  const draw = (tag, attributes, content) => svg.append(svgElement(tag, attributes, content));
-  draw('line', {x1: x(0), x2: x(10), y1: 113, y2: 113, class: 'peer-axis'});
-  for (const tick of [0, 2, 4, 6, 8, 10]) {
-    draw('line', {x1: x(tick), x2: x(tick), y1: 113, y2: 119, class: 'peer-axis'});
-    draw('text', {x: x(tick), y: 136, 'text-anchor': 'middle'}, tick);
-  }
-  draw('line', {x1: x(hongKong.score), x2: x(taiwan.score), y1: 74, y2: 74, class: 'peer-connector'});
-  draw('text', {x: x((hongKong.score + taiwan.score) / 2), y: 39, 'text-anchor': 'middle', class: 'peer-gap'}, `相差約 ${gap} 分`);
-  for (const [row, side, color] of [[hongKong, -1, 'hong-kong'], [taiwan, 1, 'taiwan']]) {
-    const marker = x(row.score);
-    const label = {x: marker + side * 16, 'text-anchor': side < 0 ? 'end' : 'start'};
-    draw('circle', {cx: marker, cy: 74, r: 9, class: color});
-    draw('text', {...label, y: 65, class: 'peer-label'}, nameOf(row));
-    draw('text', {...label, y: 92, class: 'peer-score'}, decimal(row.score));
-  }
-  get('peer-dumbbell-plot').append(svg);
-}
-
 function mountScatter(panel) {
   const plot = panel.querySelector('[data-scatter-plot]');
   const reading = panel.querySelector('[data-scatter-reading]');
@@ -327,7 +303,6 @@ function mountScatter(panel) {
 }
 
 mountGlobalFigure();
-mountPeerDumbbell();
 mountScatter(get('hong-kong'));
 
 const readingPages = Array.from(document.querySelectorAll('main > section'));

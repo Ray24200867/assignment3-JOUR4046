@@ -198,16 +198,6 @@ main > section > .chart-card { margin-top: clamp(14px, 3vh, 30px); }
   stroke-width: 3px;
 }
 .plot svg .scatter-label.is-comparison { fill: var(--accent); }
-main > section > .peer-dumbbell { max-width: 740px; }
-.peer-dumbbell h3 { font-size: clamp(17px, 2.3vw, 23px); }
-.peer-dumbbell .peer-axis { stroke: var(--line); }
-.peer-dumbbell .peer-connector { stroke: #ca8eae; stroke-width: 6; stroke-linecap: round; }
-.peer-dumbbell circle { stroke: #fffdfd; stroke-width: 2; }
-.peer-dumbbell circle.hong-kong { fill: var(--accent); }
-.peer-dumbbell circle.taiwan { fill: #5a477f; }
-.peer-dumbbell svg .peer-label { font-size: 18px; font-weight: 700; fill: var(--ink); }
-.peer-dumbbell svg .peer-score { font-size: 26px; font-weight: 700; fill: var(--ink); }
-.peer-dumbbell svg .peer-gap { font-size: 19px; font-weight: 700; fill: var(--accent); }
 .global-figure {
   --global-latin: #ba527e;
   --global-asia: #5a477f;
