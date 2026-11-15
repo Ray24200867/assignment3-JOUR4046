@@ -73,7 +73,7 @@ figcaption a{margin-left:7px}
 .chart-legend{display:flex;gap:17px;color:var(--muted);font-size:13px;margin-bottom:14px}
 .chart-legend i{display:inline-block;width:9px;height:9px;background:#7f3c6b;border-radius:50%}
 .chart-legend i.outline{background:white;border:1.5px solid #7f3c6b}
-.model-plot,.factor-plot{display:grid;gap:6px}
+.model-plot{display:grid;gap:6px}
 .data-row{display:grid;grid-template-columns:minmax(52px,100px) minmax(50px,1fr) 92px;align-items:center;gap:11px;width:100%;background:transparent;color:var(--ink);text-align:left;padding:10px 8px;border-radius:8px;font-size:14px}
 .data-row:hover,.data-row[aria-pressed="true"]{background:#f7edf4}
 .data-row>span:last-child{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -82,10 +82,28 @@ figcaption a{margin-left:7px}
 .track .connector{height:2px;background:#ab77a2;transform:translateY(-50%);transition:left .24s,width .24s}
 .track .marker{width:11px;height:11px;border-radius:50%;background:#884873;transform:translate(-50%,-50%);transition:left .24s}
 .track .expected{background:white;border:2px solid #884873}
-.factor-controls{margin-bottom:15px}
-.factor-plot .data-row{grid-template-columns:minmax(52px,100px) minmax(50px,1fr) 62px}
-.factor-plot .track i{height:9px;border-radius:100px;background:#af8aa7;transform:translateY(-50%);transition:width .28s}
-.factor-plot .data-row[aria-pressed="true"] .track i{background:#8f3967}
+.factor-bar-chart { --hk-bar: #9a416f; --tw-bar: #5a477f; }
+.factor-bar-legend i.hk-bar { background: var(--hk-bar); }
+.factor-bar-legend i.tw-bar { background: var(--tw-bar); }
+.factor-bar-area { position: relative; }
+.factor-bar-area .plot { overflow-x: auto; }
+.factor-bar-area .plot svg { min-width: 680px; }
+.factor-bar-area .factor-gridline { stroke: var(--line); }
+.factor-bar-area .factor-divider { stroke: #cdbaca; stroke-dasharray: 3 5; }
+.factor-bar-area .factor-total-bg { fill: #f6edf4; }
+.factor-bar-area .hk-bar { fill: var(--hk-bar); }
+.factor-bar-area .tw-bar { fill: var(--tw-bar); }
+.factor-bar-area .factor-pair { cursor: pointer; outline: none; }
+.factor-bar-area .factor-hit { fill: transparent; }
+.factor-pair:is(:hover, :focus-visible) .factor-hit { fill: #9a416f0e; }
+.factor-pair:focus-visible .factor-hit { stroke: var(--accent); }
+.factor-bar-area svg .factor-value {
+  fill: var(--ink);
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.factor-bar-area svg .factor-category { fill: var(--ink); font-size: 14px; font-weight: 650; }
 .daily-life{background:#eee6eb}
 .evidence-grid{max-width:1040px;margin:24px auto 0;display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .evidence{background:#fffafb;border-radius:18px;border:1px solid #e0d1dd;padding:20px}

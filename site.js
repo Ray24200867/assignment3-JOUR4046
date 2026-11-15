@@ -398,6 +398,9 @@ function createRow(row, plot, onSelect, trackItems) {
   return {row,button,number,parts};
 }
 
+const factors = {gdp: '人均 GDP', health: '健康預期壽命', social: '社會支援', freedom: '人生選擇自由', generosity: '慷慨程度', corruption: '貪腐觀感'};
+const sixFactorTotal = row => Object.keys(factors).reduce((total, key) => total + row[key], 0);
+
 let model = 'six';
 let modelChoice = hongKong;
 const modelRows = asian.map(row => createRow(row,get('model-plot'),() => {
@@ -406,7 +409,7 @@ const modelRows = asian.map(row => createRow(row,get('model-plot'),() => {
 function updateModel() {
   const scale = value => (value-5)/2.6*100;
   for (const {row,button,number,parts:[line,actualDot,expectedDot]} of modelRows) {
-    const expected = model === 'income' ? row.pred : row.gdp+row.social+row.health+row.freedom+row.generosity+row.corruption+1.16;
+    const expected = model === 'income' ? row.pred : sixFactorTotal(row) + 1.16;
     const actual = row.score;
     button.setAttribute('aria-pressed',String(row===modelChoice));
     button.setAttribute('aria-label',`${nameOf(row)}，實際 ${decimal(actual)}，預測 ${decimal(expected)}`);
@@ -427,35 +430,68 @@ get('model-controls').addEventListener('click', event => {
 });
 updateModel();
 
-const factors = {gdp:'人均 GDP',health:'健康預期壽命',social:'社會支援',freedom:'人生選擇自由',generosity:'慷慨程度',corruption:'貪腐觀感'};
-let factor = 'social';
-let factorChoice = hongKong;
-const factorRows = asian.map(row => createRow(row,get('factor-plot'),() => {
-  factorChoice = row; updateFactors();
-},['factor-bar']));
-for (const [key,label] of Object.entries(factors)) {
-  const button = document.createElement('button');
-  button.type = 'button';
-  button.dataset.factor = key;
-  button.textContent = label;
-  get('factor-controls').append(button);
-}
-function updateFactors() {
-  const highest = Math.max(...asian.map(row=>row[factor]));
-  for (const {row,button,number,parts:[bar]} of factorRows) {
-    button.setAttribute('aria-pressed',String(row===factorChoice));
-    number.textContent = row[factor].toFixed(3);
-    bar.style.width = row[factor]/highest*100+'%';
+function mountFactorBars() {
+  const plot = get('factor-plot');
+  const tooltip = get('factor-tooltip');
+  const taiwan = asian[1];
+  const categories = [
+    ...Object.entries(factors).map(([key, label]) => ({label, scores: [hongKong[key], taiwan[key]]})),
+    {label: '六項合計', scores: [sixFactorTotal(hongKong), sixFactorTotal(taiwan)]},
+  ];
+  const width = 900;
+  const height = 340;
+  const left = 48;
+  const right = width - 16;
+  const top = 28;
+  const bottom = height - 43;
+  const interval = (right - left) / categories.length;
+  const y = value => bottom - (bottom - top) * value / 6.5;
+  const svg = svgElement('svg', {viewBox: `0 0 ${width} ${height}`, role: 'group',
+    'aria-label': '香港與台灣的六項模型貢獻及合計並排柱狀圖'});
+  const draw = (tag, attrs, text) => svg.append(svgElement(tag, attrs, text));
+  const divider = right - interval;
+  draw('rect', {x: divider, y: top, width: interval, height: bottom - top, class: 'factor-total-bg'});
+  draw('line', {x1: divider, x2: divider, y1: top, y2: bottom, class: 'factor-divider'});
+  draw('text', {x: left, y: 16, class: 'axis-title'}, '模型貢獻（分）');
+  for (const tick of [0, 1, 2, 3, 4, 5, 6]) {
+    draw('line', {x1: left, x2: right, y1: y(tick), y2: y(tick), class: 'factor-gridline'});
+    draw('text', {x: left - 9, y: y(tick) + 4, 'text-anchor': 'end'}, tick);
   }
-  const rank = 1 + asian.filter(row=>row[factor]>factorChoice[factor]).length;
-  get('factor-reading').textContent = `${nameOf(factorChoice)}　${factors[factor]}的模型貢獻為 ${factorChoice[factor].toFixed(3)} 分，在圖中五地排第 ${rank}。`;
+  const hide = () => { tooltip.hidden = true; };
+  categories.forEach(({label, scores}, index) => {
+    const x = left + index * interval;
+    const center = x + interval / 2;
+    const difference = Math.round((scores[0] - scores[1]) * 1000);
+    const gap = difference === 0 ? '兩地相同' : `${difference > 0 ? '香港' : '台灣'}高 ${(Math.abs(difference) / 1000).toFixed(3)} 分`;
+    const details = `香港 ${scores[0].toFixed(3)} 分 · 台灣 ${scores[1].toFixed(3)} 分 · ${gap}`;
+    const pair = svgElement('g', {class: 'factor-pair', role: 'button', tabindex: 0, 'aria-label': `${label}，${details}`});
+    const marker = svgElement('rect', {x: x + 2, y: top, width: interval - 4, height: height - top - 5, rx: 5, class: 'factor-hit'});
+    pair.append(marker);
+    scores.forEach((score, i) => {
+      const barX = center + (i === 0 ? -24 : 24);
+      pair.append(
+        svgElement('rect', {x: barX - 15, y: y(score), width: 30, height: bottom - y(score), rx: 2, class: i === 0 ? 'hk-bar' : 'tw-bar'}),
+        svgElement('text', {x: barX, y: y(score) - 7, 'text-anchor': 'middle', class: 'factor-value'}, score.toFixed(3)),
+      );
+    });
+    pair.append(svgElement('text', {x: center, y: bottom + 28, 'text-anchor': 'middle', class: 'factor-category'}, label));
+    const show = () => showChartTooltip(tooltip, marker, label, details);
+    pair.addEventListener('pointerenter', show);
+    pair.addEventListener('pointerleave', hide);
+    pair.addEventListener('focus', show);
+    pair.addEventListener('blur', hide);
+    pair.addEventListener('click', show);
+    pair.addEventListener('keydown', event => {
+      if (event.key === 'Escape') hide();
+      if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); show(); }
+    });
+    svg.append(pair);
+  });
+  svg.addEventListener('click', event => {
+    if (!event.target.closest('.factor-pair')) hide();
+  });
+  plot.addEventListener('scroll', hide, {passive: true});
+  plot.append(svg);
 }
-get('factor-controls').addEventListener('click',event => {
-  const button=event.target.closest('button[data-factor]');
-  if (!button) return;
-  factor=button.dataset.factor;
-  selectControl(event.currentTarget,'factor',factor);
-  updateFactors();
-});
-selectControl(get('factor-controls'),'factor',factor);
-updateFactors();
+
+mountFactorBars();
