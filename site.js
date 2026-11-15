@@ -239,28 +239,24 @@ function mountPeerDumbbell() {
 function mountScatter(panel) {
   const plot = panel.querySelector('[data-scatter-plot]');
   const reading = panel.querySelector('[data-scatter-reading]');
-  const controls = panel.querySelector('[data-scatter-controls]');
-  let scatterView = 'peers';
   let scatterChoice = hongKong;
 
   function renderScatter() {
-    const world = scatterView === 'world';
     const compact = plot.clientWidth < 540;
     const w = compact ? 440 : 860;
     const h = compact ? 355 : 440;
-    const [xMin, xMax] = world ? [0,2.35] : [1.78,2.25];
-    const [yMin, yMax] = world ? [1,8] : [5.25,7.7];
+    const [xMin, xMax] = [1.78,2.25];
+    const [yMin, yMax] = [5.25,7.7];
     const left = 47, right = w - 22, top = 29, bottom = h - 59;
     const x = value => left + (right-left)*(value-xMin)/(xMax-xMin);
     const y = value => bottom - (bottom-top)*(value-yMin)/(yMax-yMin);
     const svg = svgElement('svg', {viewBox:`0 0 ${w} ${h}`, role:'group','aria-label':'人均 GDP 模型貢獻與生活評分散點圖'});
     const add = (tag, attrs, text) => svg.append(svgElement(tag, attrs, text));
-    const color = '#973c70';
-    for (const tick of world ? [1,2,3,4,5,6,7,8] : [5.5,6,6.5,7,7.5]) {
+    for (const tick of [5.5,6,6.5,7,7.5]) {
       add('line',{x1:left,x2:right,y1:y(tick),y2:y(tick),stroke:'#e5dfe6'});
       add('text',{x:left-10,y:y(tick)+4,'text-anchor':'end'},tick);
     }
-    for (const tick of world ? [0,.5,1,1.5,2] : [1.8,1.9,2,2.1,2.2]) {
+    for (const tick of [1.8,1.9,2,2.1,2.2]) {
       add('text',{x:x(tick),y:bottom+23,'text-anchor':'middle'},tick);
     }
     add('text',{x:left,y:17,class:'axis-title'},'生活評分（0–10）');
@@ -268,50 +264,36 @@ function mountScatter(panel) {
     const start = Math.max(xMin,(yMin-intercept)/slope);
     const end = Math.min(xMax,(yMax-intercept)/slope);
     add('line',{x1:x(start),y1:y(intercept+slope*start),x2:x(end),y2:y(intercept+slope*end),stroke:'#68657f','stroke-width':2,'stroke-dasharray':'6 5'});
-    if (scatterChoice) {
-      add('line',{x1:x(scatterChoice.gdp),x2:x(scatterChoice.gdp),y1:y(scatterChoice.score),y2:y(scatterChoice.pred),stroke:color,'stroke-width':2,'pointer-events':'none'});
-    }
-    const points = world ? [...observations.filter(row => !peers.has(row.country)), ...asian] : asian;
     function showPoint(row) {
-      if (!row) {
-        reading.textContent = '146 個國家和地區 · 虛線是按人均 GDP 指標估計的生活評分';
-        return;
-      }
       reading.textContent = `${nameOf(row)}　GDP 模型貢獻 ${row.gdp.toFixed(3)} · 實際 ${decimal(row.score)} 分 · 預測 ${decimal(row.pred)} 分 · 差距 ${signed(row.score-row.pred)} 分`;
     }
-    for (const row of points) {
-      const highlighted = row === scatterChoice;
-      const peer = peers.has(row.country);
-      const cx = x(row.gdp);
-      const cy = y(row.score);
-      const label = `${nameOf(row)}，生活評分 ${decimal(row.score)} 分`;
-      const flag = peers.get(row.country)?.flag;
-      const point = flag
-        ? svgElement('g', {class: `scatter-flag${highlighted ? ' is-selected' : ''}`, transform: `translate(${cx},${cy})`, 'aria-label': label})
-        : svgElement('circle', {class: 'point', cx, cy, r: highlighted ? 8 : 4, fill: highlighted ? color : '#b9b5c3', 'aria-label': label});
-      if (flag) {
-        const flagWidth = world ? 20 : 30;
-        const flagHeight = flagWidth * .75;
-        const frame = {x: -flagWidth / 2 - 3, y: -flagHeight / 2 - 3, width: flagWidth + 6, height: flagHeight + 6};
-        point.append(
-          svgElement('rect', {...frame, rx: 4, class: 'scatter-flag-frame'}),
-          svgElement('image', {x: -flagWidth / 2, y: -flagHeight / 2, width: flagWidth, height: flagHeight, href: `assets/flags/${flag}.svg`, 'aria-hidden': 'true'}),
-        );
-      }
-      if (peer) {
-        point.setAttribute('tabindex', '0');
-        point.setAttribute('role', 'button');
-        point.setAttribute('aria-pressed', String(highlighted));
-      }
+    const restoreReading = () => showPoint(scatterChoice);
+    let selectedPoint;
+    for (const row of asian) {
+      const flag = peers.get(row.country).flag;
+      const active = row === scatterChoice;
+      const point = svgElement('g', {
+        class: active ? 'scatter-flag is-selected' : 'scatter-flag',
+        transform: `translate(${x(row.gdp)},${y(row.score)})`,
+        tabindex: 0,
+        role: 'button',
+        'aria-pressed': active,
+        'aria-label': `${nameOf(row)}，生活評分 ${decimal(row.score)} 分`,
+      });
+      if (active) selectedPoint = point;
+      point.append(
+        svgElement('image', {x: -17, y: -12.75, width: 34, height: 25.5, href: `assets/flags/${flag}.svg`, 'aria-hidden': 'true'}),
+        svgElement('text', {x: 0, y: -19, 'text-anchor': 'middle', class: 'scatter-label'}, nameOf(row)),
+      );
       const choose = () => {
-        const hadFocus = document.activeElement === point;
+        selectedPoint.classList.remove('is-selected');
+        selectedPoint.setAttribute('aria-pressed', 'false');
+        selectedPoint = point;
+        point.classList.add('is-selected');
+        point.setAttribute('aria-pressed', 'true');
         scatterChoice = row;
-        renderScatter();
-        if (hadFocus && peer) {
-          plot.querySelector(`[data-peer="${asian.indexOf(row)}"]`)?.focus({preventScroll:true});
-        }
+        showPoint(row);
       };
-      if (peer) point.dataset.peer = asian.indexOf(row);
       point.addEventListener('pointerenter', () => showPoint(row));
       point.addEventListener('pointerleave', restoreReading);
       point.addEventListener('focus', () => showPoint(row));
@@ -321,26 +303,11 @@ function mountScatter(panel) {
         if (event.key === 'Enter' || event.key === ' ') {event.preventDefault();choose();}
       });
       svg.append(point);
-      if (highlighted || !world) {
-        add('text', {x: cx, y: cy - (flag ? (world ? 15 : 19) : 12), 'text-anchor': 'middle', 'pointer-events': 'none', class: 'scatter-label'}, nameOf(row));
-      }
     }
     plot.replaceChildren(svg);
     restoreReading();
-    function restoreReading() {
-      showPoint(scatterChoice);
-    }
   }
 
-  controls.addEventListener('click', event => {
-    const button = event.target.closest('button[data-view]');
-    if (!button) return;
-    scatterView = button.dataset.view;
-    if (scatterView === 'peers' && !peers.has(scatterChoice?.country)) scatterChoice = hongKong;
-    selectControl(controls, 'view', scatterView);
-    renderScatter();
-  });
-  selectControl(controls, 'view', scatterView);
   let width;
   new ResizeObserver(([entry]) => {
     if (entry.contentRect.width === width) return;

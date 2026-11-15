@@ -9,10 +9,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="layout.css">
-<link rel="stylesheet" href="site.css?v=peer-flags">
+<link rel="stylesheet" href="site.css?v=focused-charts">
 <script src="data/chart-data.js" defer></script>
 <script src="data/ranking.js" defer></script>
-<script src="site.js?v=peer-flags" defer></script>
+<script src="site.js?v=focused-charts" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">跳至正文</a>
@@ -544,11 +544,10 @@
   <div class="income-story">
     <div class="prose"><h2>找到香港的位置</h2><p>香港落在虛線下方。模型預測約 <strong>6.75 分</strong>，居民實際給了 <strong>5.57 分</strong>，相差 <strong>1.18 分</strong>。</p></div>
     <figure class="chart-card income-figure">
-      <div class="chart-heading">
-      <div class="segmented" data-scatter-controls aria-label="散點圖比較範圍"><button type="button" aria-pressed="false" data-view="world">全球</button><button type="button" aria-pressed="true" data-view="peers">人均 GDP 模型貢獻前五</button></div></div>
+      <h3 class="regional-chart-title">東亞及東南亞人均 GDP 模型貢獻前五</h3>
       <div data-scatter-plot class="plot"></div>
       <div data-scatter-reading class="chart-reading" aria-live="polite"></div>
-      <figcaption>旗幟標示東亞及東南亞中，人均 GDP 模型貢獻最高的五個國家或地區。點選旗幟或圓點可看數值。<a href="https://www.worldhappiness.report/data-sharing/">官方數據 ↗</a></figcaption>
+      <figcaption>點選旗幟可比較各地的實際評分與模型預測。<a href="https://www.worldhappiness.report/data-sharing/">官方數據 ↗</a></figcaption>
     </figure>
   </div>
 </section>

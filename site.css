@@ -183,19 +183,13 @@ main > section > .chart-card { margin-top: clamp(14px, 3vh, 30px); }
 }
 .income-figure { width: 100%; margin: 0; }
 .income-figure .plot svg { max-height: 50svh; }
-.income-figure .chart-heading { margin-bottom: 10px; }
+.regional-chart-title {
+  margin-bottom: 10px;
+  font-size: clamp(16px, 2vw, 22px);
+}
 .scatter-flag { cursor: pointer; outline: none; }
-.scatter-flag-frame {
-  fill: #fffdfd;
-  stroke: #d9c9d9;
-  stroke-width: 1;
-  filter: drop-shadow(0 2px 3px #2d183825);
-  transition: stroke .18s, stroke-width .18s;
-}
-.scatter-flag:is(:hover, :focus-visible, .is-selected) .scatter-flag-frame {
-  stroke: var(--accent);
-  stroke-width: 2;
-}
+.scatter-flag:is(:hover, :focus-visible, .is-selected) .scatter-label { fill: var(--accent); }
+.scatter-flag:focus-visible .scatter-label { text-decoration: underline; }
 .plot svg .scatter-label {
   fill: var(--ink);
   font-weight: 700;
@@ -218,7 +212,11 @@ main > section > .peer-dumbbell { max-width: 740px; }
   --global-asia: #5a477f;
   --global-other: #bdb6c8;
   --global-fit: #82758b;
-  width: min(100%, 1060px);
+}
+main > #income > .global-figure {
+  width: min(100%, 740px);
+  margin-top: 1.15rem;
+  padding: clamp(14px, 2.5vw, 25px);
 }
 .global-figure h3 { font-size: clamp(18px, 2.5vw, 29px); }
 .global-legend {
