@@ -9,10 +9,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="layout.css">
-<link rel="stylesheet" href="site.css?v=hk-rank">
+<link rel="stylesheet" href="site.css?v=global-figure">
 <script src="data/chart-data.js" defer></script>
 <script src="data/ranking.js" defer></script>
-<script src="site.js?v=hk-rank" defer></script>
+<script src="site.js?v=global-figure" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">跳至正文</a>
@@ -514,17 +514,28 @@
   </div>
 </section>
 
-<section id="income" class="story-section income-panel" data-scene="world">
-  <div class="income-story">
-    <div class="prose"><h2>先看全球趨勢</h2><p>把 146 個地方放在同一張圖上，虛線由左下往右上走。整體而言，人均 GDP 相關指標愈高的地方，生活評分也傾向愈高。</p></div>
-    <figure class="chart-card income-figure">
-      <div class="chart-heading"><div><p class="figure-number">圖 1</p></div>
-      <div class="segmented" data-scatter-controls aria-label="散點圖比較範圍"><button type="button" aria-pressed="true" data-view="world">全球</button><button type="button" aria-pressed="false" data-view="peers">亞洲五地</button></div></div>
-      <div data-scatter-plot class="plot"></div>
-      <div data-scatter-reading class="chart-reading" aria-live="polite"></div>
-      <figcaption>橫軸為人均 GDP 的模型貢獻（分）。點選圓點可看數值。<a href="https://www.worldhappiness.report/data-sharing/">官方數據 ↗</a></figcaption>
-    </figure>
-  </div>
+<section id="income" class="story-section">
+  <div class="prose"><h2>先看全球趨勢</h2></div>
+  <figure class="chart-card global-figure" aria-labelledby="global-figure-title">
+    <p class="figure-number">圖 1</p>
+    <h3 id="global-figure-title" lang="en">Money can’t buy all of happiness: Latin America is “poor but happy”, Hong Kong “rich but unhappy”</h3>
+    <ul class="global-legend" lang="en" aria-label="Legend">
+      <li><span class="global-swatch latin-america"></span>Latin America (17 countries)</li>
+      <li><span class="global-swatch east-asia"></span>Rich East Asia (Japan, South Korea, Hong Kong, Taiwan, Singapore)</li>
+      <li><span class="global-swatch other"></span>Other</li>
+      <li><span class="global-swatch prediction"></span>Score predicted by income alone</li>
+      <li>Larger dot = higher health contribution</li>
+    </ul>
+    <div class="global-chart">
+      <div id="global-plot" class="plot"></div>
+      <div id="global-tooltip" class="global-tooltip" hidden></div>
+    </div>
+    <figcaption class="global-insight">人均 GDP 的模型貢獻愈高，生活評分整體上也愈高，但不同地區與虛線的距離很不一樣。圖中的 17 個拉丁美洲國家都高於預測，平均高 <strong>0.75 分</strong>。五個高收入亞洲經濟體的評分低於或接近預測，平均低 <strong>0.57 分</strong>。台灣幾乎落在預測線上，香港則低 <strong>1.18 分</strong>，是這五地中落差最大的一個。接下來放大看香港的位置。</figcaption>
+    <details class="global-method">
+      <summary>數據與方法</summary>
+      <p>2025 年生活評分指 2023 至 2025 年的調查平均。虛線以 146 個國家和地區的生活評分及報告的「人均 GDP 模型貢獻」做線性迴歸，委內瑞拉因該欄缺值而排除。R² = 0.64，表示這條線解釋樣本中約 64% 的評分差異。拉丁美洲一組沿用原圖分法，排除牙買加、多明尼加及千里達和多巴哥。<a href="https://www.worldhappiness.report/data-sharing/">官方數據 ↗</a></p>
+    </details>
+  </figure>
 </section>
 
 <section id="hong-kong" class="story-section income-panel" data-scene="hong-kong">

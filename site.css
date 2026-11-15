@@ -184,6 +184,69 @@ main > section > .chart-card { margin-top: clamp(14px, 3vh, 30px); }
 .income-figure { width: 100%; margin: 0; }
 .income-figure .plot svg { max-height: 50svh; }
 .income-figure .chart-heading { margin-bottom: 10px; }
+.global-figure {
+  --global-latin: #ba527e;
+  --global-asia: #5a477f;
+  --global-other: #bdb6c8;
+  --global-fit: #82758b;
+  width: min(100%, 1060px);
+}
+.global-figure h3 { font-size: clamp(18px, 2.5vw, 29px); }
+.global-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 17px;
+  margin: 10px 0 4px;
+  padding: 0;
+  list-style: none;
+  color: var(--muted);
+  font-size: 13px;
+}
+.global-legend li { display: flex; align-items: center; gap: 6px; }
+.global-swatch { width: 10px; height: 10px; border-radius: 50%; }
+.global-swatch.latin-america { background: var(--global-latin); }
+.global-swatch.east-asia { background: var(--global-asia); }
+.global-swatch.other { background: var(--global-other); }
+.global-swatch.prediction { width: 18px; height: 0; border-top: 2px dashed var(--global-fit); border-radius: 0; }
+.global-chart { position: relative; }
+.global-chart .plot { overflow-x: auto; }
+.global-chart svg { min-width: 600px; }
+.global-gridline { stroke: var(--line); }
+.global-fit { stroke: var(--global-fit); stroke-width: 1.6; stroke-dasharray: 7 5; }
+.global-chart svg .global-tick { font-size: 10.5px; font-variant-numeric: tabular-nums; }
+.global-chart svg .global-axis { font-size: 12.5px; font-weight: 500; }
+.global-chart svg :is(.global-annotation, .global-country-label) {
+  font-size: 11.5px;
+  paint-order: stroke;
+  stroke: #fffdfd;
+  stroke-width: 3px;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+.global-chart svg .global-country-label { fill: var(--global-asia); font-weight: 700; }
+.global-chart circle { stroke: #fffdfd; stroke-width: 1.2; }
+.global-chart circle.other { fill: var(--global-other); fill-opacity: .7; }
+.global-chart circle.latin-america { fill: var(--global-latin); fill-opacity: .92; }
+.global-chart circle.east-asia { fill: var(--global-asia); fill-opacity: .92; }
+.global-tooltip {
+  position: absolute;
+  left: clamp(0px, var(--tooltip-x), calc(100% - 195px));
+  width: min(195px, 100%);
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 4px 18px #2920371a;
+  font-size: 12px;
+  pointer-events: none;
+}
+.global-tooltip strong { display: block; }
+.global-figure .global-insight { font-size: 15px; line-height: 1.75; }
+.global-insight strong { color: var(--ink); }
+.global-method { margin-top: 12px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+.global-method summary { cursor: pointer; }
+.global-method a { margin-left: .4em; color: var(--accent); }
 .methods .text-link { margin-top: 20px; }
 .hero { position: relative; padding-bottom: 36px; }
 .hero-inner { min-height: min(640px, calc(100svh - 36px)); padding-top: clamp(25px, 7vh, 65px); }

@@ -123,6 +123,92 @@ function svgElement(tag, attributes, text) {
   return element;
 }
 
+function mountGlobalFigure() {
+  const plot = get('global-plot');
+  const tooltip = get('global-tooltip');
+  const chart = plot.parentElement;
+  const width = 960;
+  const height = 510;
+  const {left, right, top, bottom} = {left: 62, right: width - 24, top: 16, bottom: height - 52};
+  const x = value => left + (right - left) * value / 2.3;
+  const y = value => bottom - (bottom - top) * (value - 1) / 7;
+  const prediction = value => intercept + slope * value;
+  const svg = svgElement('svg', {viewBox: `0 0 ${width} ${height}`, role: 'group',
+    'aria-label': '146 個國家和地區的生活評分與人均 GDP 模型貢獻散點圖'});
+  const draw = (tag, attrs, content) => {
+    const element = svgElement(tag, attrs, content);
+    svg.append(element);
+    return element;
+  };
+  for (const tick of [1, 2, 3, 4, 5, 6, 7, 8]) {
+    draw('line', {x1: left, x2: right, y1: y(tick), y2: y(tick), class: 'global-gridline'});
+    draw('text', {x: left - 8, y: y(tick) + 3.5, 'text-anchor': 'end', class: 'global-tick'}, tick);
+  }
+  for (const tick of [0, .5, 1, 1.5, 2]) {
+    draw('text', {x: x(tick), y: bottom + 18, 'text-anchor': 'middle', class: 'global-tick'}, tick.toFixed(1));
+  }
+  draw('text', {x: (left + right) / 2, y: height - 8, 'text-anchor': 'middle', class: 'global-axis'},
+    'Contribution of GDP per capita to the happiness score');
+  draw('text', {transform: `translate(16,${(top + bottom) / 2}) rotate(-90)`, 'text-anchor': 'middle', class: 'global-axis'},
+    'Life evaluation, 2025 (0–10)');
+  draw('line', {x1: x(.15), x2: x(2.25), y1: y(prediction(.15)), y2: y(prediction(2.25)), class: 'global-fit'});
+  draw('text', {x: x(.2), y: y(prediction(.2)) + 18, class: 'global-annotation'}, 'R² = 0.64');
+
+  const caribbean = new Set(['Jamaica', 'Dominican Republic', 'Trinidad and Tobago']);
+  const groups = {'other': [], 'latin-america': [], 'east-asia': []};
+  for (const row of observations) {
+    const latinAmerica = row.region === 'Latin America & Caribbean' && !caribbean.has(row.country);
+    const group = peers.has(row.country) ? 'east-asia' : latinAmerica ? 'latin-america' : 'other';
+    groups[group].push(row);
+  }
+  const labelOffsets = [
+    ['Japan', 'Japan', -12, 4, 'end'],
+    ['Republic of Korea', 'South Korea', 12, 12, 'start'],
+    ['Hong Kong SAR of China', 'Hong Kong', 13, 5, 'start'],
+    ['Taiwan Province of China', 'Taiwan', 0, -14, 'middle'],
+    ['Singapore', 'Singapore', 13, 4, 'start'],
+  ];
+  const englishNames = new Map(labelOffsets.map(([key, label]) => [key, label]));
+  const hide = () => { tooltip.hidden = true; };
+  for (const [group, rows] of Object.entries(groups)) {
+    for (const row of rows) {
+      const label = englishNames.get(row.country) || row.country;
+      const difference = signed(row.score - prediction(row.gdp));
+      const points = `Life evaluation ${decimal(row.score)} · vs. income prediction ${difference}`;
+      const point = draw('circle', {cx: x(row.gdp), cy: y(row.score),
+        r: 2 + 8 * Math.sqrt(Math.max(0, row.health || 0) / 1.25),
+        class: `point ${group}`, 'aria-label': `${label}, ${points}`});
+      const show = () => {
+        const marker = point.getBoundingClientRect();
+        const area = chart.getBoundingClientRect();
+        const name = document.createElement('strong');
+        name.textContent = label;
+        tooltip.replaceChildren(name, document.createTextNode(points));
+        tooltip.style.setProperty('--tooltip-x', `${marker.right - area.left + 6}px`);
+        tooltip.style.top = `${Math.max(0, marker.top - area.top - 12)}px`;
+        tooltip.hidden = false;
+      };
+      point.addEventListener('pointerenter', show);
+      point.addEventListener('pointerleave', hide);
+      point.addEventListener('click', show);
+      if (group === 'east-asia') {
+        point.setAttribute('tabindex', '0');
+        point.addEventListener('focus', show);
+        point.addEventListener('blur', hide);
+        point.addEventListener('keydown', event => { if (event.key === 'Escape') hide(); });
+      }
+    }
+  }
+  for (const [key, label, dx, dy, anchor] of labelOffsets) {
+    const row = asian.find(country => country.country === key);
+    draw('text', {x: x(row.gdp) + dx, y: y(row.score) + dy, 'text-anchor': anchor, class: 'global-country-label'}, label);
+  }
+  draw('text', {x: x(hongKong.gdp) + 8, y: y(hongKong.score) + 26, 'text-anchor': 'end', class: 'global-annotation'},
+    `Hong Kong: ${decimal(prediction(hongKong.gdp) - hongKong.score)} points below income prediction`);
+  plot.append(svg);
+  plot.addEventListener('scroll', hide, {passive: true});
+}
+
 function mountScatter(panel) {
   const plot = panel.querySelector('[data-scatter-plot]');
   const reading = panel.querySelector('[data-scatter-reading]');
@@ -226,6 +312,7 @@ function mountScatter(panel) {
   }).observe(plot);
 }
 
+mountGlobalFigure();
 document.querySelectorAll('.income-panel').forEach(mountScatter);
 
 const readingPages = Array.from(document.querySelectorAll('main > section'));
