@@ -16,15 +16,6 @@ const decimal = value => (Math.round((value + Number.EPSILON) * 100) / 100).toFi
 const signed = value => (value < 0 ? '−' : '+') + decimal(Math.abs(value));
 const get = id => document.getElementById(id);
 
-const header = document.querySelector('.site-header');
-function trackReading() {
-  const distance = document.documentElement.scrollHeight - innerHeight;
-  header.style.setProperty('--progress', distance > 0 ? Math.max(0, Math.min(1, scrollY / distance)) : 0);
-}
-addEventListener('scroll', trackReading, {passive:true});
-addEventListener('resize', trackReading);
-trackReading();
-
 const ladder = document.querySelector('[data-node-id="13:18"]');
 const stairViewport = ladder.parentElement;
 const stairButtons = Array.from(ladder.querySelectorAll('.ladder-choice'));
