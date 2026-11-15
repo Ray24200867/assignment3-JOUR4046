@@ -114,11 +114,6 @@ for (const face of stairFaces) {
   });
 }
 
-function selectControl(container, key, value) {
-  container.querySelectorAll('button').forEach(button => {
-    button.setAttribute('aria-pressed', String(button.dataset[key] === value));
-  });
-}
 function svgElement(tag, attributes, text) {
   const element = document.createElementNS('http://www.w3.org/2000/svg', tag);
   for (const [key, value] of Object.entries(attributes)) element.setAttribute(key, value);
@@ -376,59 +371,8 @@ addEventListener('wheel', event => {
   next.scrollIntoView({block, behavior:'smooth'});
 }, {passive:false});
 
-function createRow(row, plot, onSelect, trackItems) {
-  const button = document.createElement('button');
-  button.type = 'button';
-  button.className = 'data-row';
-  const label = document.createElement('span');
-  label.textContent = nameOf(row);
-  const track = document.createElement('span');
-  track.className = 'track';
-  track.setAttribute('aria-hidden','true');
-  const parts = trackItems.map(className => {
-    const item = document.createElement('i');
-    item.className = className;
-    track.append(item);
-    return item;
-  });
-  const number = document.createElement('span');
-  button.append(label,track,number);
-  button.addEventListener('click', onSelect);
-  plot.append(button);
-  return {row,button,number,parts};
-}
-
 const factors = {gdp: '人均 GDP', health: '健康預期壽命', social: '社會支援', freedom: '人生選擇自由', generosity: '慷慨程度', corruption: '貪腐觀感'};
 const sixFactorTotal = row => Object.keys(factors).reduce((total, key) => total + row[key], 0);
-
-let model = 'six';
-let modelChoice = hongKong;
-const modelRows = asian.map(row => createRow(row,get('model-plot'),() => {
-  modelChoice = row; updateModel();
-},['connector','marker','marker expected']));
-function updateModel() {
-  const scale = value => (value-5)/2.6*100;
-  for (const {row,button,number,parts:[line,actualDot,expectedDot]} of modelRows) {
-    const expected = model === 'income' ? row.pred : sixFactorTotal(row) + 1.16;
-    const actual = row.score;
-    button.setAttribute('aria-pressed',String(row===modelChoice));
-    button.setAttribute('aria-label',`${nameOf(row)}，實際 ${decimal(actual)}，預測 ${decimal(expected)}`);
-    number.textContent = signed(actual-expected)+' 分';
-    line.style.left = scale(Math.min(actual,expected))+'%';
-    line.style.width = (scale(Math.max(actual,expected))-scale(Math.min(actual,expected)))+'%';
-    actualDot.style.left = scale(actual)+'%';
-    expectedDot.style.left = scale(expected)+'%';
-    if (row===modelChoice) get('model-reading').textContent = `${nameOf(row)}　居民評分 ${decimal(actual)} 分 · ${model==='income'?'人均 GDP':'六項因素'}預測 ${decimal(expected)} 分 · 差距 ${signed(actual-expected)} 分`;
-  }
-}
-get('model-controls').addEventListener('click', event => {
-  const button = event.target.closest('button[data-model]');
-  if (!button) return;
-  model = button.dataset.model;
-  selectControl(event.currentTarget,'model',model);
-  updateModel();
-});
-updateModel();
 
 function mountFactorBars() {
   const plot = get('factor-plot');

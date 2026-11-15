@@ -9,10 +9,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="layout.css">
-<link rel="stylesheet" href="site.css?v=factor-bars">
+<link rel="stylesheet" href="site.css?v=aligned-factors">
 <script src="data/chart-data.js" defer></script>
 <script src="data/ranking.js" defer></script>
-<script src="site.js?v=factor-bars" defer></script>
+<script src="site.js?v=aligned-factors" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">跳至正文</a>
@@ -561,41 +561,6 @@
   </div>
 </section>
 
-<section id="factors" class="story-section">
-  <div class="income-story factor-page">
-  <div class="prose">
-    <p class="eyebrow">六項因素</p>
-    <h2>六項因素預測香港有 7.03 分，居民給了 5.57 分</h2>
-    <p>只看人均 GDP 指標，按全球趨勢預測香港約有 <strong>6.75 分</strong>。換用《世界幸福報告》的模型，同時考慮人均 GDP、健康預期壽命、社會支援等六項因素，預測升至 <strong>7.03 分</strong>。香港居民在問卷給出的平均分是 <strong>5.57 分</strong>，比六因素預測低 <strong>1.46 分</strong>。</p>
-    <p>六項因素沒有固定佔比。以香港為例，六項在模型中合計 <strong>5.865 分</strong>，再加上報告設定的共同基準 <strong>1.16 分</strong>，就得到約 <strong>7.03 分</strong>。</p>
-    <details class="global-method model-method">
-      <summary>香港的 7.03 分怎麼算？看每項分數和佔比</summary>
-      <p>報告先用各地資料估計每項因素和生活評分的關聯，再將各地與基準在該項指標上的差距乘以模型係數，換算成模型貢獻。例如，遇到困難時有親友可依靠的人口比例若比基準高 10 個百分點，按模型係數 2.82 計算，貢獻約為 0.28 分。</p>
-      <table class="model-breakdown" aria-label="香港的六項模型貢獻">
-        <thead><tr><th scope="col">因素</th><th scope="col">貢獻（分）</th><th scope="col">佔六項合計</th></tr></thead>
-        <tbody>
-          <tr><th scope="row">人均 GDP</th><td>1.960</td><td>33.4%</td></tr>
-          <tr><th scope="row">健康預期壽命</th><td>1.238</td><td>21.1%</td></tr>
-          <tr><th scope="row">社會支援</th><td>1.330</td><td>22.7%</td></tr>
-          <tr><th scope="row">人生選擇自由</th><td>0.852</td><td>14.5%</td></tr>
-          <tr><th scope="row">慷慨程度</th><td>0.090</td><td>1.5%</td></tr>
-          <tr><th scope="row">貪腐觀感</th><td>0.395</td><td>6.7%</td></tr>
-        </tbody>
-      </table>
-      <p>表中百分比以香港的六項貢獻合計 5.865 分為分母。基準的 1.16 分來自報告設定的假想地區，其六項指標皆取樣本中的最低表現。 <a href="https://www.worldhappiness.report/ed/2026/international-evidence-on-happiness-and-social-media/">報告方法 ↗</a></p>
-    </details>
-  </div>
-  <figure class="chart-card">
-    <div class="chart-heading"><div><p class="figure-number">圖 2</p><h3>居民給的分數 vs. 模型預測</h3></div>
-    <div class="segmented" id="model-controls" aria-label="選擇預測方式"><button type="button" aria-pressed="false" data-model="income">只看人均 GDP</button><button type="button" aria-pressed="true" data-model="six">同看六項因素</button></div></div>
-    <div class="chart-legend"><span><i></i> 居民評分</span><span><i class="outline"></i> 模型預測</span></div>
-    <div id="model-plot" class="model-plot" aria-label="東亞及東南亞人均 GDP 模型貢獻前五的實際和預測分數"></div>
-    <div id="model-reading" class="chart-reading" aria-live="polite"></div>
-    <figcaption>實心點是居民在問卷給出的平均分，空心點是模型預測。右欄顯示居民評分減去預測的差距。<a href="https://www.worldhappiness.report/data-sharing/">官方數據 ↗</a></figcaption>
-  </figure>
-  </div>
-</section>
-
 <section id="factor-comparison" class="story-section">
   <div class="prose">
     <h2>香港的六項模型貢獻合計高於台灣</h2>
@@ -603,7 +568,7 @@
   </div>
   <figure class="chart-card factor-bar-chart" aria-labelledby="factor-bar-title">
     <div class="chart-heading">
-      <div><p class="figure-number">圖 3</p><h3 id="factor-bar-title">香港的健康預期壽命貢獻較高，台灣的社會支援貢獻較高</h3></div>
+      <div><p class="figure-number">圖 2</p><h3 id="factor-bar-title">香港的健康預期壽命貢獻較高，台灣的社會支援貢獻較高</h3></div>
       <div class="chart-legend factor-bar-legend"><span><i class="hk-bar"></i>香港</span><span><i class="tw-bar"></i>台灣</span></div>
     </div>
     <div class="factor-bar-area">
@@ -642,7 +607,7 @@
 <section class="story-section methods">
   <div class="prose">
     <details><summary>數據與方法</summary>
-      <p>三張圖均使用《世界幸福報告》2026 年版 Figure 2.1 工作簿。圖 1 用 146 個地方的生活評分及人均 GDP 模型貢獻做線性迴歸，排除缺少可用 GDP 指標的委內瑞拉。圖 2 將官方六項模型貢獻值加上共同基準 1.16，重建六因素預測值。圖 3 比較香港和台灣的各項模型貢獻及六項合計。圖中分數經四捨五入。</p>
+      <p>報導圖表使用《世界幸福報告》2026 年版 Figure 2.1 工作簿。圖 1 用 146 個地方的生活評分及人均 GDP 模型貢獻做線性迴歸，排除缺少可用 GDP 指標的委內瑞拉。圖 2 比較香港和台灣的各項模型貢獻及六項合計。圖中分數經四捨五入。</p>
       <p><a href="https://www.worldhappiness.report/data-sharing/">官方工作簿 ↗</a>　<a href="https://www.worldhappiness.report/ed/2026/international-evidence-on-happiness-and-social-media/">報告第二章 ↗</a></p>
     </details>
     <a class="text-link" href="#cover">返回封面 ↑</a>
