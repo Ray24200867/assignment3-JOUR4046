@@ -127,11 +127,16 @@ main > section > .chart-card, main > section > .evidence-grid { width: min(100%,
 main > section > .chart-card { margin-top: clamp(14px, 3vh, 30px); }
 .intro-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-  gap: clamp(20px, 6vw, 76px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 3vh, 28px) clamp(20px, 6vw, 76px);
   width: min(100%, 980px);
   margin-inline: auto;
   align-items: center;
+}
+.intro-overview {
+  grid-column: 1 / -1;
+  max-width: none;
+  margin: 0;
 }
 .intro-cart {
   margin: 0;
