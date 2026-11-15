@@ -240,7 +240,7 @@ function mountScatter(panel) {
   const plot = panel.querySelector('[data-scatter-plot]');
   const reading = panel.querySelector('[data-scatter-reading]');
   const indonesia = observations.find(row => row.country === 'Indonesia');
-  const points = [...asian.map(row => ({row, ...peers.get(row.country)})), {row: indonesia, name: '印尼', flag: 'id'}];
+  const points = [...asian.map(row => ({row, ...peers.get(row.country)})), {row: indonesia, name: '印度尼西亞', flag: 'id'}];
   let scatterChoice = hongKong;
 
   function renderScatter() {
